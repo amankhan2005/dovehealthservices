@@ -136,22 +136,30 @@ export default function Footer() {
 
             <div className="flex items-center gap-3">
               <a
-                href="https://www.facebook.com/share/1WinbTxPSC/?mibextid=wwXIfr "
+                href="https://www.facebook.com/share/1WinbTxPSC/?mibextid=wwXIfr"
                 aria-label="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-shadow shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
               >
                 <FaFacebookF />
               </a>
+
               <a
                 href="https://x.com/ABAPartner"
                 aria-label="Twitter"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-shadow shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
               >
                 <FaTwitter />
               </a>
+
               <a
                 href="https://www.instagram.com/autismabapartners?igsh=dTl2a2dodWQ3anR2&utm_source=qr"
                 aria-label="Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-shadow shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
               >
                 <FaInstagram />

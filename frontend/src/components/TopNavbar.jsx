@@ -65,20 +65,28 @@ export default function TopNavbar() {
             <a
               href="https://www.facebook.com/share/1WinbTxPSC/?mibextid=wwXIfr"
               aria-label="Facebook"
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-2.5 bg-white/10 rounded-xl hover:bg-[#FBC02D] transition-transform transform hover:scale-110"
             >
               <FaFacebookF className="text-white text-base" />
             </a>
+
             <a
               href="https://www.instagram.com/autismabapartners?igsh=dTl2a2dodWQ3anR2&utm_source=qr"
               aria-label="Instagram"
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-2.5 bg-white/10 rounded-xl hover:bg-[#FBC02D] transition-transform transform hover:scale-110"
             >
               <FaInstagram className="text-white text-base" />
             </a>
+
             <a
               href="https://x.com/ABAPartner"
               aria-label="X (Twitter)"
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-2.5 bg-white/10 rounded-xl hover:bg-[#FBC02D] transition-transform transform hover:scale-110"
             >
               <FaXTwitter className="text-white text-base" />
@@ -169,21 +177,32 @@ export default function TopNavbar() {
 
             <div className="flex items-center gap-3 px-2">
               <a
-                href="https://www.facebook.com/share/1WinbTxPSC/?mibextid=wwXIfr "
+                href="https://www.facebook.com/share/1WinbTxPSC/?mibextid=wwXIfr"
                 aria-label="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 bg-white/10 rounded-md"
               >
                 <FaFacebookF className="text-white text-base" />
               </a>
+
               <a
-                href="https://www.instagram.com/autismabapartners?igsh=dTl2a2dodWQ3anR2&utm_source=qr
-"
+                href="https://www.instagram.com/autismabapartners?igsh=dTl2a2dodWQ3anR2&utm_source=qr"
                 aria-label="Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 bg-white/10 rounded-md"
               >
                 <FaInstagram className="text-white text-base" />
               </a>
-              <a href="https://x.com/ABAPartner" aria-label="X" className="p-2 bg-white/10 rounded-md">
+
+              <a
+                href="https://x.com/ABAPartner"
+                aria-label="X"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-white/10 rounded-md"
+              >
                 <FaXTwitter className="text-white text-base" />
               </a>
             </div>
