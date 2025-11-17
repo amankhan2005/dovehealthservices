@@ -42,6 +42,7 @@ app.use(limiter);
 // Allowed origins list (add more domains via ALLOWED_ORIGINS env comma-separated)
 const allowedOrigins = [
   "http://localhost:5173",
+  "https://adminabapartner.netlify.app/#/admin",
   "http://localhost:5174",
   "http://localhost:3000",
   "https://autismpartner.netlify.app",

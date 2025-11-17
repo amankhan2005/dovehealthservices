@@ -1,6 +1,12 @@
- [build]
+ [build] 
   command = "npm run build"
   publish = "dist"
+
+[[redirects]]
+  from = "/admin/*"
+  to = "https://adminabapartner.netlify.app/:splat"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/*"
