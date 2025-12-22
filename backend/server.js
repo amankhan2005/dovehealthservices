@@ -45,11 +45,8 @@ const allowedOrigins = [
   "http://localhost:5173",
    "http://localhost:5174",
   "http://localhost:3000",
-  "https://autismpartner.netlify.app",
-  "https://autismabapartners.com",
-  "https://adminabapartners.netlify.app",
-  "adminabapartners.netlify.app",
-  "autismabapartners.com",
+  "https://decoderhealth.netlify.app",
+  
   ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(",").map((u) => u.trim()) : []),
 ].filter(Boolean);
 
@@ -133,7 +130,7 @@ app.use("/api/hero",heroroutes);
 app.get("/", (req, res) => {
   res.json({
     ok: true,
-    service: "Autism ABA Clinic API",
+    service: "Decoder Health API",
     env: process.env.NODE_ENV || "development",
     db: process.env.DISABLE_DB === "true" ? "disabled" : "enabled",
     allowedOrigins,

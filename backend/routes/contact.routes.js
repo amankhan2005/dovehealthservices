@@ -1,35 +1,35 @@
- // routes/contact.routes.js
-import express from "express";
+ import express from "express";
 import {
-  createInquiry,
-  getAllInquiry,        // simple (back-compat) -> { ok, list }
-  getInquiryById,
-  deleteInquiry,
-
-  // Admin power endpoints
-  getAllInquiryAdmin,
-  updateInquiry,
-  bulkUpdateInquiry,
-  exportInquiryCsv,
-  getInquiryStats,
+  createContact,
+  getAllContacts,
+  getContactById,
+  updateContactStatus,
+  deleteContact,
 } from "../controllers/contact.controllers.js";
 
 const router = express.Router();
 
-/* ---------- PUBLIC (website form) ---------- */
-router.post("/save", createInquiry);
+/* ------------------------------------------------ */
+/* PUBLIC ROUTES                                    */
+/* ------------------------------------------------ */
+router.post("/", createContact); 
+// POST /api/contact
+// body: { firstName, lastName, email, phone, message }
 
-/* ---------- ADMIN: powerful list + tools (static paths FIRST) ---------- */
-router.get("/admin/list", getAllInquiryAdmin);     // ?page&limit&q&status&from&to...
-router.get("/list", getAllInquiryAdmin);           // alias for frontend hitting /list
-router.post("/bulk/update", bulkUpdateInquiry);
-router.get("/admin/export.csv", exportInquiryCsv);
-router.get("/admin/stats", getInquiryStats);
-router.patch("/:id", updateInquiry);               // id-based (keep below static admin paths)
-router.delete("/:id", deleteInquiry);              // id-based
+/* ------------------------------------------------ */
+/* ADMIN ROUTES                                     */
+/* ------------------------------------------------ */
+router.get("/", getAllContacts); 
+// GET /api/contact
 
-/* ---------- SIMPLE LIST/DETAIL (backward compatible) ---------- */
-router.get("/", getAllInquiry);                    // { ok, list }
-router.get("/:id", getInquiryById);                // keep this LAST so it doesn't swallow /admin/*
+router.get("/:id", getContactById); 
+// GET /api/contact/:id
+
+router.patch("/:id/status", updateContactStatus); 
+// PATCH /api/contact/:id/status
+// body: { status: "new" | "replied" | "closed" }
+
+router.delete("/:id", deleteContact); 
+// DELETE /api/contact/:id
 
 export default router;

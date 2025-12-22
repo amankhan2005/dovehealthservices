@@ -1,81 +1,70 @@
- // models/contact.models.js
-// Mongoose schema for Contact / Lead submissions (USA Autism ABA Clinic)
-
-import mongoose from "mongoose";
+ import mongoose from "mongoose";
 
 const contactSchema = new mongoose.Schema(
   {
-    // 🧩 Parent / Guardian Info
-    parentName: { type: String, required: true, trim: true },
-    email: { type: String, required: true, lowercase: true, trim: true },
-    phone: { type: String, required: true, trim: true },
-
-    // 👶 Child / Client Info
-    childName: { type: String, trim: true },
-    childAge: { type: Number, min: 0, max: 25 },
-
-    // 📍 Location Info
-    city: { type: String, trim: true },
-    state: { type: String, trim: true },
-    zipCode: { type: String, trim: true },
-
-    // 💬 Inquiry Details
-    message: { type: String, required: true, trim: true },
-    serviceInterest: {
+    // 👤 User Info (from Contact Page)
+    firstName: {
       type: String,
-      enum: [
-        "ABA Therapy",
-        "Speech Therapy",
-        "Occupational Therapy",
-        "Behavioral Consultation",
-        "Other",
-      ],
-      default: "ABA Therapy",
-    },
-    preferredContact: {
-      type: String,
-      enum: ["Call", "Email", "Text", "WhatsApp"],
-      default: "Call",
-    },
-    bestTimeToReach: { type: String, trim: true },
-
-    // 📊 Marketing & Source Tracking
-    leadSource: {
-      type: String,
-      enum: ["Website", "Google Ads", "Facebook", "Referral", "Other"],
-      default: "Website",
-    },
-    utm: {
-      campaign: String,
-      medium: String,
-      source: String,
+      required: true,
+      trim: true,
     },
 
-    // 🧠 Internal (admin / therapist)
-    assignedStaff: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    email: {
+      type: String,
+      required: true,
+      lowercase: true,
+      trim: true,
+    },
+
+    phone: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    message: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    // 📍 Optional (auto / admin)
+    source: {
+      type: String,
+      enum: ["Contact Page", "Footer", "Landing Page", "Other"],
+      default: "Contact Page",
+    },
+
     status: {
       type: String,
-      enum: ["new", "contacted", "in-progress", "closed"],
+      enum: ["new", "replied", "closed"],
       default: "new",
     },
 
-    // 🔐 Security & Logging
+    // 🔐 Security / Logs
     ipAddress: String,
     userAgent: String,
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-// Indexes for fast admin queries/search
+// 🔎 Indexes for admin panel search
 contactSchema.index({ createdAt: -1 });
 contactSchema.index({
-  parentName: "text",
+  firstName: "text",
+  lastName: "text",
   email: "text",
   phone: "text",
   message: "text",
-  city: "text",
-  state: "text",
 });
 
-export default mongoose.models.ContactLead ||
-  mongoose.model("ContactLead", contactSchema);
+export default mongoose.models.Contact ||
+  mongoose.model("Contact", contactSchema);

@@ -7,8 +7,8 @@ export default function ContactUs() {
 
   const CONTACT_EMAIL = settings?.email || "info@decoderhealth.com";
   const CONTACT_PHONE = settings?.phone || "+1 (571) 530-9004";
-  const CONTACT_ADDRESS =
-    settings?.address || " Arlington, WA";
+  const CONTACT_ADDRESS = settings?.address || "Arlington, WA";
+
   const MAP_LINK =
     settings?.mapLink ||
     `https://maps.google.com/?q=${encodeURIComponent(CONTACT_ADDRESS)}`;
@@ -23,17 +23,48 @@ export default function ContactUs() {
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
+  /* ---------------- SUBMIT HANDLER (FIXED) ---------------- */
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
+    setSuccess(false);
+    setError("");
+
+    try {
+      // ✅ SAFE API URL (fallback for dev)
+      const API_BASE =
+        import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+      const res = await fetch(`${API_BASE}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      // ✅ SAFE JSON PARSE (no crash on 404/empty)
+      let data = {};
+      const text = await res.text();
+      if (text) {
+        try {
+          data = JSON.parse(text);
+        } catch {
+          // non-JSON response (ignore)
+        }
+      }
+
+      if (!res.ok) {
+        throw new Error(data.message || `Request failed (${res.status})`);
+      }
+
       setSuccess(true);
-      setLoading(false);
       setForm({
         firstName: "",
         lastName: "",
@@ -41,37 +72,41 @@ export default function ContactUs() {
         phone: "",
         message: "",
       });
-    }, 1200);
+    } catch (err) {
+      console.error("Contact submit error:", err);
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <main className="relative overflow-hidden bg-gradient-to-br from-[#F5F9FF] via-white to-[#EEF4FF] py-28">
-      {/* soft glow */}
+      {/* glow */}
       <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-[#1E63D9]/10 rounded-full blur-[140px]" />
       <div className="absolute bottom-0 -right-40 w-[500px] h-[500px] bg-[#3F7FEF]/10 rounded-full blur-[140px]" />
 
       <div className="relative max-w-7xl mx-auto px-6">
-        {/* ================= HEADER ================= */}
+        {/* HEADER */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <span className="inline-flex items-center gap-2 px-5 py-2 bg-[#E7F0FF] text-[#1E63D9] rounded-full text-sm font-semibold mb-6">
+          <span className="inline-flex px-6 py-2 bg-[#E7F0FF] text-[#1E63D9] rounded-full text-sm font-semibold mb-6">
             Contact Us
           </span>
 
-          <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+          <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
             Let’s Start a
             <span className="block text-[#1E63D9]">Conversation</span>
           </h1>
 
           <p className="text-lg text-gray-600">
-            Have questions or need support? Our team is ready to help you every
-            step of the way.
+            Have questions or need support? Our team is ready to help you.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-14 items-start">
-          {/* ================= CONTACT INFO ================= */}
+          {/* CONTACT INFO */}
           <div className="space-y-6">
-            {[ 
+            {[
               {
                 icon: Mail,
                 label: "Email Us",
@@ -98,15 +133,15 @@ export default function ContactUs() {
                   href={item.link}
                   target={i === 2 ? "_blank" : undefined}
                   rel="noopener noreferrer"
-                  className="group block bg-white/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-2xl transition-all"
+                  className="block bg-white/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-2xl transition"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-[#1E63D9] to-[#3F7FEF] rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-[#1E63D9] to-[#3F7FEF] rounded-xl flex items-center justify-center">
                       <Icon className="w-6 h-6 text-white" />
                     </div>
                     <div>
                       <p className="text-sm text-gray-500">{item.label}</p>
-                      <p className="font-semibold text-gray-900 leading-snug">
+                      <p className="font-semibold text-gray-900">
                         {item.value}
                       </p>
                     </div>
@@ -116,12 +151,18 @@ export default function ContactUs() {
             })}
           </div>
 
-          {/* ================= FORM ================= */}
+          {/* FORM */}
           <div className="lg:col-span-2 bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-10 border border-gray-200">
             {success && (
-              <div className="mb-8 flex items-center gap-3 bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-xl">
+              <div className="mb-6 flex items-center gap-3 bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-xl">
                 <CheckCircle className="w-6 h-6" />
                 <span>Thank you! We’ll get back to you shortly.</span>
+              </div>
+            )}
+
+            {error && (
+              <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-xl">
+                {error}
               </div>
             )}
 
@@ -178,17 +219,17 @@ export default function ContactUs() {
               <button
                 type="submit"
                 disabled={loading}
-                className="group w-full flex items-center justify-center gap-3 bg-gradient-to-r from-[#1E63D9] to-[#3F7FEF] text-white py-4 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all"
+                className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-[#1E63D9] to-[#3F7FEF] text-white py-4 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition disabled:opacity-60"
               >
                 {loading ? "Sending..." : "Send Message"}
-                <Send className="w-5 h-5 group-hover:translate-x-1 transition" />
+                <Send className="w-5 h-5" />
               </button>
             </form>
           </div>
         </div>
       </div>
 
-      {/* INPUT STYLE */}
+      {/* INPUT STYLES */}
       <style>
         {`
           .input {
