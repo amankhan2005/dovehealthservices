@@ -2,7 +2,7 @@
 
 /* ===== MANUAL IMAGE IMPORTS ===== */
 import aboutImg1 from "../assets/about/about-1.jpg";
-import aboutImg2 from "../assets/about/about-2.jpg";
+import aboutImg2 from "../assets/about/about-2.webp";
 
 export default function AboutSection() {
   return (
