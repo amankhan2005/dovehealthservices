@@ -6,7 +6,7 @@ import {
   FaFacebookF,
   FaInstagram,
   FaTiktok,
-  FaYoutube, // ✅ YOUTUBE
+  FaYoutube,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { useSettings } from "../context/SettingsContext";
@@ -15,7 +15,7 @@ export default function TopNavbar() {
   const [open, setOpen] = useState(false);
   const { settings } = useSettings();
 
-  const address = settings?.address || "Aldie, Virginia ";
+  const address = settings?.address || "Aldie, Virginia";
   const phone = settings?.phone || "+1 (571) 530-9004";
   const email = settings?.email || "info@decoderhealth.com";
 
@@ -24,14 +24,14 @@ export default function TopNavbar() {
   const x = settings?.twitter || settings?.x || "";
   const tiktok = settings?.tiktok || "";
 
-  // ✅ STATIC YOUTUBE LINK
+  // ✅ STATIC YOUTUBE
   const youtube = "https://www.youtube.com/@DecoderHealth";
 
   return (
     <div className="bg-[#0B5ED7] text-white shadow-md relative">
       <div className="max-w-7xl mx-auto px-4">
 
-        {/* ===== DESKTOP ===== */}
+        {/* ================= DESKTOP ================= */}
         <div className="hidden md:flex justify-center items-center py-3">
           <div className="flex flex-wrap items-center justify-center gap-10 text-sm font-medium">
 
@@ -86,26 +86,23 @@ export default function TopNavbar() {
                   <FaTiktok />
                 </a>
               )}
-
-              {/* ✅ YOUTUBE */}
-              <a
-                href={youtube}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#EAF2FF]"
-              >
+              <a href={youtube} target="_blank" rel="noreferrer" className="hover:text-[#EAF2FF]">
                 <FaYoutube />
               </a>
             </div>
-
           </div>
         </div>
 
-        {/* ===== MOBILE ===== */}
+        {/* ================= MOBILE ================= */}
+        {/* 👉 Location ki jagah PHONE number */}
         <div className="md:hidden flex justify-between items-center py-3">
-          <span className="text-sm font-semibold">
-            {address.split(",")[0]}
-          </span>
+          <a
+            href={`tel:${phone.replace(/[^0-9+]/g, "")}`}
+            className="flex items-center gap-2 text-sm font-semibold"
+          >
+            <FaPhoneAlt className="text-sm" />
+            <span>{phone}</span>
+          </a>
 
           <button
             onClick={() => setOpen(!open)}
@@ -115,10 +112,14 @@ export default function TopNavbar() {
           </button>
         </div>
 
+        {/* ================= MOBILE DROPDOWN ================= */}
         {open && (
           <div className="md:hidden bg-[#0A58CA] rounded-lg mb-3 py-4 px-3 flex flex-col gap-3 text-sm">
 
-            <a href={`tel:${phone}`} className="flex gap-2 items-center">
+            <a
+              href={`tel:${phone.replace(/[^0-9+]/g, "")}`}
+              className="flex gap-2 items-center"
+            >
               <FaPhoneAlt /> {phone}
             </a>
 
@@ -155,13 +156,7 @@ export default function TopNavbar() {
                   <FaTiktok />
                 </a>
               )}
-
-              {/* ✅ YOUTUBE */}
-              <a
-                href={youtube}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={youtube} target="_blank" rel="noreferrer">
                 <FaYoutube />
               </a>
             </div>
