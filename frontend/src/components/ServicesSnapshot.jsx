@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 /* Folder: src/assets/services/ */
 import strokeImg from "../assets/services/stroke.jpg";
 import dementiaImg from "../assets/services/dementia.jpg";
-import surgeryImg from "../assets/services/surgery.webp";
+import surgeryImg from "../assets/services/surgery.jpeg";
 import coordinationImg from "../assets/services/coordination.webp";
 import conciergeImg from "../assets/services/concierge.jpg";
 import privatePayImg from "../assets/services/privatepay.jpeg";
