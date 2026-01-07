@@ -138,7 +138,7 @@ app.use("/api/hero",heroroutes);
 app.get("/", (req, res) => {
   res.json({
     ok: true,
-    service: "Decoder Health API",
+    service: "Gentle Hearts Home Health Care API",
     env: process.env.NODE_ENV || "development",
     db: process.env.DISABLE_DB === "true" ? "disabled" : "enabled",
     allowedOrigins,
