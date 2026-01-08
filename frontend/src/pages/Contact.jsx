@@ -66,12 +66,9 @@ export default function ContactUs() {
     setError("");
     setSuccess(false);
 
-    const API_BASE = import.meta.env.VITE_API_URL;
-    if (!API_BASE) {
-      setError("Server configuration error.");
-      setLoading(false);
-      return;
-    }
+    const API_BASE =
+  import.meta.env.VITE_API_URL || "https://hearthomeagency.onrender.com";
+
 
     // ⏱️ timeout safety
     const controller = new AbortController();
