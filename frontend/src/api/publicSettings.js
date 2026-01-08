@@ -1,16 +1,13 @@
  // src/api/publicSettings.js
 
-// ✅ ONLY env-based API (NO localhost fallback)
-const API_BASE = import.meta.env.VITE_API_URL;
+// ✅ Safe API base with fallback
+const API_BASE =
+  import.meta.env.VITE_API_URL || "https://hearthomeagency.onrender.com";
 
-if (!API_BASE) {
-  throw new Error("VITE_API_URL is not defined");
-}
-
-// Normalize: ensure no trailing slash
+// Normalize (remove trailing slash)
 const NORMALIZED_BASE = API_BASE.replace(/\/$/, "");
 
-// Optional (agar kahin aur use hota ho)
+// Optional export
 export const SERVER_BASE = NORMALIZED_BASE;
 
 async function fetchJson(path, opts = {}) {
@@ -35,7 +32,7 @@ async function fetchJson(path, opts = {}) {
   }
 }
 
-// ✅ Correct endpoint → /api/settings
+// ✅ Correct endpoint
 export async function fetchSettings() {
   return fetchJson("/settings");
 }
