@@ -1,5 +1,22 @@
  @import "tailwindcss";
 
- .container {
+/* RESET DEFAULT BROWSER SPACING */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* REMOVE HORIZONTAL SCROLL */
+body {
+  overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Container Utility */
+.container {
   @apply max-w-7xl mx-auto px-4;
 }

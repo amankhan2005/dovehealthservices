@@ -1,75 +1,68 @@
  import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import ScrollToTop from "./components/ScrollToTop";
-import RouteScrollTop from "./components/RouteScrollTop";
+// Layout
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
 
-// ================= PAGES =================
+// Scroll
+import RouteScrollTop from "./components/RouteScrollTop";
+import ScrollToTop from "./components/ScrollToTop";
+
+// Pages
 import Home from "./pages/Home";
 import About from "./pages/About";
-import FAQ from "./pages/faq";
 import Contact from "./pages/Contact";
- 
-// ================= SERVICES (NEW) =================
-import StrokeRecovery from "./pages/services/StrokeRecovery";
-import DementiaCare from "./pages/services/DementiaCare";
-import PostSurgicalRecovery from "./pages/services/PostSurgicalRecovery";
-import CareCoordination from "./pages/services/CareCoordination";
-import ConciergeCare from "./pages/services/ConciergeCare";
-import PrivatePay from "./pages/services/PrivatePay";
-import PhysicianPartnerships from "./pages/services/PhysicianPartnerships";
+import FAQ from "./pages/faq";
+
+// Services Pages
+import RN from "./pages/services/RN";
+import LPN from "./pages/services/LPN";
+import GNA from "./pages/services/GNA";
+import CNA from "./pages/services/CNA";
+import PTOT from "./pages/services/PTOT";
+
+// Forms
+import RequestNurse from "./forms/RequestNurse";
+import ApplyNurse from "./forms/ApplyNurse";  
 
 export default function App() {
   return (
     <>
-      {/* 🔥 Auto scroll to top on route change */}
+      {/* Auto scroll on route change */}
       <RouteScrollTop />
 
-      <Navbar />
+      {/* Header */}
+      <Header />
 
+      {/* Routes */}
       <Routes>
-        {/* ===== MAIN PAGES ===== */}
+
+        {/* Main Pages */}
         <Route path="/" element={<Home />} />
         <Route path="/about-us" element={<About />} />
+        <Route path="/contact-us" element={<Contact />} />
         <Route path="/faq" element={<FAQ />} />
-         <Route path="/contact-us" element={<Contact />} />
- 
-        {/* ===== SERVICES ===== */}
-        <Route
-          path="/services/stroke-recovery-neuro-rehab"
-          element={<StrokeRecovery />}
-        />
-        <Route
-          path="/services/dementia-alzheimers-care"
-          element={<DementiaCare />}
-        />
-        <Route
-          path="/services/post-surgical-recovery"
-          element={<PostSurgicalRecovery />}
-        />
-        <Route
-          path="/services/comprehensive-care-coordination"
-          element={<CareCoordination />}
-        />
-        <Route
-          path="/services/concierge-add-ons"
-          element={<ConciergeCare />}
-        />
-        <Route
-          path="/services/private-pay-model"
-          element={<PrivatePay />}
-        />
-        <Route
-          path="/services/physician-hospital-partnerships"
-          element={<PhysicianPartnerships />}
-        />
+
+        {/* Career Page (ApplyNurse) */}
+        <Route path="/careers" element={<ApplyNurse />} />
+
+        {/* Service Pages */}
+        <Route path="/services/rn" element={<RN />} />
+        <Route path="/services/lpn" element={<LPN />} />
+        <Route path="/services/gna" element={<GNA />} />
+        <Route path="/services/cna" element={<CNA />} />
+        <Route path="/services/ptot" element={<PTOT />} />
+
+        {/* Client Form */}
+        <Route path="/request-nurse" element={<RequestNurse />} />
+
       </Routes>
 
+      {/* Footer */}
       <Footer />
 
-      {/* ⬆️ Floating scroll-to-top button */}
+      {/* Scroll Button */}
       <ScrollToTop />
     </>
   );

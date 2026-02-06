@@ -1,22 +1,19 @@
- import React from "react";
+ import Hero from "../components/home/Hero";
+import About from "../components/home/About";
+import Services from "../components/home/Services";
+import WhyUs from "../components/home/WhyUs";
+import FAQ from "../components/home/FAQ";
+ 
 
- import ServicesSnapshot from "../components/ServicesSnapshot";
-import WhyGentleHearts from "../components/WhyGentleHearts";
-import CareProcess from "../components/CareProcess";
-import AboutPreview from "../components/AboutPreview";
-import FinalCTA from "../components/FinalCTA";
-import FAQPreview from "../components/FAQPreview";
-import AboutSection from "../components/AboutSection";
 export default function Home() {
   return (
-    <div>
-         <AboutPreview />
-         <AboutSection />
-       <ServicesSnapshot />
-      <WhyGentleHearts />
-      <CareProcess />
-      <FAQPreview />
-     
-    </div>
+    <>
+      <Hero />
+      <About />
+      <Services />
+      <WhyUs />
+      <FAQ />
+      
+    </>
   );
 }
