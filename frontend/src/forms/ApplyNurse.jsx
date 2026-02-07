@@ -1,9 +1,126 @@
  import { motion } from "framer-motion";
+import { useState } from "react";
 
 /* Image */
-import careerImg from "../assets/career-nurse.webp"; // Change path if needed
+import careerImg from "../assets/career-nurse.webp";
+
+/* API (Safe) */
+const API = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
+
+console.log("API URL:", API);
 
 export default function ApplyNurse() {
+
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    location: "",
+    availability: "Full-Time",
+    phone: "",
+    experience: "",
+    resume: null
+  });
+
+
+  /* Input Change */
+
+  const handleChange = (e) => {
+
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+
+  };
+
+
+  /* File Change */
+
+  const handleFile = (e) => {
+
+    setForm({
+      ...form,
+      resume: e.target.files[0]
+    });
+
+  };
+
+
+  /* Submit */
+
+  const handleSubmit = async (e) => {
+
+    e.preventDefault();
+
+    if (!API) {
+      return setMsg("❌ API not configured");
+    }
+
+    if (!form.resume) {
+      return setMsg("Please upload resume");
+    }
+
+    setLoading(true);
+    setMsg("");
+
+    try {
+
+      const data = new FormData();
+
+      Object.keys(form).forEach((key) => {
+        data.append(key, form[key]);
+      });
+
+
+      /* API Call */
+
+      const res = await fetch(`${API}/api/career/apply`, {
+        method: "POST",
+        body: data
+      });
+
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message || "Submit failed");
+      }
+
+
+      setMsg("✅ Application submitted successfully");
+
+
+      /* Reset */
+
+      setForm({
+        name: "",
+        email: "",
+        location: "",
+        availability: "Full-Time",
+        phone: "",
+        experience: "",
+        resume: null
+      });
+
+      document.getElementById("resume").value = "";
+
+
+    } catch (err) {
+
+      console.error("Submit Error:", err);
+
+      setMsg("❌ Failed. Try again later");
+
+    } finally {
+      setLoading(false);
+    }
+
+  };
+
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 30 }}
@@ -22,15 +139,11 @@ export default function ApplyNurse() {
           {/* LEFT */}
           <div className="relative">
 
-
-            {/* Soft Glow */}
             <div className="absolute -left-20 top-20 w-72 h-72 bg-pink-300/30 rounded-full blur-3xl"></div>
-
 
             <p className="text-pink-400 font-semibold mb-4 relative z-10">
               Zenith Care Services Careers
             </p>
-
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-6 relative z-10">
 
@@ -41,7 +154,6 @@ export default function ApplyNurse() {
 
             </h1>
 
-
             <p className="text-gray-600 max-w-lg text-lg mb-8 relative z-10">
 
               Build a meaningful healthcare career with Zenith Care
@@ -49,7 +161,6 @@ export default function ApplyNurse() {
               and a supportive professional environment.
 
             </p>
-
 
             <a
               href="#apply-form"
@@ -63,7 +174,6 @@ export default function ApplyNurse() {
 
           {/* RIGHT IMAGE */}
           <div className="relative flex justify-center">
-
 
             <img
               src={careerImg}
@@ -103,34 +213,91 @@ export default function ApplyNurse() {
 
 
           {/* FORM */}
-          <form className="space-y-5">
+          <form
+            className="space-y-5"
+            onSubmit={handleSubmit}
+            encType="multipart/form-data"
+          >
 
 
-            <Input label="Full Name" placeholder="Enter your name" />
-            <Input label="Email Address" type="email" placeholder="Enter your email" />
-            <Input label="Current Location" placeholder="City, State" />
-            <SelectInput label="Availability" />
-            <Input label="Phone Number" placeholder="Enter phone number" />
-            <Input label="Years of Experience" placeholder="e.g. 2 Years" />
+            <Input
+              label="Full Name"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+            />
+
+            <Input
+              label="Email Address"
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+            />
+
+            <Input
+              label="Current Location"
+              name="location"
+              value={form.location}
+              onChange={handleChange}
+              placeholder="City, State"
+            />
+
+            <SelectInput
+              value={form.availability}
+              onChange={handleChange}
+            />
+
+            <Input
+              label="Phone Number"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              placeholder="Enter phone number"
+            />
+
+            <Input
+              label="Years of Experience"
+              name="experience"
+              value={form.experience}
+              onChange={handleChange}
+              placeholder="e.g. 2 Years"
+            />
 
 
             {/* Resume */}
             <div>
+
               <label className="label">Upload Resume</label>
 
               <input
+                id="resume"
                 type="file"
                 className="clean-file"
+                onChange={handleFile}
+                required
               />
+
             </div>
+
+
+            {/* Message */}
+            {msg && (
+              <p className="text-center text-sm font-medium">
+                {msg}
+              </p>
+            )}
 
 
             {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-semibold transition"
+              disabled={loading}
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-semibold transition disabled:opacity-50"
             >
-              Apply Now
+              {loading ? "Submitting..." : "Apply Now"}
             </button>
 
 
@@ -139,7 +306,6 @@ export default function ApplyNurse() {
         </div>
 
       </div>
-
 
 
       {/* ================= STYLES ================= */}
@@ -189,16 +355,26 @@ export default function ApplyNurse() {
 
 /* ================= COMPONENTS ================= */
 
-function Input({ label, type = "text", placeholder }) {
+function Input({
+  label,
+  name,
+  type = "text",
+  placeholder,
+  value,
+  onChange
+}) {
   return (
     <div>
 
       <label className="label">{label}</label>
 
       <input
+        name={name}
         type={type}
+        value={value}
         placeholder={placeholder}
         className="clean-input"
+        onChange={onChange}
         required
       />
 
@@ -207,13 +383,18 @@ function Input({ label, type = "text", placeholder }) {
 }
 
 
-function SelectInput({ label }) {
+function SelectInput({ value, onChange }) {
   return (
     <div>
 
-      <label className="label">{label}</label>
+      <label className="label">Availability</label>
 
-      <select className="clean-input">
+      <select
+        name="availability"
+        value={value}
+        className="clean-input"
+        onChange={onChange}
+      >
 
         <option>Full-Time</option>
         <option>Part-Time</option>

@@ -15,6 +15,9 @@ import dashboardRoutes from "./routes/dashboard.routes.js";
 import settingsRoutes from "./routes/settings.routes.js";
 import mapRoutes from "./routes/map.routes.js";
 import heroRoutes from "./routes/hero.routes.js";
+ import requestRoutes from "./routes/request.routes.js";
+
+
 
 dotenv.config();
 
@@ -119,6 +122,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/map", mapRoutes);
 app.use("/api/hero", heroRoutes);
+app.use("/api/request", requestRoutes);
 
 /* -------------------- HEALTH CHECK -------------------- */
 app.get("/", (_req, res) => {

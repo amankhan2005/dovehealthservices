@@ -1,9 +1,107 @@
  import { motion } from "framer-motion";
+import { useState } from "react";
 
 /* Image */
-import nurseImg from ".././assets/Hire-nurse.png"; // Change if needed
+import nurseImg from ".././assets/Hire-nurse.png";
+
+/* API */
+const API = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
+
+console.log("API URL:", API);
 
 export default function RequestNurse() {
+
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    location: "",
+    phone: ""
+  });
+
+
+  /* Input Change */
+
+  const handleChange = (e) => {
+
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+
+  };
+
+
+  /* Submit */
+
+  const handleSubmit = async (e) => {
+
+    e.preventDefault();
+
+    if (!API) {
+      return setMsg("❌ API not configured");
+    }
+
+    if (!form.name || !form.phone || !form.location) {
+      return setMsg("❌ Please fill required fields");
+    }
+
+    setLoading(true);
+    setMsg("");
+
+    try {
+
+      const res = await fetch(`${API}/api/request/create`, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(form)
+
+      });
+
+
+      const result = await res.json();
+
+
+      if (!res.ok) {
+        throw new Error(result.message || "Submit failed");
+      }
+
+
+      setMsg("✅ Request submitted successfully");
+
+
+      /* Reset */
+
+      setForm({
+        name: "",
+        email: "",
+        location: "",
+        phone: ""
+      });
+
+
+    } catch (err) {
+
+      console.error("Request Error:", err);
+
+      setMsg("❌ Failed. Try again later");
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 30 }}
@@ -22,15 +120,11 @@ export default function RequestNurse() {
           {/* LEFT */}
           <div className="relative">
 
-
-            {/* Soft Glow */}
             <div className="absolute -left-20 top-20 w-72 h-72 bg-blue-300/30 rounded-full blur-3xl"></div>
-
 
             <p className="text-blue-500 font-semibold mb-4 relative z-10">
               Zenith Care Services
             </p>
-
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-6 relative z-10">
 
@@ -41,7 +135,6 @@ export default function RequestNurse() {
 
             </h1>
 
-
             <p className="text-gray-600 max-w-lg text-lg mb-8 relative z-10">
 
               Get certified nurses and caregivers for home
@@ -49,7 +142,6 @@ export default function RequestNurse() {
               compassionate healthcare support.
 
             </p>
-
 
             <a
               href="#request-form"
@@ -63,7 +155,6 @@ export default function RequestNurse() {
 
           {/* RIGHT IMAGE */}
           <div className="relative flex justify-center">
-
 
             <img
               src={nurseImg}
@@ -103,22 +194,61 @@ export default function RequestNurse() {
 
 
           {/* FORM */}
-          <form className="space-y-5">
+          <form
+            className="space-y-5"
+            onSubmit={handleSubmit}
+          >
 
 
-            <Input label="Full Name" placeholder="Enter your name" />
-            <Input label="Email Address" type="email" placeholder="Enter your email" />
-            <Input label="Location" placeholder="Patient location" />
-            <SelectInput label="Care Duration" />
-            <Input label="Phone Number" placeholder="Enter phone number" />
+            <Input
+              label="Full Name"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+            />
+
+            <Input
+              label="Email Address"
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+            />
+
+            <Input
+              label="Location"
+              name="location"
+              value={form.location}
+              onChange={handleChange}
+              placeholder="Patient location"
+            />
+
+            <Input
+              label="Phone Number"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              placeholder="Enter phone number"
+            />
+
+
+            {/* Message */}
+            {msg && (
+              <p className="text-center text-sm font-medium">
+                {msg}
+              </p>
+            )}
 
 
             {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-lg font-semibold transition"
+              disabled={loading}
+              className="w-full bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-lg font-semibold transition disabled:opacity-50"
             >
-              Submit Request
+              {loading ? "Submitting..." : "Submit Request"}
             </button>
 
 
@@ -127,7 +257,6 @@ export default function RequestNurse() {
         </div>
 
       </div>
-
 
 
       {/* ================= STYLES ================= */}
@@ -168,38 +297,28 @@ export default function RequestNurse() {
 
 /* ================= COMPONENTS ================= */
 
-function Input({ label, type = "text", placeholder }) {
+function Input({
+  label,
+  name,
+  type = "text",
+  placeholder,
+  value,
+  onChange
+}) {
   return (
     <div>
 
       <label className="label">{label}</label>
 
       <input
+        name={name}
         type={type}
+        value={value}
         placeholder={placeholder}
         className="clean-input"
+        onChange={onChange}
         required
       />
-
-    </div>
-  );
-}
-
-
-function SelectInput({ label }) {
-  return (
-    <div>
-
-      <label className="label">{label}</label>
-
-      <select className="clean-input">
-
-        <option>Hourly</option>
-        <option>Daily</option>
-        <option>Weekly</option>
-        <option>Monthly</option>
-
-      </select>
 
     </div>
   );

@@ -1,48 +1,40 @@
-import multer from "multer";
+ import multer from "multer";
 import fs from "fs";
 import path from "path";
 
-// Define the uploads directory
-const uploadDir = path.join(process.cwd(), "uploads/resumes");
+const dir = process.env.UPLOAD_DIR || "uploads";
 
-// Ensure the folder exists
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-  console.log("✅ Created uploads/resumes folder");
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir);
 }
 
-// Multer storage configuration
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir);
-  },
+
+  destination: dir,
+
   filename: (req, file, cb) => {
-    const timestamp = Date.now();
-    const uniqueSuffix = Math.round(Math.random() * 1e9);
-    const cleanName = file.originalname.replace(/\s+/g, "_");
-    cb(null, `${timestamp}-${uniqueSuffix}-${cleanName}`);
-  },
+
+    const ext = path.extname(file.originalname);
+
+    cb(null, Date.now() + ext);
+  }
+
 });
 
-// File filter (accept only docs and pdf)
-const fileFilter = (req, file, cb) => {
-  const allowed = [
-    "application/pdf",
-    "application/msword",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  ];
-  if (allowed.includes(file.mimetype)) {
+const filter = (req, file, cb) => {
+
+  if (
+    file.mimetype === "application/pdf" ||
+    file.mimetype.includes("word")
+  ) {
     cb(null, true);
   } else {
-    cb(new Error("Invalid file type. Only PDF or DOC/DOCX allowed."), false);
+    cb("Only PDF / DOC allowed");
   }
 };
 
-// Final multer upload instance
-const uploadResume = multer({
+export default multer({
   storage,
-  fileFilter,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  fileFilter: filter,
+  limits: { fileSize: 5 * 1024 * 1024 }
 });
-
-export default uploadResume;

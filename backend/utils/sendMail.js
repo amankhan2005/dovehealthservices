@@ -2,8 +2,16 @@
 
 let resend = null;
 
-export const sendMail = async ({ to, subject, html, text, replyTo }) => {
+export const sendMail = async ({
+  to,
+  subject,
+  html,
+  text,
+  replyTo,
+  attachments   // ✅ ADD THIS
+}) => {
   try {
+
     if (!process.env.RESEND_API_KEY) {
       console.warn("⚠️ RESEND_API_KEY missing. Email skipped.");
       return;
@@ -24,11 +32,16 @@ export const sendMail = async ({ to, subject, html, text, replyTo }) => {
     }
 
     const { data, error } = await resend.emails.send({
+
       from: process.env.EMAIL_FROM || "onboarding@resend.dev",
+
       to,
       subject,
       html,
       text,
+
+      attachments, // ✅ NOW VALID
+
       reply_to: replyTo ? [replyTo] : undefined,
     });
 
@@ -39,7 +52,10 @@ export const sendMail = async ({ to, subject, html, text, replyTo }) => {
 
     console.log("✅ Email sent:", data.id);
     return data;
+
   } catch (err) {
+
     console.error("❌ Email failed:", err.message);
+
   }
 };

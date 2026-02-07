@@ -1,4 +1,4 @@
- import Contact from "../models/contact.models.js";
+  import Contact from "../models/contact.models.js";
 import { sendMail } from "../utils/sendMail.js";
 
 /* ---------------- HTML Escape ---------------- */
@@ -11,29 +11,133 @@ function escapeHtml(str = "") {
     .replace(/'/g, "&#039;");
 }
 
-/* ---------------- Email Templates ---------------- */
+  /* ================= ADMIN EMAIL ================= */
+
 const adminHtml = (c) => `
-<h2>New Contact Message</h2>
-<p><b>Name:</b> ${escapeHtml(c.firstName)} ${escapeHtml(c.lastName)}</p>
-<p><b>Email:</b> ${escapeHtml(c.email)}</p>
-<p><b>Phone:</b> ${escapeHtml(c.phone)}</p>
-<p><b>Message:</b><br/>${escapeHtml(c.message)}</p>
-<hr/>
-<p><small>
-IP: ${escapeHtml(c.ipAddress || "Unknown")}<br/>
-Agent: ${escapeHtml(c.userAgent || "Unknown")}
-</small></p>
+<div style="font-family:Arial,sans-serif;padding:20px;">
+
+  <h2 style="color:#2563eb;">
+    📩 New Contact Enquiry Received
+  </h2>
+
+  <hr/>
+
+  <table style="width:100%;font-size:14px;line-height:1.8;">
+
+    <tr>
+      <td><b>Name:</b></td>
+      <td>${escapeHtml(c.firstName)} ${escapeHtml(c.lastName)}</td>
+    </tr>
+
+    <tr>
+      <td><b>Email:</b></td>
+      <td>${escapeHtml(c.email)}</td>
+    </tr>
+
+    <tr>
+      <td><b>Phone:</b></td>
+      <td>${escapeHtml(c.phone)}</td>
+    </tr>
+
+  </table>
+
+  <br/>
+
+  <p><b>Message:</b></p>
+
+  <div style="
+    background:#f9fafb;
+    padding:12px;
+    border-left:4px solid #2563eb;
+    font-size:14px;
+  ">
+    ${escapeHtml(c.message)}
+  </div>
+
+  <hr/>
+
+  <p style="font-size:13px;color:#444;line-height:1.6;">
+
+    <b>About Zenithcare</b><br/>
+
+    Zenithcare provides professional nursing and therapy services
+    focused on comfort, safety, and patient well-being.
+    Our certified team delivers reliable care at home and in hospitals
+    with dignity and respect.
+
+  </p>
+
+  <p style="font-size:12px;color:#555;">
+
+    <b>Technical Info</b><br/>
+
+    IP Address: ${escapeHtml(c.ipAddress || "Unknown")}<br/>
+    Browser: ${escapeHtml(c.userAgent || "Unknown")}
+
+  </p>
+
+</div>
 `;
 
+
+/* ================= USER EMAIL ================= */
+
 const userHtml = (c) => `
-<p>Hello ${escapeHtml(c.firstName)},</p>
-<p>Thank you for contacting <b>Gentle Hearts Home Health Care</b>.</p>
-<p>We have received your message and will get back to you shortly.</p>
-<hr/>
-<p><b>Your Message:</b><br/>${escapeHtml(c.message)}</p>
-<br/>
-<p>Warm regards,<br/>Gentle Hearts Care Team</p>
+<div style="font-family:Arial,sans-serif;padding:20px;">
+
+  <h2 style="color:#16a34a;">
+    ✅ We’ve Received Your Message
+  </h2>
+
+  <p>Hello <b>${escapeHtml(c.firstName)}</b>,</p>
+
+  <p>
+    Thank you for contacting <b>Zenithcare</b>.
+  </p>
+
+  <p>
+    We appreciate your interest in our healthcare services.
+    Our support team will review your message and respond shortly.
+  </p>
+
+  <hr/>
+
+  <p><b>Your Message:</b></p>
+
+  <div style="
+    background:#f9fafb;
+    padding:12px;
+    border-left:4px solid #16a34a;
+    font-size:14px;
+  ">
+    ${escapeHtml(c.message)}
+  </div>
+
+  <hr/>
+
+  <p style="font-size:13px;color:#444;line-height:1.6;">
+
+    <b>About Zenithcare</b><br/>
+
+    Zenithcare provides professional nursing and therapy services
+    focused on comfort, safety, and patient well-being.
+    Our certified team delivers reliable care at home and in hospitals
+    with dignity and respect.
+
+  </p>
+
+  <p style="margin-top:20px;">
+
+    Warm regards,<br/>
+
+    <b>Zenithcare Care Team</b><br/>
+    
+
+  </p>
+
+</div>
 `;
+
 
 /* ------------------------------------------------ */
 /* CREATE CONTACT (PUBLIC)                          */
