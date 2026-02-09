@@ -46,7 +46,7 @@ export default function HomeCareCTA() {
               </h2>
 
               <p className="text-white/90 max-w-lg mb-8">
-                We provide certified nurses, caregivers, and therapists
+                We provide skilled nurses, caregivers, and therapists
                 for home and hospital care. Get reliable, safe, and
                 compassionate healthcare support for your loved ones.
               </p>

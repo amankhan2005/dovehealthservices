@@ -9,7 +9,7 @@ export default function PeaceOfMind() {
   const cards = [
     {
       icon: <FaUserShield />,
-      title: "Certified & Trusted Staff",
+      title: "Skilled & Trusted Staff",
       desc: "All professionals are certified, trained, and verified to deliver safe and reliable care.",
     },
     {

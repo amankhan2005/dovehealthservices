@@ -23,22 +23,22 @@ export default function GNA() {
           <div>
 
             <p className="text-pink-500 font-semibold mb-4">
-              Professional Graduate Nursing Assistance
+              Professional Geriatric Nursing Assistants
             </p>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-[#1f2937] mb-6">
 
-              Graduate <br />
-              Nurse{" "}
+              Geriatric <br />
+              Nursing{" "}
               <span className="font-serif italic font-medium">
-                Assistance
+                Assistants
               </span>
 
             </h1>
 
 
             <p className="text-gray-600 max-w-lg mb-8">
-              Zenith Care Services provides trained Graduate Nurse
+              Zenith Care Services provides trained Geriatric Nursing
               Assistants who support patients with daily care,
               hygiene, mobility, and comfort in home and healthcare
               settings.
@@ -114,7 +114,7 @@ export default function GNA() {
             </h3>
 
             <p className="text-gray-700 leading-relaxed mb-6">
-              Our Graduate Nurse Assistants are ideal for elderly
+              Our Geriatric Nursing Assistants are ideal for elderly
               patients and individuals who need daily care,
               personal support, and comfort assistance.
             </p>
@@ -133,7 +133,7 @@ export default function GNA() {
         <div className="max-w-5xl mx-auto mb-24">
 
           <h2 className="text-3xl font-bold text-center mb-10 text-gray-900">
-            Graduate Nurse Assistant (GNA) – FAQs
+            Geriatric Nursing Assistant (GNA) – FAQs
           </h2>
 
 
@@ -203,7 +203,7 @@ export default function GNA() {
         <div className="text-center">
 
           <h2 className="text-3xl font-bold mb-4 text-gray-900">
-            Need a Graduate Nurse Assistant Today?
+            Need a Geriatric Nursing Assistant Today?
           </h2>
 
           <p className="text-gray-600 mb-6 max-w-xl mx-auto">

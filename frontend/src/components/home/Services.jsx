@@ -25,7 +25,7 @@ export default function Services() {
       link: "/services/lpn",
     },
     {
-      title: "Graduate Nurse Assistant (GNA)",
+      title: "Geriatric Nursing Assistants (GNA)",
       desc: "Specialized elderly care for daily living and mobility support.",
       img: gnaImg,
       link: "/services/gna",

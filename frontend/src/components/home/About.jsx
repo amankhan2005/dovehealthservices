@@ -32,9 +32,12 @@ export default function About() {
           {/* Paragraph */}
           <p className="max-w-xl mx-auto mt-6 text-base text-black leading-relaxed">
 
-            Zenithcare provides professional nursing and therapy services focused
-            on comfort, safety, and patient well-being. Our certified team delivers
-            reliable care at home and in hospitals with dignity and respect.
+             Zenith Care Services provides skilled nurses and caregivers for home
+and hospital care. We are committed to delivering compassionate,
+reliable, and personalized healthcare solutions that support the
+comfort, safety, and well-being of every patient.
+
+
 
           </p>
 
@@ -48,7 +51,7 @@ export default function About() {
 
             <ValueCard
               icon={<FaUserNurse />}
-              text="Certified Nurses"
+              text="Skilled Nurses"
             />
 
             <ValueCard

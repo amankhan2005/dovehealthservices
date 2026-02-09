@@ -58,10 +58,9 @@ export default function Hero() {
           {/* Description */}
           <p className="text-sm sm:text-base md:text-lg text-[#1F2933] leading-relaxed max-w-xl px-2 md:px-0">
 
-            Zenithcare provides professional nurses and therapists for
-            home and hospital care. We deliver reliable, compassionate,
-            and personalized healthcare services to ensure comfort,
-            safety, and peace of mind for every family.
+              We provide skilled nurses and caregivers for home and
+            hospital care, ensuring safe, compassionate, and
+            personalized support for every family.
 
           </p>
 

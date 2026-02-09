@@ -51,7 +51,7 @@ const allowedOrigins = [
   "https://zenithcareservices.netlify.app",
   "https://www.zenithcareservice.org",
 
-  // Optional: without www
+  // Optional: without www  - cors allow
   "https://zenithcareservice.org",
 
   // Regex for preview deployments
