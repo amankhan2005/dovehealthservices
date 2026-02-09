@@ -49,10 +49,10 @@ app.use(
 const allowedOrigins = [
   // Production (Zenithcare only)
   "https://zenithcareservices.netlify.app",
-  "https://www.zenithcareservices.com",
+  "https://www.zenithcareservice.org",
 
   // Optional: without www
-  "https://zenithcareservices.com",
+  "https://zenithcareservice.org",
 
   // Regex for preview deployments
   /\.netlify\.app$/,
