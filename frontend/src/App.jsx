@@ -1,68 +1,67 @@
- import React from "react";
+  import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Layout
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import TopBar from "./components/layout/TopBar";
 
 // Scroll
 import RouteScrollTop from "./components/RouteScrollTop";
 import ScrollToTop from "./components/ScrollToTop";
 
-// Pages
+// Main Pages
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/faq";
+import TreatmentRecovery from "./pages/TreatmentRecovery";
+import BookAppointment from "./pages/BookAppointment";
+
+// Strategies Pages
+import PersonalObjective from "./pages/strategies/PersonalObjective";
+import WellnessRecovery from "./pages/strategies/WellnessRecovery";
+import DoctorVisits from "./pages/strategies/DoctorVisits";
 
 // Services Pages
-import RN from "./pages/services/RN";
-import LPN from "./pages/services/LPN";
-import GNA from "./pages/services/GNA";
-import CNA from "./pages/services/CNA";
-import PTOT from "./pages/services/PTOT";
-
-// Forms
-import RequestNurse from "./forms/RequestNurse";
-import ApplyNurse from "./forms/ApplyNurse";  
+import OMHC from "./pages/services/OMHC";
+import Prp from "./pages/services/Prp";
+import FamilyCounselling from "./pages/services/FamilyCounselling";
+import PersonalCounselling from "./pages/services/PersonalCounselling";
 
 export default function App() {
   return (
     <>
-      {/* Auto scroll on route change */}
       <RouteScrollTop />
 
-      {/* Header */}
       <Header />
 
-      {/* Routes */}
-      <Routes>
+      <main className="min-h-screen pt-24 ">
+        <Routes>
 
-        {/* Main Pages */}
-        <Route path="/" element={<Home />} />
-        <Route path="/about-us" element={<About />} />
-        <Route path="/contact-us" element={<Contact />} />
-        <Route path="/faq" element={<FAQ />} />
+          {/* Main */}
+          <Route path="/" element={<Home />} />
+          <Route path="/about-us" element={<About />} />
+          <Route path="/contact-us" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/treatment-recovery" element={<TreatmentRecovery />} />
+          <Route path="/book-appointment" element={<BookAppointment />} />
 
-        {/* Career Page (ApplyNurse) */}
-        <Route path="/careers" element={<ApplyNurse />} />
+          {/* Strategies */}
+          <Route path="/strategies/personal-objective" element={<PersonalObjective />} />
+          <Route path="/strategies/wellness-recovery" element={<WellnessRecovery />} />
+          <Route path="/strategies/doctor-visits" element={<DoctorVisits />} />
 
-        {/* Service Pages */}
-        <Route path="/services/rn" element={<RN />} />
-        <Route path="/services/lpn" element={<LPN />} />
-        <Route path="/services/gna" element={<GNA />} />
-        <Route path="/services/cna" element={<CNA />} />
-        <Route path="/services/ptot" element={<PTOT />} />
+          {/* Services */}
+          <Route path="/services/omhc" element={<OMHC />} />
+          <Route path="/services/prp" element={<Prp />} />
+          <Route path="/services/family-counselling" element={<FamilyCounselling />} />
+          <Route path="/services/personal-counselling" element={<PersonalCounselling />} />
 
-        {/* Client Form */}
-        <Route path="/request-nurse" element={<RequestNurse />} />
+        </Routes>
+      </main>
 
-      </Routes>
-
-      {/* Footer */}
       <Footer />
-
-      {/* Scroll Button */}
       <ScrollToTop />
     </>
   );

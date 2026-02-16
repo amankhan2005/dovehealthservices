@@ -14,9 +14,14 @@ body,
 body {
   overflow-x: hidden;
   font-family: "Poppins", sans-serif;
-}
+ }
 
 /* Container Utility */
 .container {
   @apply max-w-7xl mx-auto px-4;
 }
+
+
+ 
+ 
+ 

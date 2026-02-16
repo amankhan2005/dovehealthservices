@@ -1,441 +1,237 @@
- import { useState, useRef, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
-
-import {
-  FaChevronDown,
-  FaPhoneAlt,
-  FaUserNurse,
-} from "react-icons/fa";
-
-import { HiMenu, HiX } from "react-icons/hi";
-
+ import { NavLink, useLocation } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { ChevronDown } from "lucide-react";
 import logo from "../../assets/logo.png";
 
-
 export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [mobileDropdown, setMobileDropdown] = useState(null);
 
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const [servicesOpen, setServicesOpen] = useState(false); // Desktop
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false); // Mobile
-
-
+  const location = useLocation();
   const dropdownRef = useRef(null);
 
+  const navLinkClass = ({ isActive }) =>
+    `transition duration-200 text-[16px] font-medium ${
+      isActive
+        ? "text-[#F39C6B]"
+        : "text-gray-700 hover:text-[#F39C6B]"
+    }`;
 
-  /* Close desktop dropdown on outside click */
-
+  // Close menus on route change
   useEffect(() => {
+    setMenuOpen(false);
+    setOpenDropdown(null);
+    setMobileDropdown(null);
+  }, [location]);
 
-    function handleOutside(e) {
-
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target)
-      ) {
-        setServicesOpen(false);
+  // Close desktop dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpenDropdown(null);
       }
-
-    }
-
-    document.addEventListener("mousedown", handleOutside);
-
-    return () =>
-      document.removeEventListener("mousedown", handleOutside);
-
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-
-  const navClass =
-    "text-[#1F2933] hover:text-[#E85C9A] font-medium transition";
-
-  const activeClass =
-    "text-[#E85C9A] font-semibold border-b-2 border-[#E85C9A]";
-
-
-  /* Close mobile menu when route changes */
-
-  const closeMobile = () => {
-    setMobileOpen(false);
-    setMobileServicesOpen(false);
+  const toggleDropdown = (name) => {
+    setOpenDropdown(openDropdown === name ? null : name);
   };
 
+  const toggleMobileDropdown = (name) => {
+    setMobileDropdown(mobileDropdown === name ? null : name);
+  };
 
   return (
-    <header
-      className="
-        sticky top-0 z-50
-        bg-white/60
-        backdrop-blur-2xl
-        border-b border-white/40
-        shadow-[0_8px_30px_rgba(0,0,0,0.04)]
-      "
-    >
+    <header className="w-full bg-white shadow-sm fixed top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-      <div className="max-w-7xl mx-auto px-6">
-
-
-        {/* ================= MAIN BAR ================= */}
-        <div className="flex items-center justify-between h-24">
-
-
-          {/* LOGO */}
-          <Link to="/" className="flex items-center gap-3">
-
-            <img
-              src={logo}
-              alt="Zenithcare Logo"
-              className="
-                h-14 md:h-16 w-auto
-                drop-shadow-md
-                hover:scale-105
-                transition
-              "
-            />
-
-          </Link>
-
-
-          {/* ================= DESKTOP NAV ================= */}
-          <nav className="hidden md:flex items-center gap-10">
-
-
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive ? activeClass : navClass
-              }
-            >
-              Home
-            </NavLink>
-
-
-            <NavLink
-              to="/about-us"
-              className={({ isActive }) =>
-                isActive ? activeClass : navClass
-              }
-            >
-              About Us
-            </NavLink>
-
-
-            {/* DESKTOP SERVICES */}
-            <div className="relative" ref={dropdownRef}>
-
-              <button
-                onClick={() =>
-                  setServicesOpen(!servicesOpen)
-                }
-                className="
-                  flex items-center gap-1
-                  font-medium text-[#1F2933]
-                  hover:text-[#E85C9A]
-                "
-              >
-                Services
-
-                <FaChevronDown
-                  className={`text-xs mt-[2px] transition ${
-                    servicesOpen ? "rotate-180" : ""
-                  }`}
-                />
-
-              </button>
-
-
-              {servicesOpen && (
-
-                <div
-                  className="
-                    absolute left-0 top-full mt-4 w-72
-                    bg-white/80 backdrop-blur-xl
-                    rounded-2xl shadow-xl
-                    border border-white/50
-                    overflow-hidden
-                  "
-                >
-
-                  <DropLink to="/services/rn" setOpen={setServicesOpen}>
-                    Registered Nurse
-                  </DropLink>
-
-                  <DropLink to="/services/lpn" setOpen={setServicesOpen}>
-                    Licensed Practical Nurse
-                  </DropLink>
-
-                  <DropLink to="/services/gna" setOpen={setServicesOpen}>
-                    GNA
-                  </DropLink>
-
-                  <DropLink to="/services/cna" setOpen={setServicesOpen}>
-                    CNA
-                  </DropLink>
-
-                  <DropLink to="/services/ptot" setOpen={setServicesOpen}>
-                    PT / OT
-                  </DropLink>
-
-                </div>
-
-              )}
-
-            </div>
-
-
-            <NavLink
-              to="/faq"
-              className={({ isActive }) =>
-                isActive ? activeClass : navClass
-              }
-            >
-              FAQ
-            </NavLink>
-
-
-            <NavLink
-              to="/careers"
-              className={({ isActive }) =>
-                isActive ? activeClass : navClass
-              }
-            >
-              Career
-            </NavLink>
-
-
-            <NavLink
-              to="/contact-us"
-              className={({ isActive }) =>
-                isActive ? activeClass : navClass
-              }
-            >
-              Contact
-            </NavLink>
-
-
-          </nav>
-
-
-          {/* ================= CTA ================= */}
-          <div className="hidden md:flex items-center gap-4">
-
-
-            <Link
-              to="/request-nurse"
-              className="
-                flex items-center gap-2
-                bg-[#E85C9A] text-white
-                px-6 py-2 rounded-full
-                hover:bg-[#d94b89]
-                hover:shadow-xl
-                hover:scale-105
-                transition
-              "
-            >
-              <FaUserNurse />
-              Request a Nurse
-            </Link>
-
-
-            <a
-              href="tel:2402748822"
-              className="
-                flex items-center gap-2
-                bg-gradient-to-r
-                from-[#1FA6D9] to-[#0B8EC2]
-                text-white
-                px-6 py-2 rounded-full
-                shadow-lg
-                hover:shadow-xl
-                hover:scale-105
-                transition
-              "
-            >
-              <FaPhoneAlt />
-              Call Now
-            </a>
-
-
+        {/* Logo */}
+        <NavLink to="/" className="flex items-center gap-3">
+          <img src={logo} alt="logo" className="h-20 w-auto" />
+          <div>
+            <h2 className="text-base font-semibold tracking-wide text-gray-900">
+              DOVE HEALTHCARE
+            </h2>
+            <p className="text-xs tracking-[3px] text-gray-500">
+              SERVICES
+            </p>
           </div>
+        </NavLink>
 
+        {/* DESKTOP NAV */}
+        <nav
+          ref={dropdownRef}
+          className="hidden md:flex items-center gap-8"
+        >
+          <NavLink to="/" end className={navLinkClass}>
+            Home
+          </NavLink>
 
-          {/* ================= MOBILE BUTTON ================= */}
-          <button
-            onClick={() => {
-              setMobileOpen(!mobileOpen);
-              setMobileServicesOpen(false);
-            }}
-            className="md:hidden text-2xl text-[#1F2933]"
-          >
-            {mobileOpen ? <HiX /> : <HiMenu />}
-          </button>
+          {/* Strategies */}
+          <div className="relative">
+            <button
+              onClick={() => toggleDropdown("strategies")}
+              className={`flex items-center gap-1 text-[16px] font-medium ${
+                location.pathname.startsWith("/strategies")
+                  ? "text-[#F39C6B]"
+                  : "text-gray-700 hover:text-[#F39C6B]"
+              }`}
+            >
+              Strategies
+              <ChevronDown
+                size={18}
+                className={`transition-transform ${
+                  openDropdown === "strategies" ? "rotate-180" : ""
+                }`}
+              />
+            </button>
 
-
-        </div>
-
-
-        {/* ================= MOBILE MENU ================= */}
-        {mobileOpen && (
-
-          <div className="md:hidden pb-6">
-
-            <nav className="flex flex-col gap-5 mt-4">
-
-
-              <MobileLink to="/" close={closeMobile}>
-                Home
-              </MobileLink>
-
-              <MobileLink to="/about-us" close={closeMobile}>
-                About Us
-              </MobileLink>
-
-
-              {/* MOBILE SERVICES */}
-              <div>
-
-                <button
-                  onClick={() =>
-                    setMobileServicesOpen(!mobileServicesOpen)
-                  }
-                  className="
-                    flex justify-between w-full
-                    font-medium text-[#1F2933]
-                  "
-                >
-                  Services
-
-                  <FaChevronDown
-                    className={`transition ${
-                      mobileServicesOpen
-                        ? "rotate-180"
-                        : ""
-                    }`}
-                  />
-
-                </button>
-
-
-                {mobileServicesOpen && (
-
-                  <div className="ml-4 mt-3 space-y-2 text-sm">
-
-
-                    <MobileServiceLink
-                      to="/services/rn"
-                      close={closeMobile}
-                    >
-                      RN
-                    </MobileServiceLink>
-
-                    <MobileServiceLink
-                      to="/services/lpn"
-                      close={closeMobile}
-                    >
-                      LPN
-                    </MobileServiceLink>
-
-                    <MobileServiceLink
-                      to="/services/gna"
-                      close={closeMobile}
-                    >
-                      GNA
-                    </MobileServiceLink>
-
-                    <MobileServiceLink
-                      to="/services/cna"
-                      close={closeMobile}
-                    >
-                      CNA
-                    </MobileServiceLink>
-
-                    <MobileServiceLink
-                      to="/services/ptot"
-                      close={closeMobile}
-                    >
-                      PT / OT
-                    </MobileServiceLink>
-
-                  </div>
-
-                )}
-
+            {openDropdown === "strategies" && (
+              <div className="absolute top-12 left-0 w-64 bg-white rounded-xl shadow-lg p-3 space-y-1">
+                <NavLink to="/strategies/personal-objective" className="block px-4 py-2 rounded-lg hover:bg-orange-50">
+                  Personal Objective
+                </NavLink>
+                <NavLink to="/strategies/wellness-recovery" className="block px-4 py-2 rounded-lg hover:bg-orange-50">
+                  Wellness Recovery
+                </NavLink>
+                <NavLink to="/strategies/doctor-visits" className="block px-4 py-2 rounded-lg hover:bg-orange-50">
+                  Doctor Visits
+                </NavLink>
               </div>
-
-
-              <MobileLink to="/faq" close={closeMobile}>
-                FAQ
-              </MobileLink>
-
-              <MobileLink to="/careers" close={closeMobile}>
-                Career
-              </MobileLink>
-
-              <MobileLink to="/contact-us" close={closeMobile}>
-                Contact
-              </MobileLink>
-
-              <MobileLink to="/request-nurse" close={closeMobile}>
-                Find Care
-              </MobileLink>
-
-
-            </nav>
-
+            )}
           </div>
 
-        )}
+          {/* Services */}
+          <div className="relative">
+            <button
+              onClick={() => toggleDropdown("services")}
+              className={`flex items-center gap-1 text-[16px] font-medium ${
+                location.pathname.startsWith("/services")
+                  ? "text-[#F39C6B]"
+                  : "text-gray-700 hover:text-[#F39C6B]"
+              }`}
+            >
+              Services
+              <ChevronDown
+                size={18}
+                className={`transition-transform ${
+                  openDropdown === "services" ? "rotate-180" : ""
+                }`}
+              />
+            </button>
 
+            {openDropdown === "services" && (
+              <div className="absolute top-12 left-0 w-64 bg-white rounded-xl shadow-lg p-3 space-y-1">
+                <NavLink to="/services/omhc" className="block px-4 py-2 rounded-lg hover:bg-orange-50">OMHC</NavLink>
+                <NavLink to="/services/prp" className="block px-4 py-2 rounded-lg hover:bg-orange-50">PRP</NavLink>
+                <NavLink to="/services/family-counselling" className="block px-4 py-2 rounded-lg hover:bg-orange-50">Family Counseling</NavLink>
+                <NavLink to="/services/personal-counselling" className="block px-4 py-2 rounded-lg hover:bg-orange-50">Personal Counseling</NavLink>
+              </div>
+            )}
+          </div>
 
+          <NavLink to="/treatment-recovery" className={navLinkClass}>
+            Treatment & Recovery
+          </NavLink>
+
+          <NavLink to="/about-us" className={navLinkClass}>
+            About
+          </NavLink>
+
+          <NavLink to="/contact-us" className={navLinkClass}>
+            Contact
+          </NavLink>
+
+          <NavLink
+            to="/book-appointment"
+            className="bg-[#F39C6B] text-white px-6 py-2.5 rounded-full font-medium hover:bg-orange-500 transition"
+          >
+            Book Appointment
+          </NavLink>
+        </nav>
+
+        {/* MOBILE BUTTON */}
+        <button
+          className="md:hidden text-2xl text-gray-800"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? "✕" : "☰"}
+        </button>
       </div>
 
+      {/* MOBILE MENU */}
+      {menuOpen && (
+        <div className="md:hidden bg-white shadow-md px-6 py-6">
+          <div className="flex flex-col space-y-5 text-[16px] font-medium text-gray-700">
+
+            <NavLink to="/" end className={navLinkClass}>Home</NavLink>
+
+            {/* Mobile Strategies */}
+            <div>
+              <button
+                onClick={() => toggleMobileDropdown("strategies")}
+                className="flex justify-between w-full"
+              >
+                Strategies
+                <ChevronDown
+                  size={18}
+                  className={`transition-transform ${
+                    mobileDropdown === "strategies" ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {mobileDropdown === "strategies" && (
+                <div className="flex flex-col pl-4 mt-3 space-y-3">
+                  <NavLink to="/strategies/personal-objective">Personal Objective</NavLink>
+                  <NavLink to="/strategies/wellness-recovery">Wellness Recovery</NavLink>
+                  <NavLink to="/strategies/doctor-visits">Doctor Visits</NavLink>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Services */}
+            <div>
+              <button
+                onClick={() => toggleMobileDropdown("services")}
+                className="flex justify-between w-full"
+              >
+                Services
+                <ChevronDown
+                  size={18}
+                  className={`transition-transform ${
+                    mobileDropdown === "services" ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {mobileDropdown === "services" && (
+                <div className="flex flex-col pl-4 mt-3 space-y-3">
+                  <NavLink to="/services/omhc">OMHC</NavLink>
+                  <NavLink to="/services/prp">PRP</NavLink>
+                  <NavLink to="/services/family-counselling">Family Counseling</NavLink>
+                  <NavLink to="/services/personal-counselling">Personal Counseling</NavLink>
+                </div>
+              )}
+            </div>
+
+            <NavLink to="/treatment-recovery">Treatment & Recovery</NavLink>
+            <NavLink to="/about-us">About</NavLink>
+            <NavLink to="/contact-us">Contact</NavLink>
+
+            <NavLink
+              to="/book-appointment"
+              className="block bg-[#F39C6B] text-white text-center py-3 rounded-full"
+            >
+              Book Appointment
+            </NavLink>
+
+          </div>
+        </div>
+      )}
     </header>
-  );
-}
-
-
-/* ================= COMPONENTS ================= */
-
-
-function DropLink({ to, children, setOpen }) {
-  return (
-    <Link
-      to={to}
-      onClick={() => setOpen(false)}
-      className="
-        block px-6 py-3 text-[#1F2933]
-        hover:bg-pink-50/70
-        hover:text-[#E85C9A]
-        transition
-      "
-    >
-      {children}
-    </Link>
-  );
-}
-
-
-function MobileLink({ to, children, close }) {
-  return (
-    <Link
-      to={to}
-      onClick={close}
-      className="font-medium text-[#1F2933] hover:text-[#E85C9A]"
-    >
-      {children}
-    </Link>
-  );
-}
-
-
-function MobileServiceLink({ to, children, close }) {
-  return (
-    <Link
-      to={to}
-      onClick={close}
-      className="block text-gray-600 hover:text-[#E85C9A]"
-    >
-      {children}
-    </Link>
   );
 }

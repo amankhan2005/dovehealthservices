@@ -2,7 +2,7 @@
 import About from "../components/home/About";
 import Services from "../components/home/Services";
 import WhyUs from "../components/home/WhyUs";
-import FAQ from "../components/home/FAQ";
+ import GetInTouch from "../components/home/GetInTouch";
  
 
 export default function Home() {
@@ -12,7 +12,8 @@ export default function Home() {
       <About />
       <Services />
       <WhyUs />
-      <FAQ />
+     
+      <GetInTouch />
       
     </>
   );

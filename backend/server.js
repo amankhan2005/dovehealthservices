@@ -18,6 +18,9 @@ import settingsRoutes from "./routes/settings.routes.js";
 import mapRoutes from "./routes/map.routes.js";
 import heroRoutes from "./routes/hero.routes.js";
 import requestRoutes from "./routes/request.routes.js";
+import enquiryRoutes from "./routes/enquiry.routes.js";
+import appointmentRoutes from "./routes/appointment.routes.js";
+
 
 dotenv.config();
 
@@ -95,6 +98,8 @@ app.use("/api/settings", settingsRoutes);
 app.use("/api/map", mapRoutes);
 app.use("/api/hero", heroRoutes);
 app.use("/api/request", requestRoutes);
+app.use("/api/enquiry", enquiryRoutes);
+app.use("/api/appointment", appointmentRoutes);
 
 /* ================= HEALTH ================= */
 

@@ -1,107 +1,76 @@
- import {
-  FaUserShield,
-  FaSyncAlt,
-  FaPhoneAlt,
-  FaHeart,
-} from "react-icons/fa";
+ import { CheckCircle2 } from "lucide-react";
+import whyImg from "../../assets/whyus.jpg";
 
-export default function PeaceOfMind() {
-  const cards = [
-    {
-      icon: <FaUserShield />,
-      title: "Skilled & Trusted Staff",
-      desc: "All professionals are certified, trained, and verified to deliver safe and reliable care.",
-    },
-    {
-      icon: <FaSyncAlt />,
-      title: "Consistent Personal Care",
-      desc: "We provide dedicated caregivers who understand patient needs and preferences.",
-    },
-    {
-      icon: <FaPhoneAlt />,
-      title: "24/7 Support Service",
-      desc: "Our support team is available anytime to assist patients and families.",
-    },
-    {
-      icon: <FaHeart />,
-      title: "Compassionate Care",
-      desc: "Quality healthcare services for children, adults, seniors, and special care patients.",
-    },
+export default function WhyUs() {
+  const points = [
+    "Personalized, client-centered recovery planning",
+    "Licensed and highly experienced mental health specialists",
+    "Evidence-based therapeutic approaches",
+    "Safe, confidential and supportive care environment",
   ];
 
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="relative py-20 bg-white overflow-hidden">
 
-        {/* Heading */}
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-16">
-          <span className="font-serif italic font-medium">
-            Why
-          </span>{" "}
-          Choose Zenithcare
-        </h2>
+      {/* Soft Background Blobs */}
+      <div className="absolute -top-24 -left-24 w-[400px] h-[400px]  rounded-full blur-3xl opacity-40"></div>
+      <div className="absolute -bottom-24 -right-24 w-[400px] h-[400px]   rounded-full blur-3xl opacity-40"></div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="relative max-w-7xl mx-auto px-6">
 
-          {cards.map((item, i) => (
-            <div
-              key={i}
-              className="
-                relative
-                bg-white/70
-                backdrop-blur-lg
-                rounded-2xl
-                border border-pink-200/50
-                p-7
-                shadow-md
-                transition-all
-                duration-300
-                hover:-translate-y-3
-                hover:shadow-2xl
-                hover:border-pink-400
-                group
-                overflow-hidden
-              "
-            >
+        {/* Centered Label */}
+        <div className="text-center mb-16">
+          <span className="text-sm font-semibold tracking-[6px] text-[#F39C6B] uppercase">
+            Why Choose Us
+          </span>
 
-              {/* Glossy Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-pink-100/30 opacity-0 group-hover:opacity-100 transition duration-300"></div>
+          <h2 className="mt-6 text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
+            Excellence in Mental Wellness & Recovery Support
+          </h2>
+        </div>
 
-              {/* Icon */}
-              <div
-                className="
-                  w-10 h-10
-                  bg-gradient-to-br from-sky-300 to-pink-300
-                  text-white
-                  rounded-full
-                  flex
-                  items-center
-                  justify-center
-                  mb-4
-                  text-lg
-                  transition
-                  duration-300
-                  group-hover:scale-110
-                  group-hover:rotate-6
-                "
-              >
-                {item.icon}
-              </div>
+        <div className="grid lg:grid-cols-2 gap-20 items-stretch">
 
-              {/* Title */}
-              <h3 className="font-bold text-lg mb-2 text-black relative z-10">
-                {item.title}
-              </h3>
-
-              {/* Desc */}
-              <p className="text-sm text-gray-600 leading-relaxed relative z-10">
-                {item.desc}
-              </p>
-
+          {/* IMAGE */}
+          <div className="relative group h-full">
+            <div className="rounded-3xl overflow-hidden shadow-xl h-full">
+              <img
+                src={whyImg}
+                alt="Mental health therapy consultation"
+                className="w-full h-full object-cover transition duration-700 group-hover:scale-105"
+              />
             </div>
-          ))}
 
+           
+          </div>
+
+          {/* CONTENT */}
+          <div className="flex flex-col justify-center">
+
+            <p className="text-lg text-gray-600 leading-relaxed mb-10">
+              We combine clinical expertise with compassionate care to deliver
+              comprehensive mental health services designed for long-term
+              recovery, emotional resilience, and personal empowerment.
+            </p>
+
+            <div className="space-y-6">
+              {points.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-4 group"
+                >
+                  <CheckCircle2
+                    size={24}
+                    className="text-[#F39C6B] mt-1 transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                    {item}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+          </div>
         </div>
 
       </div>

@@ -13,130 +13,370 @@ function escapeHtml(str = "") {
 
   /* ================= ADMIN EMAIL ================= */
 
-const adminHtml = (c) => `
-<div style="font-family:Arial,sans-serif;padding:20px;">
+ const adminHtml = (c) => `
 
-  <h2 style="color:#2563eb;">
-    📩 New Contact Enquiry Received
-  </h2>
+<div style="
+  font-family:Arial,sans-serif;
+  padding:24px;
+  background:#f8fafc;
+">
 
-  <hr/>
-
-  <table style="width:100%;font-size:14px;line-height:1.8;">
-
-    <tr>
-      <td><b>Name:</b></td>
-      <td>${escapeHtml(c.firstName)} ${escapeHtml(c.lastName)}</td>
-    </tr>
-
-    <tr>
-      <td><b>Email:</b></td>
-      <td>${escapeHtml(c.email)}</td>
-    </tr>
-
-    <tr>
-      <td><b>Phone:</b></td>
-      <td>${escapeHtml(c.phone)}</td>
-    </tr>
-
-  </table>
-
-  <br/>
-
-  <p><b>Message:</b></p>
+  <!-- HEADER -->
 
   <div style="
-    background:#f9fafb;
-    padding:12px;
-    border-left:4px solid #2563eb;
-    font-size:14px;
+    background:#38bdf8;
+    padding:16px 20px;
+    border-radius:8px;
+    color:white;
   ">
-    ${escapeHtml(c.message)}
+
+    <h2 style="margin:0;">
+      New Enquiry Received
+    </h2>
+
+    <p style="
+      margin:4px 0 0 0;
+      font-size:13px;
+      opacity:.9;
+    ">
+      Dove Healthcare Services
+    </p>
+
   </div>
 
-  <hr/>
 
-  <p style="font-size:13px;color:#444;line-height:1.6;">
 
-    <b>About Zenithcare</b><br/>
+  <!-- BODY -->
 
-    Zenithcare provides professional nursing and therapy services
-    focused on comfort, safety, and patient well-being.
-    Our certified team delivers reliable care at home and in hospitals
-    with dignity and respect.
+  <div style="
+    background:white;
+    padding:20px;
+    margin-top:16px;
+    border-radius:8px;
+    border:1px solid #e5e7eb;
+  ">
 
-  </p>
 
-  <p style="font-size:12px;color:#555;">
+    <h3 style="
+      margin-top:0;
+      color:#0f172a;
+    ">
+      Client Information
+    </h3>
 
-    <b>Technical Info</b><br/>
 
-    IP Address: ${escapeHtml(c.ipAddress || "Unknown")}<br/>
-    Browser: ${escapeHtml(c.userAgent || "Unknown")}
+    <table style="
+      width:100%;
+      font-size:14px;
+      line-height:1.8;
+    ">
 
-  </p>
+
+      <tr>
+        <td width="120"><b>Name:</b></td>
+        <td>
+          ${escapeHtml(c.firstName)}
+          ${escapeHtml(c.lastName)}
+        </td>
+      </tr>
+
+
+      <tr>
+        <td><b>Email:</b></td>
+        <td>
+          ${escapeHtml(c.email)}
+        </td>
+      </tr>
+
+
+      <tr>
+        <td><b>Phone:</b></td>
+        <td>
+          ${escapeHtml(c.phone)}
+        </td>
+      </tr>
+
+
+    </table>
+
+
+
+    <!-- MESSAGE -->
+
+
+    <h3 style="
+      margin-top:20px;
+      color:#0f172a;
+    ">
+      Message
+    </h3>
+
+
+    <div style="
+      background:#f1f5f9;
+      padding:14px;
+      border-left:4px solid #F39C6B;
+      border-radius:6px;
+      font-size:14px;
+    ">
+
+      ${escapeHtml(c.message)}
+
+    </div>
+
+
+
+  </div>
+
+
+
+  <!-- FOOTER -->
+
+
+  <div style="
+    margin-top:18px;
+    font-size:13px;
+    color:#334155;
+    line-height:1.6;
+  ">
+
+
+    <b>About Dove Healthcare Services</b><br/>
+
+    Dove Healthcare Services provides compassionate,
+    evidence-based behavioral health care including
+    Psychiatric Rehabilitation Programs (PRP),
+    Outpatient Mental Health Clinic (OMHC),
+    and counseling services.
+
+    <br/><br/>
+
+    Our mission is to empower individuals to achieve
+    emotional stability, independence, and long-term recovery.
+
+
+  </div>
+
+
+
+  <!-- TECH INFO -->
+
+
+  <div style="
+    margin-top:18px;
+    font-size:12px;
+    color:#64748b;
+  ">
+
+
+    <b>Technical Details</b><br/>
+
+    IP Address:
+    ${escapeHtml(c.ipAddress || "Unknown")}<br/>
+
+    Browser:
+    ${escapeHtml(c.userAgent || "Unknown")}
+
+
+  </div>
+
+
 
 </div>
+
 `;
 
 
 /* ================= USER EMAIL ================= */
 
-const userHtml = (c) => `
-<div style="font-family:Arial,sans-serif;padding:20px;">
+ const userHtml = (c) => `
 
-  <h2 style="color:#16a34a;">
-    ✅ We’ve Received Your Message
-  </h2>
+<div style="
+  font-family:Arial,sans-serif;
+  padding:24px;
+  background:#f8fafc;
+">
 
-  <p>Hello <b>${escapeHtml(c.firstName)}</b>,</p>
 
-  <p>
-    Thank you for contacting <b>Zenithcare</b>.
-  </p>
+  <!-- HEADER -->
 
-  <p>
-    We appreciate your interest in our healthcare services.
-    Our support team will review your message and respond shortly.
-  </p>
-
-  <hr/>
-
-  <p><b>Your Message:</b></p>
 
   <div style="
-    background:#f9fafb;
-    padding:12px;
-    border-left:4px solid #16a34a;
-    font-size:14px;
+    background:#38bdf8;
+    padding:16px 20px;
+    border-radius:8px;
+    color:white;
   ">
-    ${escapeHtml(c.message)}
+
+
+    <h2 style="margin:0;">
+      We’ve Received Your Enquiry
+    </h2>
+
+
+    <p style="
+      margin:4px 0 0 0;
+      font-size:13px;
+      opacity:.9;
+    ">
+
+      Dove Healthcare Services
+
+    </p>
+
+
   </div>
 
-  <hr/>
 
-  <p style="font-size:13px;color:#444;line-height:1.6;">
 
-    <b>About Zenithcare</b><br/>
+  <!-- BODY -->
 
-    Zenithcare provides professional nursing and therapy services
-    focused on comfort, safety, and patient well-being.
-    Our certified team delivers reliable care at home and in hospitals
-    with dignity and respect.
 
-  </p>
+  <div style="
+    background:white;
+    padding:20px;
+    margin-top:16px;
+    border-radius:8px;
+    border:1px solid #e5e7eb;
+  ">
 
-  <p style="margin-top:20px;">
 
-    Warm regards,<br/>
 
-    <b>Zenithcare Care Team</b><br/>
-    
+    <p>
 
-  </p>
+      Hello
+      <b>
+        ${escapeHtml(c.firstName)}
+      </b>,
+
+    </p>
+
+
+
+    <p>
+
+      Thank you for reaching out to
+      <b>Dove Healthcare Services</b>.
+
+    </p>
+
+
+
+    <p>
+
+      Your enquiry has been successfully received.
+      Our mental health professionals will review your message
+      and contact you as soon as possible.
+
+    </p>
+
+
+
+    <p>
+
+      We are committed to providing compassionate,
+      confidential, and professional behavioral health care.
+
+    </p>
+
+
+
+    <!-- MESSAGE COPY -->
+
+
+    <h3 style="
+      margin-top:20px;
+      color:#0f172a;
+    ">
+
+      Your Message
+
+    </h3>
+
+
+
+    <div style="
+      background:#f1f5f9;
+      padding:14px;
+      border-left:4px solid #F39C6B;
+      border-radius:6px;
+      font-size:14px;
+    ">
+
+      ${escapeHtml(c.message)}
+
+    </div>
+
+
+
+  </div>
+
+
+
+  <!-- FOOTER -->
+
+
+  <div style="
+    margin-top:18px;
+    font-size:13px;
+    color:#334155;
+    line-height:1.6;
+  ">
+
+
+    <b>About Dove Healthcare Services</b><br/>
+
+
+    Dove Healthcare Services provides specialized behavioral health care
+    including Psychiatric Rehabilitation Programs (PRP),
+    Outpatient Mental Health Clinic (OMHC),
+    and counseling services.
+
+
+    <br/><br/>
+
+
+    Our mission is to help individuals achieve emotional stability,
+    independence, and long-term recovery.
+
+
+  </div>
+
+
+
+  <!-- SIGNATURE -->
+
+
+  <div style="
+    margin-top:20px;
+    font-size:14px;
+  ">
+
+
+    Warm regards,<br/><br/>
+
+
+    <b>Dove Healthcare Services Team</b><br/>
+
+
+    Email:
+    info@dovehealthservices.com
+<br/>
+
+
+    Phone:
+    +1 410-988-2335
+
+
+  </div>
+
+
 
 </div>
+
 `;
+
+
 
 
 /* ------------------------------------------------ */
