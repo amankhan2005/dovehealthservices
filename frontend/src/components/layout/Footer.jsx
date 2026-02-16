@@ -38,47 +38,46 @@ export default function Footer() {
           </p>
 
           {/* SOCIAL ICONS */}
-          <div className="flex gap-4">
+           <div className="flex gap-4">
 
-            {/* Facebook */}
-            <a
-              href="#"
-              className="w-11 h-11 flex items-center justify-center bg-white rounded-full shadow-md hover:scale-110 transition"
-            >
-              <Facebook size={18} className="text-orange-500" />
-            </a>
+  {/* Facebook */}
+  <a
+    href="https://www.facebook.com/DovehealthcareServices"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-11 h-11 flex items-center justify-center bg-white rounded-full shadow-md hover:scale-110 transition"
+  >
+    <Facebook size={18} className="text-orange-500" />
+  </a>
 
-            {/* Instagram */}
-            <a
-              href="#"
-              className="w-11 h-11 flex items-center justify-center bg-white rounded-full shadow-md hover:scale-110 transition"
-            >
-              <Instagram size={18} className="text-orange-500" />
-            </a>
+  {/* Instagram */}
+  <a
+    href="https://www.instagram.com/dovehealthcaremd"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-11 h-11 flex items-center justify-center bg-white rounded-full shadow-md hover:scale-110 transition"
+  >
+    <Instagram size={18} className="text-orange-500" />
+  </a>
 
-            {/* LinkedIn */}
-            <a
-              href="#"
-              className="w-11 h-11 flex items-center justify-center bg-white rounded-full shadow-md hover:scale-110 transition"
-            >
-              <Linkedin size={18} className="text-orange-500" />
-            </a>
+  {/* X */}
+  <a
+    href="https://x.com/dovehealth_md"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-11 h-11 flex items-center justify-center bg-white rounded-full shadow-md hover:scale-110 transition"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      className="w-5 h-5 text-orange-500"
+      fill="currentColor"
+    >
+      <path d="M18.901 1H22L14.62 9.21L23 23H16.42L11.09 15.62L4.9 23H1.8L9.69 14.07L1.7 1H8.42L13.24 7.7L18.901 1Z" />
+    </svg>
+  </a>
 
-            {/* X */}
-            <a
-              href="#"
-              className="w-11 h-11 flex items-center justify-center bg-white rounded-full shadow-md hover:scale-110 transition"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                className="w-5 h-5 text-orange-500"
-                fill="currentColor"
-              >
-                <path d="M18.901 1H22L14.62 9.21L23 23H16.42L11.09 15.62L4.9 23H1.8L9.69 14.07L1.7 1H8.42L13.24 7.7L18.901 1Z" />
-              </svg>
-            </a>
+</div>
 
-          </div>
         </div>
 
         {/* QUICK LINKS */}
@@ -110,17 +109,17 @@ export default function Footer() {
   <div className="space-y-5 text-sm">
 
     {/* Phone */}
-    <a
-      href="tel:+14109882335"
-      className="flex items-center gap-4 hover:text-orange-300 transition"
-    >
-      <div className="w-10 h-10 flex items-center justify-center bg-white rounded-full shrink-0">
-        <Phone size={18} className="text-orange-500" />
-      </div>
-      <span className="leading-relaxed">
-        +1 410-988-2335
-      </span>
-    </a>
+     <a
+  href="tel:+14109882335"
+  className="flex items-center gap-4 hover:text-orange-300 transition"
+>
+  <div className="w-10 h-10 flex items-center justify-center bg-white rounded-full shrink-0">
+    <Phone size={18} className="text-orange-500" />
+  </div>
+
+  <span>+1 (410) 988-2335</span>
+</a>
+
 
     {/*fax */}
     <a

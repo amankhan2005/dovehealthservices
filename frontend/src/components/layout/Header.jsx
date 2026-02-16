@@ -70,6 +70,10 @@ export default function Header() {
             Home
           </NavLink>
 
+          <NavLink to="/about-us" className={navLinkClass}>
+            About
+          </NavLink>
+
           {/* Strategies */}
           <div className="relative">
             <button
@@ -137,9 +141,7 @@ export default function Header() {
             Treatment & Recovery
           </NavLink>
 
-          <NavLink to="/about-us" className={navLinkClass}>
-            About
-          </NavLink>
+           
 
           <NavLink to="/contact-us" className={navLinkClass}>
             Contact
@@ -168,6 +170,7 @@ export default function Header() {
           <div className="flex flex-col space-y-5 text-[16px] font-medium text-gray-700">
 
             <NavLink to="/" end className={navLinkClass}>Home</NavLink>
+            <NavLink to="/about-us">About</NavLink>
 
             {/* Mobile Strategies */}
             <div>
@@ -219,7 +222,7 @@ export default function Header() {
             </div>
 
             <NavLink to="/treatment-recovery">Treatment & Recovery</NavLink>
-            <NavLink to="/about-us">About</NavLink>
+             
             <NavLink to="/contact-us">Contact</NavLink>
 
             <NavLink

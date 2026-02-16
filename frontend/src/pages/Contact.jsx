@@ -11,7 +11,7 @@ export default function ContactUs() {
     settings?.email || "info@dovehealthservices.com";
 
   const CONTACT_PHONE =
-    settings?.phone || "+1 410-988-2335";
+    settings?.phone || " +1 (410) 988-2335";
 
   const CONTACT_ADDRESS =
     settings?.address || 

@@ -119,8 +119,7 @@ export default function GetInTouch() {
 
               <span className="text-gray-900 text-lg group-hover:text-[#F39C6B] transition">
 
-                +1 410-988-2335
-
+ <span>+1 (410) 988-2335</span>
               </span>
 
             </a>

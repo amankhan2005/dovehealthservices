@@ -55,14 +55,29 @@ export default function Hero() {
       </p>
 
       {/* CTA */}
-      <div className="mt-10">
-        <a
-          href="/book-appointment"
-          className="inline-block bg-[#F39C6B] hover:bg-orange-500 text-white px-10 py-4 rounded-full font-semibold transition shadow-lg"
-        >
-          Book Appointment
-        </a>
-      </div>
+      {/* CTA */}
+<div className="mt-10 flex flex-wrap gap-4">
+
+  {/* Book Appointment */}
+  <a
+    href="/book-appointment"
+    className="inline-block bg-[#F39C6B] hover:bg-orange-500 text-white px-10 py-4 rounded-full font-semibold transition shadow-lg"
+  >
+    Book Appointment
+  </a>
+
+  {/* Call Us Now */}
+  <a
+    href="tel:+14109882335"
+    className="inline-block bg-white hover:bg-gray-100 text-[#F39C6B] px-10 py-4 rounded-full font-semibold transition shadow-lg border border-white"
+  >
+    Call Us Now
+  </a>
+
+</div>
+
+
+      
 
     </div>
   </div>
