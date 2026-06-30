@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import TopBar from "./components/layout/TopBar";
+import EmergencyContact from "./components/home/EmergencyContact";
 
 // Scroll
 import RouteScrollTop from "./components/RouteScrollTop";
@@ -17,11 +18,14 @@ import Contact from "./pages/Contact";
 import FAQ from "./pages/faq";
 import TreatmentRecovery from "./pages/TreatmentRecovery";
 import BookAppointment from "./pages/BookAppointment";
+import MeetTheTeam from "./pages/MeetTheTeam";
+import EducationalResources from "./pages/EducationalResources";
 
 // Strategies Pages
 import PersonalObjective from "./pages/strategies/PersonalObjective";
 import WellnessRecovery from "./pages/strategies/WellnessRecovery";
 import DoctorVisits from "./pages/strategies/DoctorVisits";
+import StrategyPage from "./pages/strategies/StrategyPage.jsx";
 
 // Services Pages
 import OMHC from "./pages/services/OMHC";
@@ -36,12 +40,14 @@ export default function App() {
 
       <Header />
 
-      <main className="min-h-screen pt-24 ">
+      <main className="min-h-screen pt-20 ">
         <Routes>
 
           {/* Main */}
           <Route path="/" element={<Home />} />
           <Route path="/about-us" element={<About />} />
+          <Route path="/meet-the-team" element={<MeetTheTeam />} />
+          <Route path="/resources" element={<EducationalResources />} />
           <Route path="/contact-us" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/treatment-recovery" element={<TreatmentRecovery />} />
@@ -60,6 +66,7 @@ export default function App() {
 
         </Routes>
       </main>
+<EmergencyContact />
 
       <Footer />
       <ScrollToTop />

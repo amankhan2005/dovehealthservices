@@ -1,4 +1,4 @@
- import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import whyImg from "../../assets/whyus.jpg";
 
 export default function WhyUs() {
@@ -10,69 +10,261 @@ export default function WhyUs() {
   ];
 
   return (
-    <section className="relative py-20 bg-white overflow-hidden">
+    <section className="whyus-section">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&display=swap');
 
-      {/* Soft Background Blobs */}
-      <div className="absolute -top-24 -left-24 w-[400px] h-[400px]  rounded-full blur-3xl opacity-40"></div>
-      <div className="absolute -bottom-24 -right-24 w-[400px] h-[400px]   rounded-full blur-3xl opacity-40"></div>
+        .whyus-section {
+          --navy: #1C2B3A;
+          --blue: #2F86C6;
+          --blue-tint: #EAF3FA;
+          --peach: #F2A878;
+          --peach-tint: #FCEEE4;
+          --peach-deep: #E8895A;
+          --paper: #FBF9F7;
+          position: relative;
+          background: var(--paper);
+          padding: 96px 0;
+          overflow: hidden;
+        }
 
-      <div className="relative max-w-7xl mx-auto px-6">
+        .whyus-blob-blue {
+          position: absolute;
+          top: -120px;
+          left: -120px;
+          width: 420px;
+          height: 420px;
+          border-radius: 50%;
+          background: var(--blue);
+          filter: blur(90px);
+          opacity: 0.14;
+        }
 
-        {/* Centered Label */}
-        <div className="text-center mb-16">
-          <span className="text-sm font-semibold tracking-[6px] text-[#F39C6B] uppercase">
-            Why Choose Us
-          </span>
+        .whyus-blob-peach {
+          position: absolute;
+          bottom: -120px;
+          right: -120px;
+          width: 420px;
+          height: 420px;
+          border-radius: 50%;
+          background: var(--peach);
+          filter: blur(90px);
+          opacity: 0.18;
+        }
 
-          <h2 className="mt-6 text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
+        .whyus-inner {
+          position: relative;
+          z-index: 1;
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+
+        .whyus-head {
+          text-align: center;
+          margin-bottom: 72px;
+        }
+
+        .whyus-eyebrow {
+          font-family: 'Inter', sans-serif;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--peach-deep);
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .whyus-eyebrow::before,
+        .whyus-eyebrow::after {
+          content: "";
+          width: 24px;
+          height: 2px;
+          background: var(--peach);
+        }
+
+        .whyus-heading {
+          font-family: 'Manrope', sans-serif;
+          font-weight: 800;
+          letter-spacing: -0.5px;
+          color: var(--navy);
+          font-size: clamp(2rem, 1.4rem + 2.4vw, 3.2rem);
+          line-height: 1.15;
+          margin-top: 20px;
+        }
+
+        .whyus-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 72px;
+          align-items: stretch;
+        }
+
+        @media (max-width: 900px) {
+          .whyus-grid { grid-template-columns: 1fr; gap: 48px; }
+        }
+
+        .whyus-img-wrap {
+          position: relative;
+          border-radius: 24px;
+          overflow: hidden;
+          box-shadow: 0 24px 60px -20px rgba(28, 43, 58, 0.25);
+        }
+
+        .whyus-img-wrap img {
+          width: 100%;
+          height: 100%;
+          min-height: 420px;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.7s ease;
+        }
+
+        .whyus-img-wrap:hover img {
+          transform: scale(1.06);
+        }
+
+        .whyus-img-badge {
+          position: absolute;
+          bottom: 20px;
+          left: 20px;
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(6px);
+          border-radius: 14px;
+          padding: 12px 18px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .whyus-img-badge .dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: var(--blue);
+        }
+
+        .whyus-img-badge span {
+          font-family: 'Inter', sans-serif;
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--navy);
+        }
+
+        .whyus-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .whyus-intro {
+          font-family: 'Inter', sans-serif;
+          font-size: 17px;
+          line-height: 1.75;
+          color: #51606E;
+          margin-bottom: 40px;
+          max-width: 52ch;
+        }
+
+        .whyus-list {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .whyus-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 16px;
+          padding: 18px 4px;
+          border-top: 1px solid #EFEAE5;
+          transition: padding-left 0.3s ease;
+        }
+
+        .whyus-item:last-child {
+          border-bottom: 1px solid #EFEAE5;
+        }
+
+        .whyus-item:hover {
+          padding-left: 10px;
+        }
+
+        .whyus-item-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          margin-top: 2px;
+          transition: transform 0.3s ease;
+        }
+
+        .whyus-item:nth-child(odd) .whyus-item-icon {
+          background: var(--blue-tint);
+          color: var(--blue);
+        }
+
+        .whyus-item:nth-child(even) .whyus-item-icon {
+          background: var(--peach-tint);
+          color: var(--peach-deep);
+        }
+
+        .whyus-item:hover .whyus-item-icon {
+          transform: scale(1.1);
+        }
+
+        .whyus-item p {
+          font-family: 'Inter', sans-serif;
+          font-size: 16px;
+          line-height: 1.6;
+          color: var(--navy);
+          font-weight: 500;
+        }
+      `}</style>
+
+      <div className="whyus-blob-blue" />
+      <div className="whyus-blob-peach" />
+
+      <div className="whyus-inner">
+        <div className="whyus-head">
+          <span className="whyus-eyebrow">Why Choose Us</span>
+          <h2 className="whyus-heading">
             Excellence in Mental Wellness & Recovery Support
           </h2>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-20 items-stretch">
-
-          {/* IMAGE */}
-          <div className="relative group h-full">
-            <div className="rounded-3xl overflow-hidden shadow-xl h-full">
-              <img
-                src={whyImg}
-                alt="Mental health therapy consultation"
-                className="w-full h-full object-cover transition duration-700 group-hover:scale-105"
-              />
+        <div className="whyus-grid">
+          <div className="whyus-img-wrap">
+            <img src={whyImg} alt="Mental health therapy consultation" />
+            <div className="whyus-img-badge">
+              <span className="dot" />
+              <span>Confidential & licensed care</span>
             </div>
-
-           
           </div>
 
-          {/* CONTENT */}
-          <div className="flex flex-col justify-center">
-
-            <p className="text-lg text-gray-600 leading-relaxed mb-10">
+          <div className="whyus-content">
+            <p className="whyus-intro">
               We combine clinical expertise with compassionate care to deliver
               comprehensive mental health services designed for long-term
               recovery, emotional resilience, and personal empowerment.
             </p>
 
-            <div className="space-y-6">
+            <div className="whyus-list">
               {points.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-4 group"
-                >
-                  <CheckCircle2
-                    size={24}
-                    className="text-[#F39C6B] mt-1 transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <p className="text-gray-700 text-lg leading-relaxed">
-                    {item}
-                  </p>
+                <div key={index} className="whyus-item">
+                  <div className="whyus-item-icon">
+                    <CheckCircle2 size={18} />
+                  </div>
+                  <p>{item}</p>
                 </div>
               ))}
             </div>
-
           </div>
         </div>
-
       </div>
     </section>
   );

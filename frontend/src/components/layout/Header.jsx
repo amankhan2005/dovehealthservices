@@ -1,22 +1,24 @@
- import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Menu, X, AlertCircle, CalendarCheck } from "lucide-react";
 import logo from "../../assets/logo.png";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileDropdown, setMobileDropdown] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const location = useLocation();
   const dropdownRef = useRef(null);
+  const mobileMenuRef = useRef(null);
 
-  const navLinkClass = ({ isActive }) =>
-    `transition duration-200 text-[16px] font-medium ${
-      isActive
-        ? "text-[#F39C6B]"
-        : "text-gray-700 hover:text-[#F39C6B]"
-    }`;
+  // Track scroll for subtle header shadow enhancement
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Close menus on route change
   useEffect(() => {
@@ -36,162 +38,293 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const toggleDropdown = (name) => {
-    setOpenDropdown(openDropdown === name ? null : name);
-  };
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutsideMobile = (e) => {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutsideMobile);
+      return () => document.removeEventListener("mousedown", handleClickOutsideMobile);
+    }
+  }, [menuOpen]);
 
-  const toggleMobileDropdown = (name) => {
-    setMobileDropdown(mobileDropdown === name ? null : name);
-  };
+  // Escape key closes whichever menu/dropdown is open
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        setOpenDropdown(null);
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, []);
+
+  const toggleDropdown = (name) => setOpenDropdown(openDropdown === name ? null : name);
+  const toggleMobileDropdown = (name) => setMobileDropdown(mobileDropdown === name ? null : name);
+
+  const navItemClass = ({ isActive }) =>
+    `flex-shrink-0 whitespace-nowrap px-2.5 xl:px-3 2xl:px-3.5 py-2 rounded-lg ` +
+    `transition duration-200 text-sm 2xl:text-base font-medium focus-visible:outline-none ` +
+    `focus-visible:ring-2 focus-visible:ring-[var(--peach)]/50 ${
+      isActive
+        ? "text-[var(--peach-deep)] bg-[var(--peach-tint)]"
+        : "text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--blue-tint)]"
+    }`;
+
+  const dropdownItemClass = ({ isActive }) =>
+    `block px-4 py-2.5 rounded-lg transition duration-200 text-sm font-medium whitespace-nowrap ` +
+    `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--peach)]/50 ${
+      isActive
+        ? "text-[var(--peach-deep)] bg-[var(--peach-tint)]"
+        : "text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--peach-tint)]"
+    }`;
+
+  const dropdownTriggerClass = (isActivePath) =>
+    `flex items-center gap-1 whitespace-nowrap px-2.5 xl:px-3 2xl:px-3.5 py-2 rounded-lg ` +
+    `transition duration-200 text-sm 2xl:text-base font-medium focus-visible:outline-none ` +
+    `focus-visible:ring-2 focus-visible:ring-[var(--peach)]/50 ${
+      isActivePath
+        ? "text-[var(--peach-deep)] bg-[var(--peach-tint)]"
+        : "text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--blue-tint)]"
+    }`;
+
+  const NAV_VISIBLE = "xl:flex";
 
   return (
-    <header className="w-full bg-white shadow-sm fixed top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <header
+      className={`dove-header w-full bg-white fixed top-0 z-50 transition-shadow duration-300 ${
+        isScrolled ? "shadow-md" : "shadow-sm"
+      }`}
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
 
-        {/* Logo */}
-        <NavLink to="/" className="flex items-center gap-3">
-          <img src={logo} alt="logo" className="h-20 w-auto" />
-          <div>
-            <h2 className="text-base font-semibold tracking-wide text-gray-900">
-              DOVE HEALTHCARE
+        .dove-header {
+          --navy: #16314F;
+          --blue: #2F86C6;
+          --blue-tint: #EAF3FA;
+          --peach: #F2A878;
+          --peach-tint: #FCEEE4;
+          --peach-deep: #E8895A;
+          --crisis-red: #C8302B;
+          --crisis-red-tint: #FBE7E6;
+          font-family: 'Inter', sans-serif;
+        }
+
+        .dove-header h1,
+        .dove-header h2 {
+          font-family: 'Manrope', sans-serif;
+        }
+      `}</style>
+
+      <div className="max-w-[1800px] mx-auto px-4 sm:px-6 xl:px-8 py-3 flex items-center justify-between gap-2 sm:gap-4">
+
+        {/* ── LOGO ── */}
+        <NavLink
+          to="/"
+          className="flex items-center gap-2 flex-shrink-0 xl:w-14 2xl:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--peach)]/50 rounded-lg"
+        >
+          <img
+            src={logo}
+            alt="Dove Healthcare Services logo"
+            className="h-14 sm:h-16 2xl:h-20 w-auto object-contain flex-shrink-0"
+          />
+          <div className="hidden xs:block xl:hidden 2xl:block whitespace-nowrap leading-tight">
+            <h1 className="text-xs sm:text-sm font-bold tracking-wide text-[var(--navy)] leading-tight">
+              DOVE
+            </h1>
+            <h2 className="text-xs font-semibold tracking-[2px] text-[var(--peach-deep)]">
+              HEALTHCARE
             </h2>
-            <p className="text-xs tracking-[3px] text-gray-500">
+            <p className="text-[10px] tracking-[1px] text-[var(--navy)]/55 font-medium">
               SERVICES
             </p>
           </div>
         </NavLink>
 
-        {/* DESKTOP NAV */}
+        {/* ── DESKTOP NAV ── */}
         <nav
           ref={dropdownRef}
-          className="hidden md:flex items-center gap-8"
+          className={`hidden ${NAV_VISIBLE} flex-1 min-w-0 items-center justify-center flex-nowrap gap-x-1 2xl:gap-x-2`}
         >
-          <NavLink to="/" end className={navLinkClass}>
+          <NavLink to="/" end className={navItemClass}>
             Home
           </NavLink>
 
-          <NavLink to="/about-us" className={navLinkClass}>
+          <NavLink to="/about-us" className={navItemClass}>
             About
           </NavLink>
 
-          {/* Strategies */}
-          <div className="relative">
+          {/* Strategies Dropdown */}
+          <div className="relative flex-shrink-0">
             <button
               onClick={() => toggleDropdown("strategies")}
-              className={`flex items-center gap-1 text-[16px] font-medium ${
-                location.pathname.startsWith("/strategies")
-                  ? "text-[#F39C6B]"
-                  : "text-gray-700 hover:text-[#F39C6B]"
-              }`}
+              aria-haspopup="true"
+              aria-expanded={openDropdown === "strategies"}
+              className={dropdownTriggerClass(location.pathname.startsWith("/strategies"))}
             >
               Strategies
               <ChevronDown
-                size={18}
-                className={`transition-transform ${
+                size={16}
+                className={`flex-shrink-0 transition-transform duration-300 ${
                   openDropdown === "strategies" ? "rotate-180" : ""
                 }`}
               />
             </button>
 
             {openDropdown === "strategies" && (
-              <div className="absolute top-12 left-0 w-64 bg-white rounded-xl shadow-lg p-3 space-y-1">
-                <NavLink to="/strategies/personal-objective" className="block px-4 py-2 rounded-lg hover:bg-orange-50">
+              <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl shadow-xl border border-[var(--navy)]/10 p-2 space-y-1 z-50">
+                <NavLink to="/strategies/personal-objective" className={dropdownItemClass}>
                   Personal Objective
                 </NavLink>
-                <NavLink to="/strategies/wellness-recovery" className="block px-4 py-2 rounded-lg hover:bg-orange-50">
+                <NavLink to="/strategies/wellness-recovery" className={dropdownItemClass}>
                   Wellness Recovery
                 </NavLink>
-                <NavLink to="/strategies/doctor-visits" className="block px-4 py-2 rounded-lg hover:bg-orange-50">
+                <NavLink to="/strategies/doctor-visits" className={dropdownItemClass}>
                   Doctor Visits
                 </NavLink>
               </div>
             )}
           </div>
 
-          {/* Services */}
-          <div className="relative">
+          {/* Services Dropdown */}
+          <div className="relative flex-shrink-0">
             <button
               onClick={() => toggleDropdown("services")}
-              className={`flex items-center gap-1 text-[16px] font-medium ${
-                location.pathname.startsWith("/services")
-                  ? "text-[#F39C6B]"
-                  : "text-gray-700 hover:text-[#F39C6B]"
-              }`}
+              aria-haspopup="true"
+              aria-expanded={openDropdown === "services"}
+              className={dropdownTriggerClass(location.pathname.startsWith("/services"))}
             >
               Services
               <ChevronDown
-                size={18}
-                className={`transition-transform ${
+                size={16}
+                className={`flex-shrink-0 transition-transform duration-300 ${
                   openDropdown === "services" ? "rotate-180" : ""
                 }`}
               />
             </button>
 
             {openDropdown === "services" && (
-              <div className="absolute top-12 left-0 w-64 bg-white rounded-xl shadow-lg p-3 space-y-1">
-                <NavLink to="/services/omhc" className="block px-4 py-2 rounded-lg hover:bg-orange-50">OMHC</NavLink>
-                <NavLink to="/services/prp" className="block px-4 py-2 rounded-lg hover:bg-orange-50">PRP</NavLink>
-                <NavLink to="/services/family-counselling" className="block px-4 py-2 rounded-lg hover:bg-orange-50">Family Counseling</NavLink>
-                <NavLink to="/services/personal-counselling" className="block px-4 py-2 rounded-lg hover:bg-orange-50">Personal Counseling</NavLink>
+              <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl shadow-xl border border-[var(--navy)]/10 p-2 space-y-1 z-50">
+                <NavLink to="/services/omhc" className={dropdownItemClass}>
+                  OMHC
+                </NavLink>
+                <NavLink to="/services/prp" className={dropdownItemClass}>
+                  PRP
+                </NavLink>
+                <NavLink to="/services/family-counselling" className={dropdownItemClass}>
+                  Family Counseling
+                </NavLink>
+                <NavLink to="/services/personal-counselling" className={dropdownItemClass}>
+                  Personal Counseling
+                </NavLink>
               </div>
             )}
           </div>
 
-          <NavLink to="/treatment-recovery" className={navLinkClass}>
-            Treatment & Recovery
+          <NavLink to="/treatment-recovery" className={navItemClass}>
+            Treatment &amp; Recovery
           </NavLink>
 
-           
-
-          <NavLink to="/contact-us" className={navLinkClass}>
-            Contact
+          <NavLink to="/meet-the-team" className={navItemClass}>
+            Meet the Team
           </NavLink>
 
+          <NavLink to="/resources" className={navItemClass}>
+            Resources
+          </NavLink>
+
+          {/* Crisis Support */}
+          <a
+            href="tel:988"
+            className="flex-shrink-0 flex items-center gap-1.5 whitespace-nowrap px-2.5 xl:px-3 2xl:px-3.5 py-2 rounded-lg transition duration-200 text-sm 2xl:text-base font-semibold text-[var(--crisis-red)] hover:text-white hover:bg-[var(--crisis-red)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--crisis-red)]/40"
+          >
+            <span className="inline-flex items-center justify-center text-[9px] font-bold bg-[var(--crisis-red)] text-white px-1 py-0.5 rounded leading-none">
+              SOS
+            </span>
+            Crisis
+          </a>
+        </nav>
+
+        {/* ── CTA ── */}
+        <div className="hidden xl:flex items-center flex-shrink-0">
           <NavLink
             to="/book-appointment"
-            className="bg-[#F39C6B] text-white px-6 py-2.5 rounded-full font-medium hover:bg-orange-500 transition"
+            className="whitespace-nowrap bg-[var(--peach)] text-white px-5 2xl:px-6 py-2.5 rounded-full text-sm 2xl:text-base font-semibold hover:bg-[var(--peach-deep)] hover:shadow-lg transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--peach)]"
           >
             Book Appointment
           </NavLink>
-        </nav>
+        </div>
 
-        {/* MOBILE BUTTON */}
+        {/* ── MOBILE MENU BUTTON ── */}
         <button
-          className="md:hidden text-2xl text-gray-800"
           onClick={() => setMenuOpen(!menuOpen)}
+          className="xl:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-[var(--blue-tint)] transition duration-200 flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--peach)]/50"
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
         >
-          {menuOpen ? "✕" : "☰"}
+          {menuOpen ? <X size={24} className="text-[var(--navy)]" /> : <Menu size={24} className="text-[var(--navy)]" />}
         </button>
       </div>
 
-      {/* MOBILE MENU */}
+      {/* ── MOBILE MENU ── */}
       {menuOpen && (
-        <div className="md:hidden bg-white shadow-md px-6 py-6">
-          <div className="flex flex-col space-y-5 text-[16px] font-medium text-gray-700">
+        <div
+          ref={mobileMenuRef}
+          className="xl:hidden bg-white border-t border-[var(--navy)]/10 shadow-lg max-h-[calc(100vh-80px)] overflow-y-auto"
+        >
+          <nav className="px-4 sm:px-6 py-4 space-y-1">
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-lg transition duration-200 font-medium ${
+                  isActive ? "text-[var(--peach-deep)] bg-[var(--peach-tint)]" : "text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--blue-tint)]"
+                }`
+              }
+            >
+              Home
+            </NavLink>
 
-            <NavLink to="/" end className={navLinkClass}>Home</NavLink>
-            <NavLink to="/about-us">About</NavLink>
+            <NavLink
+              to="/about-us"
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-lg transition duration-200 font-medium ${
+                  isActive ? "text-[var(--peach-deep)] bg-[var(--peach-tint)]" : "text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--blue-tint)]"
+                }`
+              }
+            >
+              About
+            </NavLink>
 
             {/* Mobile Strategies */}
             <div>
               <button
                 onClick={() => toggleMobileDropdown("strategies")}
-                className="flex justify-between w-full"
+                aria-expanded={mobileDropdown === "strategies"}
+                className="w-full flex justify-between items-center px-4 py-3 rounded-lg font-medium text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--blue-tint)] transition duration-200"
               >
                 Strategies
                 <ChevronDown
                   size={18}
-                  className={`transition-transform ${
-                    mobileDropdown === "strategies" ? "rotate-180" : ""
-                  }`}
+                  className={`transition-transform duration-300 ${mobileDropdown === "strategies" ? "rotate-180" : ""}`}
                 />
               </button>
-
               {mobileDropdown === "strategies" && (
-                <div className="flex flex-col pl-4 mt-3 space-y-3">
-                  <NavLink to="/strategies/personal-objective">Personal Objective</NavLink>
-                  <NavLink to="/strategies/wellness-recovery">Wellness Recovery</NavLink>
-                  <NavLink to="/strategies/doctor-visits">Doctor Visits</NavLink>
+                <div className="flex flex-col pl-2 mt-1 space-y-1 bg-[var(--blue-tint)] rounded-lg p-2 mx-2">
+                  <NavLink to="/strategies/personal-objective" className={dropdownItemClass}>
+                    Personal Objective
+                  </NavLink>
+                  <NavLink to="/strategies/wellness-recovery" className={dropdownItemClass}>
+                    Wellness Recovery
+                  </NavLink>
+                  <NavLink to="/strategies/doctor-visits" className={dropdownItemClass}>
+                    Doctor Visits
+                  </NavLink>
                 </div>
               )}
             </div>
@@ -200,39 +333,93 @@ export default function Header() {
             <div>
               <button
                 onClick={() => toggleMobileDropdown("services")}
-                className="flex justify-between w-full"
+                aria-expanded={mobileDropdown === "services"}
+                className="w-full flex justify-between items-center px-4 py-3 rounded-lg font-medium text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--blue-tint)] transition duration-200"
               >
                 Services
                 <ChevronDown
                   size={18}
-                  className={`transition-transform ${
-                    mobileDropdown === "services" ? "rotate-180" : ""
-                  }`}
+                  className={`transition-transform duration-300 ${mobileDropdown === "services" ? "rotate-180" : ""}`}
                 />
               </button>
-
               {mobileDropdown === "services" && (
-                <div className="flex flex-col pl-4 mt-3 space-y-3">
-                  <NavLink to="/services/omhc">OMHC</NavLink>
-                  <NavLink to="/services/prp">PRP</NavLink>
-                  <NavLink to="/services/family-counselling">Family Counseling</NavLink>
-                  <NavLink to="/services/personal-counselling">Personal Counseling</NavLink>
+                <div className="flex flex-col pl-2 mt-1 space-y-1 bg-[var(--blue-tint)] rounded-lg p-2 mx-2">
+                  <NavLink to="/services/omhc" className={dropdownItemClass}>
+                    OMHC
+                  </NavLink>
+                  <NavLink to="/services/prp" className={dropdownItemClass}>
+                    PRP
+                  </NavLink>
+                  <NavLink to="/services/family-counselling" className={dropdownItemClass}>
+                    Family Counseling
+                  </NavLink>
+                  <NavLink to="/services/personal-counselling" className={dropdownItemClass}>
+                    Personal Counseling
+                  </NavLink>
                 </div>
               )}
             </div>
 
-            <NavLink to="/treatment-recovery">Treatment & Recovery</NavLink>
-             
-            <NavLink to="/contact-us">Contact</NavLink>
+            <NavLink
+              to="/treatment-recovery"
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-lg transition duration-200 font-medium ${
+                  isActive ? "text-[var(--peach-deep)] bg-[var(--peach-tint)]" : "text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--blue-tint)]"
+                }`
+              }
+            >
+              Treatment &amp; Recovery
+            </NavLink>
+
+            <NavLink
+              to="/meet-the-team"
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-lg transition duration-200 font-medium ${
+                  isActive ? "text-[var(--peach-deep)] bg-[var(--peach-tint)]" : "text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--blue-tint)]"
+                }`
+              }
+            >
+              Meet the Team
+            </NavLink>
+
+            <NavLink
+              to="/resources"
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-lg transition duration-200 font-medium ${
+                  isActive ? "text-[var(--peach-deep)] bg-[var(--peach-tint)]" : "text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--blue-tint)]"
+                }`
+              }
+            >
+              Resources
+            </NavLink>
+
+            <a
+              href="tel:988"
+              className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition duration-200 font-semibold text-[var(--crisis-red)] hover:text-white hover:bg-[var(--crisis-red)] text-center"
+            >
+              <AlertCircle size={18} />
+              Crisis Support (988)
+            </a>
+
+            <NavLink
+              to="/contact-us"
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-lg transition duration-200 font-medium ${
+                  isActive ? "text-[var(--peach-deep)] bg-[var(--peach-tint)]" : "text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--blue-tint)]"
+                }`
+              }
+            >
+              Contact
+            </NavLink>
 
             <NavLink
               to="/book-appointment"
-              className="block bg-[#F39C6B] text-white text-center py-3 rounded-full"
+              className="flex items-center justify-center gap-2 bg-[var(--peach)] text-white text-center px-4 py-3.5 rounded-full font-semibold hover:bg-[var(--peach-deep)] transition duration-200 mt-4 shadow-md"
             >
+              <CalendarCheck size={18} />
               Book Appointment
             </NavLink>
-
-          </div>
+          </nav>
         </div>
       )}
     </header>

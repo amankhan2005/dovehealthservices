@@ -1,4 +1,5 @@
  import { Link } from "react-router-dom";
+import CrisisSupport from "../../components/CrisisSupport";
 
 export default function OMHC() {
 
@@ -6,6 +7,8 @@ export default function OMHC() {
 
     <div className="bg-white overflow-hidden">
 
+      {/* CRISIS SUPPORT */}
+      <CrisisSupport />
 
       {/* HEADER */}
       <section className="relative py-24 bg-[#38bdf8] overflow-hidden">
