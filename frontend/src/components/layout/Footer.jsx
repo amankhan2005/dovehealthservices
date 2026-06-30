@@ -305,7 +305,7 @@ export default function Footer() {
           <ul className="dove-footer-links">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/about-us">About us</Link></li>
-            <li><Link to="/meet-the-team">Meet the team</Link></li>
+            {/* <li><Link to="/meet-the-team">Meet the team</Link></li> */}
             <li><Link to="/resources">Resources</Link></li>
             <li><Link to="/contact-us">Contact</Link></li>
             <li><Link to="/faq">FAQs</Link></li>

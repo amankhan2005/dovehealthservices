@@ -230,9 +230,9 @@ export default function Header() {
             Treatment &amp; Recovery
           </NavLink>
 
-          <NavLink to="/meet-the-team" className={navItemClass}>
+          {/* <NavLink to="/meet-the-team" className={navItemClass}>
             Meet the Team
-          </NavLink>
+          </NavLink> */}
 
           <NavLink to="/resources" className={navItemClass}>
             Resources
@@ -371,7 +371,7 @@ export default function Header() {
               Treatment &amp; Recovery
             </NavLink>
 
-            <NavLink
+            {/* <NavLink
               to="/meet-the-team"
               className={({ isActive }) =>
                 `block px-4 py-3 rounded-lg transition duration-200 font-medium ${
@@ -380,7 +380,7 @@ export default function Header() {
               }
             >
               Meet the Team
-            </NavLink>
+            </NavLink> */}
 
             <NavLink
               to="/resources"

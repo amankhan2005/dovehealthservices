@@ -624,7 +624,7 @@ export default function EducationalResources() {
       </section>
 
       {/* DOWNLOADABLE GUIDES */}
-      <section className="res-guides">
+      {/* <section className="res-guides">
         <div className="res-guides-inner">
           <h2>More resources</h2>
           <p>Additional materials to support your mental health journey.</p>
@@ -667,7 +667,7 @@ export default function EducationalResources() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA SECTION */}
       <section className="res-cta">
