@@ -238,6 +238,10 @@ export default function Header() {
             Resources
           </NavLink>
 
+          <NavLink to="/employee" className={navItemClass}>
+            Employee
+          </NavLink>
+
           {/* Crisis Support */}
           <a
             href="tel:988"
@@ -391,6 +395,17 @@ export default function Header() {
               }
             >
               Resources
+            </NavLink>
+
+            <NavLink
+              to="/employee"
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-lg transition duration-200 font-medium ${
+                  isActive ? "text-[var(--peach-deep)] bg-[var(--peach-tint)]" : "text-[var(--navy)]/75 hover:text-[var(--peach-deep)] hover:bg-[var(--blue-tint)]"
+                }`
+              }
+            >
+              Employee
             </NavLink>
 
             <a

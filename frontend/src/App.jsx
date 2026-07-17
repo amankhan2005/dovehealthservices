@@ -20,6 +20,7 @@ import TreatmentRecovery from "./pages/TreatmentRecovery";
 import BookAppointment from "./pages/BookAppointment";
 import MeetTheTeam from "./pages/MeetTheTeam";
 import EducationalResources from "./pages/EducationalResources";
+import Employee from "./pages/Employee";
 
 // Strategies Pages
 import PersonalObjective from "./pages/strategies/PersonalObjective";
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="/faq" element={<FAQ />} />
           <Route path="/treatment-recovery" element={<TreatmentRecovery />} />
           <Route path="/book-appointment" element={<BookAppointment />} />
+          <Route path="/employee" element={<Employee />} />
 
           {/* Strategies */}
           <Route path="/strategies/personal-objective" element={<PersonalObjective />} />
