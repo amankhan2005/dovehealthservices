@@ -12,7 +12,7 @@ export const EMPLOYEE_PASSWORD =
 export const EMPLOYEE_SESSION_KEY = "dove_employee_unlocked";
 
 // Employee-facing forms. Add or reorder entries here; the page renders whatever is listed.
-export const EMPLOYEE_FORMS = [
+ export const EMPLOYEE_FORMS = [
   {
     id: "sep",
     title: "SEP Form",
@@ -36,5 +36,17 @@ export const EMPLOYEE_FORMS = [
     title: "PRP Consent Form",
     description: "Psychiatric Rehabilitation Program consent.",
     url: "https://pdf.ac/MhJMWzQID",
+  },
+  {
+    id: "carelon-discharge",
+    title: "Carelon Discharge Form",
+    description: "Carelon discharge summary and closure documentation.",
+    url: "https://pdf.ac/SxxbNrskle",
+  },
+  {
+    id: "supervision-contract-prp",
+    title: "Supervision Contract PRP",
+    description: "Supervision agreement for Psychiatric Rehabilitation Program staff.",
+    url: "https://pdf.ac/bn9FqjbbV",
   },
 ];
