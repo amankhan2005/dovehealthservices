@@ -1,8 +1,12 @@
- import { useState } from "react";
+// GetInTouch.jsx
+import { useRef, useState } from "react";
 import { Phone, Mail, MapPin, Send, CheckCircle2, AlertCircle } from "lucide-react";
+import MathCaptcha from "./MathCaptcha.jsx";
 
 export default function GetInTouch() {
-  const API_BASE = import.meta.env.VITE_API_URL;
+  const API_BASE =
+    import.meta.env.VITE_API_URL ||
+    "https://dovehealthservices.onrender.com";
 
   const [form, setForm] = useState({
     name: "",
@@ -13,6 +17,8 @@ export default function GetInTouch() {
 
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("idle");
+  const captchaRef = useRef(null);
+  const [captchaOk, setCaptchaOk] = useState(false);
 
   function handleChange(e) {
     setForm({
@@ -23,7 +29,7 @@ export default function GetInTouch() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (loading) return;
+    if (loading || !captchaOk) return;
 
     setLoading(true);
     setStatus("idle");
@@ -41,6 +47,8 @@ export default function GetInTouch() {
 
       setForm({ name: "", email: "", phone: "", message: "" });
       setStatus("success");
+      captchaRef.current?.regenerate();
+      setCaptchaOk(false);
     } catch (err) {
       console.log(err);
       setStatus("error");
@@ -446,7 +454,17 @@ export default function GetInTouch() {
               />
             </div>
 
-            <button type="submit" className="contact-submit" disabled={loading}>
+            <MathCaptcha
+              ref={captchaRef}
+              onValidChange={setCaptchaOk}
+              className="contact-field"
+            />
+
+            <button
+              type="submit"
+              className="contact-submit"
+              disabled={loading || !captchaOk}
+            >
               {loading ? (
                 "Sending..."
               ) : (

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import appointmentImg from "../assets/appointment.jpg";
+import MathCaptcha from "../components/home/MathCaptcha.jsx";
 
 export default function BookAppointment() {
 
@@ -16,6 +17,9 @@ export default function BookAppointment() {
 
   const [error, setError] =
     useState("");
+
+  const captchaRef = useRef(null);
+  const [captchaOk, setCaptchaOk] = useState(false);
 
 
   const [form, setForm] =
@@ -48,6 +52,8 @@ export default function BookAppointment() {
   async function handleSubmit(e) {
 
     e.preventDefault();
+
+    if (loading || !captchaOk) return;
 
     setLoading(true);
     setError("");
@@ -98,6 +104,9 @@ export default function BookAppointment() {
 
       });
 
+      captchaRef.current?.regenerate();
+      setCaptchaOk(false);
+
 
     }
 
@@ -134,6 +143,7 @@ export default function BookAppointment() {
           --peach-tint: #FCEEE4;
           --peach-deep: #E8895A;
           --paper: #FBF9F7;
+          --crisis-red: #C8302B;
           background: #fff;
           font-family: 'Inter', sans-serif;
           overflow: hidden;
@@ -533,9 +543,14 @@ export default function BookAppointment() {
             className="book-field"
           ></textarea>
 
+          <MathCaptcha
+            ref={captchaRef}
+            onValidChange={setCaptchaOk}
+          />
+
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || !captchaOk}
             className="book-submit"
           >
             {loading
