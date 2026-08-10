@@ -49,4 +49,10 @@ export const EMPLOYEE_SESSION_KEY = "dove_employee_unlocked";
     description: "Supervision agreement for Psychiatric Rehabilitation Program staff.",
     url: "https://pdf.ac/bn9FqjbbV",
   },
+  {
+    id: "PRP Referral Form",
+    title: "PRP Referral Form",
+    description: "Referral form for the Psychiatric Rehabilitation Program.",
+    url: "https://pdf.ac/qn5k5kcr",
+  }
 ];
