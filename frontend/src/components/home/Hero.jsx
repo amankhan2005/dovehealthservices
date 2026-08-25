@@ -4,18 +4,17 @@ import heroPoster from "../../assets/hero.png";
 
 export default function Hero() {
   const slides = [
-    {
-      label: "Welcome to Dove Healthcare Services",
-      title: "Mind wellness,\nlife success",
-      desc: "We are a dedicated recovery center specializing in mental health and substance use treatment. Our comprehensive services include personalized, evidence-based care.",
-    },
-    {
-      label: "Welcome to Dove Healthcare Services",
-      title: "Empowering minds,\ntransforming lives",
-      desc: "We provide professional outpatient mental health services including OMHC, PRP programs, and personalized counseling support.",
-    },
-  ];
-
+  {
+    label: "Mental Health & Recovery Services",
+    title: "Mental wellness,\nlife success",
+    desc: "Dove Healthcare Services provides compassionate, evidence-based mental health and substance use treatment, with personalized care designed to support recovery, wellness, and long-term success.",
+  },
+  {
+    label: "Outpatient Mental Health Services",
+    title: "Empowering minds,\ntransforming lives",
+    desc: "Access professional outpatient mental health services, including OMHC, PRP programs, counseling, and personalized behavioral health support tailored to your individual needs.",
+  },
+];
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
