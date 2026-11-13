@@ -41,7 +41,7 @@ export default function App() {
 
       <Header />
 
-      <main className="min-h-screen pt-20 ">
+      <main className="min-h-screen pt-20 2xl:pt-24">
         <Routes>
 
           {/* Main */}

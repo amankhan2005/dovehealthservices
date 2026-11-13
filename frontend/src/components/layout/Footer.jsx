@@ -63,33 +63,24 @@ export default function Footer() {
 
         .dove-footer-logo-box {
           background: #fff;
-          padding: 10px;
+          padding: 12px 18px;
           border-radius: 14px;
           flex-shrink: 0;
-          display: flex;
+          display: inline-flex;
+          align-items: center;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
         }
 
         .dove-footer-logo-box img {
-          width: 44px;
+          height: 72px;
+          width: auto;
+          max-width: 100%;
           display: block;
+          object-fit: contain;
         }
 
-        .dove-footer-brand-name {
-          font-family: 'Manrope', sans-serif;
-          font-weight: 700;
-          font-size: 17px;
-          color: #fff;
-          line-height: 1.3;
-          margin: 0;
-        }
-
-        .dove-footer-brand-sub {
-          font-family: 'Inter', sans-serif;
-          font-size: 11px;
-          letter-spacing: 2px;
-          color: var(--peach);
-          font-weight: 600;
-          margin: 0;
+        @media (max-width: 560px) {
+          .dove-footer-logo-box img { height: 64px; }
         }
 
         .dove-footer-desc {
@@ -248,11 +239,14 @@ export default function Footer() {
         <div>
           <div className="dove-footer-brand-row">
             <div className="dove-footer-logo-box">
-              <img src={logo} alt="Dove Logo" />
-            </div>
-            <div>
-              <p className="dove-footer-brand-name">Dove Healthcare</p>
-              <p className="dove-footer-brand-sub">SERVICES LLC</p>
+              <img
+                src={logo}
+                alt="Dove Healthcare Services"
+                width={1000}
+                height={472}
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </div>
 

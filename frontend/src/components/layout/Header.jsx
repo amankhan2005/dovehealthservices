@@ -121,29 +121,25 @@ export default function Header() {
         }
       `}</style>
 
-      <div className="max-w-[1800px] mx-auto px-4 sm:px-6 xl:px-8 py-3 flex items-center justify-between gap-2 sm:gap-4">
+      <div className="max-w-[1800px] mx-auto px-4 sm:px-6 xl:px-8 h-20 2xl:h-24 flex items-center justify-between gap-2 sm:gap-4">
 
         {/* ── LOGO ── */}
         <NavLink
           to="/"
-          className="flex items-center gap-2 flex-shrink-0 xl:w-14 2xl:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--peach)]/50 rounded-lg"
+          aria-label="Dove Healthcare Services - Home"
+          className="flex items-center flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--peach)]/50 rounded-lg"
         >
+          {/* Wordmark is 1000x472 (~2.12:1): height drives size, width follows */}
           <img
             src={logo}
-            alt="Dove Healthcare Services logo"
-            className="h-14 sm:h-16 2xl:h-20 w-auto object-contain flex-shrink-0"
+            alt="Dove Healthcare Services"
+            width={1000}
+            height={472}
+            decoding="async"
+            fetchPriority="high"
+            draggable="false"
+            className="block h-14 sm:h-16 xl:h-14 2xl:h-[76px] w-auto max-w-none object-contain select-none"
           />
-          <div className="hidden xs:block xl:hidden 2xl:block whitespace-nowrap leading-tight">
-            <h1 className="text-xs sm:text-sm font-bold tracking-wide text-[var(--navy)] leading-tight">
-              DOVE
-            </h1>
-            <h2 className="text-xs font-semibold tracking-[2px] text-[var(--peach-deep)]">
-              HEALTHCARE
-            </h2>
-            <p className="text-[10px] tracking-[1px] text-[var(--navy)]/55 font-medium">
-              SERVICES
-            </p>
-          </div>
         </NavLink>
 
         {/* ── DESKTOP NAV ── */}
