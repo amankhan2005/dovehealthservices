@@ -3,12 +3,12 @@ import StrategyPage from "./StrategyPage";
 export default function WellnessRecovery() {
   return (
     <StrategyPage
-      breadcrumb="Dove Healthcare Services, LLC > Wellness recovery"
+      breadcrumb="Dove Health > Wellness recovery"
       title="Comprehensive wellness recovery program"
       introTitle="Supporting total wellness in recovery"
       introParagraphs={[
         "Mental health recovery involves more than emotional healing — it includes physical health, psychological well-being, and overall life stability.",
-        "At Dove Healthcare Services, we provide comprehensive care to support every aspect of an individual's wellness journey.",
+        "At Dove Health, we provide comprehensive care to support every aspect of an individual's wellness journey.",
       ]}
       cards={[
         {
@@ -26,10 +26,10 @@ export default function WellnessRecovery() {
       ]}
       closingTitle="Achieving long-term wellness"
       closingParagraphs={[
-        "Comprehensive wellness programs improve recovery outcomes, helping individuals live longer, healthier, and more fulfilling lives. Dove Healthcare Services is committed to providing compassionate, professional care every step of the way.",
+        "Comprehensive wellness programs improve recovery outcomes, helping individuals live longer, healthier, and more fulfilling lives. Dove Health is committed to providing compassionate, professional care every step of the way.",
       ]}
       ctaTitle="Begin your wellness journey today"
-      ctaSubtitle="Contact Dove Healthcare Services to learn more."
+      ctaSubtitle="Contact Dove Health to learn more."
       ctaLabel="Contact us today"
     />
   );

@@ -220,6 +220,13 @@ export default function Footer() {
           margin: 0;
         }
 
+        .dove-footer-bottom-inner .dove-footer-legal {
+          font-size: 11.5px;
+          letter-spacing: 0.2px;
+          color: rgba(255, 255, 255, 0.35);
+          margin-top: 4px;
+        }
+
         .dove-footer-bottom-inner a {
           font-weight: 700;
           color: var(--peach);
@@ -241,7 +248,7 @@ export default function Footer() {
             <div className="dove-footer-logo-box">
               <img
                 src={logo}
-                alt="Dove Healthcare Services"
+                alt="Dove Health"
                 width={1000}
                 height={472}
                 loading="lazy"
@@ -260,7 +267,7 @@ export default function Footer() {
               href="https://www.facebook.com/DovehealthcareServices"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Dove Healthcare Services on Facebook"
+              aria-label="Dove Health on Facebook"
               className="dove-icon-chip"
             >
               <Facebook size={17} />
@@ -270,7 +277,7 @@ export default function Footer() {
               href="https://www.instagram.com/dovehealthcaremd"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Dove Healthcare Services on Instagram"
+              aria-label="Dove Health on Instagram"
               className="dove-icon-chip"
             >
               <Instagram size={17} />
@@ -280,7 +287,7 @@ export default function Footer() {
               href="https://x.com/dovehealth_md"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Dove Healthcare Services on X"
+              aria-label="Dove Health on X"
               className="dove-icon-chip"
             >
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
@@ -374,7 +381,10 @@ export default function Footer() {
       </div>
       <div className="dove-footer-bottom">
         <div className="dove-footer-bottom-inner">
-          <p>© {new Date().getFullYear()} Dove Healthcare Services. All rights reserved.</p>
+          <div className="dove-footer-legal-block">
+            <p>© {new Date().getFullYear()} Dove Health. All rights reserved.</p>
+            <p className="dove-footer-legal">Dove Healthcare Services, LLC dba Dove Health</p>
+          </div>
           <p>
             Designed and developed by {" "}
             <a

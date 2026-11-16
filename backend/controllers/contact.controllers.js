@@ -39,7 +39,7 @@ function escapeHtml(str = "") {
       font-size:13px;
       opacity:.9;
     ">
-      Dove Healthcare Services
+      Dove Health
     </p>
 
   </div>
@@ -141,9 +141,9 @@ function escapeHtml(str = "") {
   ">
 
 
-    <b>About Dove Healthcare Services</b><br/>
+    <b>About Dove Health</b><br/>
 
-    Dove Healthcare Services provides compassionate,
+    Dove Health provides compassionate,
     evidence-based behavioral health care including
     Psychiatric Rehabilitation Programs (PRP),
     Outpatient Mental Health Clinic (OMHC),
@@ -220,7 +220,7 @@ function escapeHtml(str = "") {
       opacity:.9;
     ">
 
-      Dove Healthcare Services
+      Dove Health
 
     </p>
 
@@ -256,7 +256,7 @@ function escapeHtml(str = "") {
     <p>
 
       Thank you for reaching out to
-      <b>Dove Healthcare Services</b>.
+      <b>Dove Health</b>.
 
     </p>
 
@@ -324,10 +324,10 @@ function escapeHtml(str = "") {
   ">
 
 
-    <b>About Dove Healthcare Services</b><br/>
+    <b>About Dove Health</b><br/>
 
 
-    Dove Healthcare Services provides specialized behavioral health care
+    Dove Health provides specialized behavioral health care
     including Psychiatric Rehabilitation Programs (PRP),
     Outpatient Mental Health Clinic (OMHC),
     and counseling services.
@@ -356,7 +356,7 @@ function escapeHtml(str = "") {
     Warm regards,<br/><br/>
 
 
-    <b>Dove Healthcare Services Team</b><br/>
+    <b>Dove Health Team</b><br/>
 
 
     Email:
@@ -366,6 +366,15 @@ function escapeHtml(str = "") {
 
     Phone:
     +1 410-988-2335
+
+
+    <p style="
+      margin:14px 0 0 0;
+      font-size:11px;
+      color:#94a3b8;
+    ">
+      Dove Healthcare Services, LLC dba Dove Health
+    </p>
 
 
   </div>

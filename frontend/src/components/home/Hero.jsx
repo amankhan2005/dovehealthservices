@@ -7,7 +7,7 @@ export default function Hero() {
   {
     label: "Mental Health & Recovery Services",
     title: "Mental wellness,\nlife success",
-    desc: "Dove Healthcare Services provides compassionate, evidence-based mental health and substance use treatment, with personalized care designed to support recovery, wellness, and long-term success.",
+    desc: "Dove Health provides compassionate, evidence-based mental health and substance use treatment, with personalized care designed to support recovery, wellness, and long-term success.",
   },
   {
     label: "Outpatient Mental Health Services",

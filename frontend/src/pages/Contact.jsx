@@ -467,7 +467,7 @@ export default function ContactUs() {
       <section className="contact-header">
         <div className="contact-header-glow" />
         <div className="contact-header-inner">
-          <p className="contact-eyebrow">Dove Healthcare Services</p>
+          <p className="contact-eyebrow">Dove Health</p>
           <h1 className="contact-h1">
             Get In <em>Touch</em> With Us
           </h1>

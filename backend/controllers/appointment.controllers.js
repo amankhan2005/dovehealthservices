@@ -95,7 +95,7 @@ export async function createAppointment(req, res) {
 
         <br>
 
-        <p>Dove Healthcare Services</p>
+        <p>Dove Health</p>
 
       `,
 

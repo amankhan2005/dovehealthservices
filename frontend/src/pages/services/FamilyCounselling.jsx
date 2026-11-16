@@ -435,7 +435,7 @@ export default function FamilyCounselling() {
         <div className="omhc-header-glow" />
         <div className="omhc-header-inner">
           <p className="omhc-breadcrumb">
-            Dove Healthcare Services, LLC &gt; Services &gt; Family Counseling
+            Dove Health &gt; Services &gt; Family Counseling
           </p>
           <h1 className="omhc-h1">
             Family Counseling Services

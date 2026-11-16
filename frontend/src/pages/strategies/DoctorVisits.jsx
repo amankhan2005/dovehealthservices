@@ -3,7 +3,7 @@
 export default function DoctorVisits() {
   return (
     <StrategyPage
-      breadcrumb="Dove Healthcare Services, LLC > Doctor visits"
+      breadcrumb="Dove Health > Doctor visits"
       title="Collaborative doctor visits and treatment planning"
       introTitle="Working together for better treatment outcomes"
       introParagraphs={[
@@ -26,10 +26,10 @@ export default function DoctorVisits() {
       ]}
       closingTitle="Supporting your mental health journey"
       closingParagraphs={[
-        "At Dove Healthcare Services, our team works closely with doctors, families, and clients to ensure effective treatment and recovery. We are committed to helping individuals achieve stability, independence, and a healthier future.",
+        "At Dove Health, our team works closely with doctors, families, and clients to ensure effective treatment and recovery. We are committed to helping individuals achieve stability, independence, and a healthier future.",
       ]}
       ctaTitle="Partner with us in your recovery"
-      ctaSubtitle="Contact Dove Healthcare Services today."
+      ctaSubtitle="Contact Dove Health today."
       ctaLabel="Schedule a consultation"
     />
   );

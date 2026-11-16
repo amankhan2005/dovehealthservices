@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Dove Healthcare Services server built with Express and MongoDB",
+  "description": "Dove Health server built with Express and MongoDB",
   "main": "server.js",
   "type": "module",
   "scripts": {

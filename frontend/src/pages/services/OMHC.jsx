@@ -435,7 +435,7 @@ export default function OMHC() {
         <div className="omhc-header-glow" />
         <div className="omhc-header-inner">
           <p className="omhc-breadcrumb">
-            Dove Healthcare Services, LLC &gt; Services &gt; OMHC
+            Dove Health &gt; Services &gt; OMHC
           </p>
           <h1 className="omhc-h1">
             Outpatient Mental Health Clinic (OMHC)

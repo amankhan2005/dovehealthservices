@@ -194,7 +194,7 @@ export default function EmployeePasswordGate({ children }) {
         </div>
 
         <h1>Employee access</h1>
-        <p>This area is for Dove Healthcare staff. Enter the shared password to continue.</p>
+        <p>This area is for Dove Health staff. Enter the shared password to continue.</p>
 
         <form onSubmit={handleSubmit}>
           <label className="emp-gate-label" htmlFor="employee-password">

@@ -397,7 +397,7 @@ export default function MeetTheTeam() {
       <section className="team-header">
         <div className="team-header-glow" />
         <div className="team-header-inner">
-          <p className="team-breadcrumb">Dove Healthcare Services, LLC &gt; About</p>
+          <p className="team-breadcrumb">Dove Health &gt; About</p>
           <h1 className="team-h1">Meet our team</h1>
           <div className="team-h1-rule">
             <span className="bar" />

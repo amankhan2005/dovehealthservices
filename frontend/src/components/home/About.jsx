@@ -261,7 +261,7 @@ export default function About() {
           <div className="about-img-glow" />
           <img
             src={aboutImg}
-            alt="Professional mental health consultation at Dove Healthcare Services"
+            alt="Professional mental health consultation at Dove Health"
             className="about-img"
           />
           <div className="about-badge-float">
@@ -272,15 +272,15 @@ export default function About() {
 
         {/* CONTENT */}
         <div>
-          <span className="about-eyebrow">About Dove Healthcare</span>
+          <span className="about-eyebrow">About Dove Health</span>
 
           <h2 className="about-heading">
             Dedicated to mental wellness, <em>recovery</em> & lifelong support
           </h2>
 
           <p className="about-body">
-            Dove Healthcare Services, LLC is a certified outpatient mental
-            health clinic in Maryland providing comprehensive OMHC services,
+            Dove Health is a certified outpatient mental health clinic in
+            Maryland providing comprehensive OMHC services,
             Psychiatric Rehabilitation Programs, DUI education, and
             behavioral health support. Our evidence-based approach focuses on
             personalized care, long-term recovery, and empowering individuals

@@ -265,8 +265,8 @@ export default function About() {
       <section className="about-header">
         <div className="about-header-glow" />
         <div className="about-header-inner">
-          <p className="about-breadcrumb">Dove Healthcare Services, LLC &gt; About us</p>
-          <h1 className="about-h1">About Dove Healthcare Services</h1>
+          <p className="about-breadcrumb">Dove Health &gt; About us</p>
+          <h1 className="about-h1">About Dove Health</h1>
           <div className="about-h1-rule">
             <span className="bar" />
             <span className="dot" />
@@ -281,8 +281,8 @@ export default function About() {
             <div className="about-eyebrow-bar" />
             <h2>Who we are</h2>
             <p>
-              Dove Healthcare Services, LLC is a certified outpatient mental
-              health clinic provider approved by the Maryland Department of
+              Dove Health (Dove Healthcare Services, LLC) is a certified
+              outpatient mental health clinic provider approved by the Maryland Department of
               Behavioral Health Administration (BHA). We provide
               comprehensive psychiatric rehabilitation and outpatient mental
               health services to individuals across Maryland.
@@ -296,7 +296,7 @@ export default function About() {
 
           <div className="about-img-wrap">
             <div className="about-img-glow" />
-            <img src={therapy1} alt="Therapy session at Dove Healthcare Services" />
+            <img src={therapy1} alt="Therapy session at Dove Health" />
           </div>
         </div>
       </section>
@@ -306,7 +306,7 @@ export default function About() {
         <div className="about-grid reverse">
           <div className="about-img-wrap">
             <div className="about-img-glow" />
-            <img src={therapy2} alt="Programs and services at Dove Healthcare Services" />
+            <img src={therapy2} alt="Programs and services at Dove Health" />
           </div>
 
           <div>
@@ -331,7 +331,7 @@ export default function About() {
             <span className="accred-tag">Joint Commission accredited</span>
             <h2 style={{ marginTop: 22 }}>Joint Commission accreditation</h2>
             <p>
-              Dove Healthcare Services has earned accreditation from The
+              Dove Health has earned accreditation from The
               Joint Commission, the nation's leading healthcare quality
               organization.
             </p>

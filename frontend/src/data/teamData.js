@@ -1,4 +1,4 @@
-// Dove Healthcare Services Team Data
+// Dove Health Team Data
 // Update with actual clinician information from the organization
 
 export const teamMembers = [
@@ -103,7 +103,7 @@ export const teamMembers = [
 // Care Philosophy Statement
 export const carePhilosophy = {
   title: "How We Approach Care",
-  description: "At Dove Healthcare Services, we believe that recovery is possible for everyone. Our approach is grounded in compassion, evidence-based practice, and a deep respect for each individual's unique journey.",
+  description: "At Dove Health, we believe that recovery is possible for everyone. Our approach is grounded in compassion, evidence-based practice, and a deep respect for each individual's unique journey.",
   principles: [
     {
       title: "Patient-Centered",

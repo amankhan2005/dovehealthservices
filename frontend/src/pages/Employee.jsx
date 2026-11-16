@@ -285,7 +285,7 @@ function EmployeeContent() {
       <section className="emp-header">
         <div className="emp-header-glow" />
         <div className="emp-header-inner">
-          <p className="emp-breadcrumb">Dove Healthcare Services, LLC &gt; Employee</p>
+          <p className="emp-breadcrumb">Dove Health &gt; Employee</p>
           <h1 className="emp-h1">Employee resources</h1>
           <div className="emp-h1-rule">
             <span className="bar" />
@@ -344,7 +344,7 @@ function EmployeeContent() {
 
           <p className="emp-note">
             Forms are hosted externally and open outside this site. Follow Dove
-            Healthcare's privacy procedures when handling completed paperwork.
+            Health's privacy procedures when handling completed paperwork.
           </p>
         </div>
       </section>

@@ -1,4 +1,4 @@
-// Dove Healthcare Services - Educational Resources
+// Dove Health - Educational Resources
 
 export const resourceCategories = [
   {

@@ -126,13 +126,13 @@ export default function Header() {
         {/* ── LOGO ── */}
         <NavLink
           to="/"
-          aria-label="Dove Healthcare Services - Home"
+          aria-label="Dove Health - Home"
           className="flex items-center flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--peach)]/50 rounded-lg"
         >
           {/* Wordmark is 1000x472 (~2.12:1): height drives size, width follows */}
           <img
             src={logo}
-            alt="Dove Healthcare Services"
+            alt="Dove Health"
             width={1000}
             height={472}
             decoding="async"

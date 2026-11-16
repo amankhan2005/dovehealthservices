@@ -3,7 +3,7 @@ import StrategyPage from "./StrategyPage";
 export default function PersonalObjective() {
   return (
     <StrategyPage
-      breadcrumb="Dove Healthcare Services, LLC > Personal objective"
+      breadcrumb="Dove Health > Personal objective"
       title="Personal objective in mental health recovery"
       introTitle="Creating meaningful life goals"
       introParagraphs={[
@@ -26,10 +26,10 @@ export default function PersonalObjective() {
       ]}
       closingTitle="Achieving long-term success"
       closingParagraphs={[
-        "With proper treatment and support, individuals can live meaningful, productive, and independent lives. Dove Healthcare Services is committed to helping every individual achieve recovery and wellness.",
+        "With proper treatment and support, individuals can live meaningful, productive, and independent lives. Dove Health is committed to helping every individual achieve recovery and wellness.",
       ]}
       ctaTitle="Start your recovery journey"
-      ctaSubtitle="Contact Dove Healthcare Services today."
+      ctaSubtitle="Contact Dove Health today."
       ctaLabel="Contact us"
     />
   );

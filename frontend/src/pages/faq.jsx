@@ -225,13 +225,13 @@ export default function FAQ() {
       <div className="faq-inner">
         {/* HEADER */}
         <div className="faq-head">
-          <p className="faq-eyebrow">Dove Healthcare Services Support</p>
+          <p className="faq-eyebrow">Dove Health Support</p>
           <h1 className="faq-h1">
             Frequently asked <span>questions</span>
           </h1>
           <p>
             Find answers about our outpatient programs, appointments, and
-            what to expect from care at Dove Healthcare Services.
+            what to expect from care at Dove Health.
           </p>
         </div>
 
@@ -274,7 +274,7 @@ export default function FAQ() {
 /* FAQ DATA */
 const faqData = [
   {
-    q: "What services does Dove Healthcare Services provide?",
+    q: "What services does Dove Health provide?",
     a: "We offer Outpatient Mental Health Clinic (OMHC) services, a Psychiatric Rehabilitation Program (PRP), family counseling, personal counseling, and DUI education for adults and children across Maryland.",
   },
   {
@@ -283,7 +283,7 @@ const faqData = [
   },
   {
     q: "Are your clinicians licensed and accredited?",
-    a: "Yes. Dove Healthcare Services is a certified outpatient mental health clinic approved by the Maryland Department of Behavioral Health Administration and accredited by The Joint Commission.",
+    a: "Yes. Dove Health (Dove Healthcare Services, LLC) is a certified outpatient mental health clinic approved by the Maryland Department of Behavioral Health Administration and accredited by The Joint Commission.",
   },
   {
     q: "What is PRP and who is it for?",

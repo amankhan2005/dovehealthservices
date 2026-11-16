@@ -435,7 +435,7 @@ export default function Prp() {
         <div className="omhc-header-glow" />
         <div className="omhc-header-inner">
           <p className="omhc-breadcrumb">
-            Dove Healthcare Services, LLC &gt; Services &gt; PRP
+            Dove Health &gt; Services &gt; PRP
           </p>
           <h1 className="omhc-h1">
             Psychiatric Rehabilitation Program (PRP)

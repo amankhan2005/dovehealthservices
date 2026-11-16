@@ -76,7 +76,7 @@ export const createEnquiry = async (req, res) => {
 
       html: `
 
-        <h2>Thank you for contacting Dove Healthcare</h2>
+        <h2>Thank you for contacting Dove Health</h2>
 
         <p>Dear ${name},</p>
 
@@ -90,7 +90,7 @@ export const createEnquiry = async (req, res) => {
 
         <br>
 
-        <p>Dove Healthcare Services</p>
+        <p>Dove Health</p>
 
       `,
 

@@ -263,7 +263,7 @@ export default function TreatmentRecovery() {
       <section className="treatment-header">
         <div className="treatment-header-glow" />
         <div className="treatment-header-inner">
-          <p className="treatment-breadcrumb">Dove Healthcare Services, LLC &gt; Treatment &amp; recovery</p>
+          <p className="treatment-breadcrumb">Dove Health &gt; Treatment &amp; recovery</p>
           <h1 className="treatment-h1">Treatment &amp; recovery</h1>
           <div className="treatment-h1-rule">
             <span className="bar" />
@@ -275,9 +275,9 @@ export default function TreatmentRecovery() {
       {/* INTRO */}
       <section className="treatment-text-section">
         <div className="treatment-eyebrow-bar" />
-        <h2>Welcome to Dove Healthcare Services</h2>
+        <h2>Welcome to Dove Health</h2>
         <p>
-          At Dove Healthcare Services, we specialize in providing treatment
+          At Dove Health, we specialize in providing treatment
           and recovery support for individuals living with serious mental
           health conditions including schizophrenia, schizoaffective
           disorder, bipolar I disorder, and other behavioral health
@@ -343,7 +343,7 @@ export default function TreatmentRecovery() {
           individuals can successfully manage their mental health condition.
         </p>
         <p>
-          Dove Healthcare Services is committed to helping every individual
+          Dove Health is committed to helping every individual
           achieve a healthier, stable, and fulfilling future.
         </p>
       </section>
@@ -354,11 +354,11 @@ export default function TreatmentRecovery() {
         <div className="treatment-cta-inner">
           <h2>Start your recovery journey today</h2>
           <p>
-            Contact Dove Healthcare Services to learn how our programs can
+            Contact Dove Health to learn how our programs can
             help you or your loved one achieve recovery and wellness.
           </p>
           <Link to="/contact-us" className="treatment-cta-link">
-            Contact Dove Healthcare Services
+            Contact Dove Health
           </Link>
         </div>
       </section>

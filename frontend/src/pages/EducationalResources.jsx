@@ -527,7 +527,7 @@ export default function EducationalResources() {
       <section className="res-header">
         <div className="res-header-glow" />
         <div className="res-header-inner">
-          <p className="res-breadcrumb">Dove Healthcare Services, LLC &gt; Resources</p>
+          <p className="res-breadcrumb">Dove Health &gt; Resources</p>
           <h1 className="res-h1">Educational resources</h1>
           <div className="res-h1-rule">
             <span className="bar" />
@@ -557,7 +557,7 @@ export default function EducationalResources() {
               </a>
               <Link to="/book-appointment" className="res-crisis-link">
                 <Users size={16} />
-                Contact Dove Healthcare
+                Contact Dove Health
               </Link>
             </div>
           </div>
