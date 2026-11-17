@@ -1,6 +1,188 @@
 import { useState, useEffect } from "react";
-import heroVideo from "../../assets/hero.mp4";
-import heroPoster from "../../assets/hero.png";
+import { Phone } from "lucide-react";
+import ArrowIcon from "../ui/ArrowIcon";
+import heroImg from "../../assets/hero/hero-session.webp";
+import heroImgSm from "../../assets/hero/hero-session-640.webp";
+import heroInset from "../../assets/hero/hero-smile.webp";
+
+const HERO_CSS = `
+  .home-hero {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding: clamp(40px, 6vw, 88px) 0 clamp(64px, 8vw, 112px);
+    background:
+      radial-gradient(900px 520px at 100% 0%, rgba(207, 222, 236, 0.7), transparent 62%),
+      radial-gradient(800px 480px at 0% 100%, rgba(245, 238, 229, 0.95), transparent 60%),
+      var(--dh-sand-50);
+  }
+
+  .home-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(48px, 7vw, 72px);
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .home-hero__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); }
+    .home-hero { min-height: calc(100vh - var(--dh-header-h)); display: flex; align-items: center; }
+    .home-hero > .dh-container { width: 100%; }
+  }
+
+  .home-hero__copy { max-width: 640px; }
+
+  .home-hero__animate { animation: home-hero-in 0.7s var(--dh-ease) both; }
+  .home-hero__animate.d1 { animation-delay: 0.06s; }
+  .home-hero__animate.d2 { animation-delay: 0.12s; }
+
+  @keyframes home-hero-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .home-hero__title {
+    white-space: pre-line;
+    font-size: clamp(2.6rem, 1.5rem + 3.6vw, 4.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.028em;
+  }
+
+  .home-hero__stack { display: grid; }
+  .home-hero__stack > * { grid-area: 1 / 1; visibility: hidden; }
+  .home-hero__stack > .is-active { visibility: visible; }
+  .home-hero__stack > .dh-eyebrow { margin-bottom: 20px; }
+
+  .home-hero__desc {
+    margin-top: 26px;
+    max-width: 52ch;
+  }
+
+  .home-hero__desc > p { margin: 0; }
+
+  .home-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  .home-hero__dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 44px;
+  }
+
+  .home-hero__dot {
+    position: relative;
+    width: 32px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .home-hero__dot::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 3px;
+    border-radius: 3px;
+    transform: translateY(-50%);
+    background: var(--dh-sky-200);
+    transition: background-color 0.3s;
+  }
+
+  .home-hero__dot.is-active::before { background: var(--dh-accent); }
+
+  /* Visual composition */
+  .home-hero__visual {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 0 36px 36px;
+  }
+
+  @media (min-width: 1024px) {
+    .home-hero__visual { margin: 0 0 0 auto; }
+  }
+
+  .home-hero__mark {
+    position: absolute;
+    z-index: -1;
+    top: -6%;
+    left: -10%;
+    width: 46%;
+    opacity: 0.16;
+    transform: rotate(-6deg);
+  }
+
+  .home-hero__ring {
+    position: absolute;
+    z-index: -1;
+    right: -7%;
+    top: 12%;
+    width: 46%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(67, 101, 133, 0.28);
+  }
+
+  .home-hero__frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 999px 999px 32px 32px;
+    box-shadow: var(--dh-shadow-lg);
+    background: var(--dh-sand-100);
+  }
+
+  .home-hero__frame img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 30%;
+  }
+
+  .home-hero__inset {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 38%;
+    aspect-ratio: 1;
+    padding: 6px;
+    border-radius: 28px;
+    background: #fff;
+    box-shadow: var(--dh-shadow-md);
+  }
+
+  .home-hero__inset img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 22px;
+  }
+
+  @media (max-width: 1023px) {
+    .home-hero__copy { margin: 0 auto; }
+    .home-hero__visual { max-width: 440px; }
+  }
+
+  @media (max-width: 520px) {
+    .home-hero__visual { padding: 0 0 26px 22px; }
+    .home-hero__frame { border-radius: 999px 999px 24px 24px; }
+    .home-hero__inset { border-radius: 22px; padding: 5px; }
+    .home-hero__inset img { border-radius: 17px; }
+    .home-hero__ctas .dh-btn { flex: 1 1 100%; }
+    .home-hero__dots { margin-top: 28px; }
+  }
+`;
 
 export default function Hero() {
   const slides = [
@@ -16,234 +198,113 @@ export default function Hero() {
   },
 ];
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
+    // Respect reduced-motion preferences: no automatic rotation.
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (paused || reduceMotion) return undefined;
+
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % slides.length);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [paused, slides.length]);
 
   return (
-    <section className="hero-section">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+    <section
+      className="home-hero"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
+      <style>{HERO_CSS}</style>
 
-        .hero-section {
-          --navy: #16314F;
-          --navy-deep: #0E2138;
-          --blue: #2F86C6;
-          --peach: #F2A878;
-          --peach-deep: #E8895A;
-          position: relative;
-          min-height: 100vh;
-          display: flex;
-          align-items: center;
-          overflow: hidden;
-          font-family: 'Inter', sans-serif;
-        }
+      <div className="dh-container home-hero__grid">
+        <div className="home-hero__copy">
+          {/* All slides share one grid cell, so the block keeps the height of the
+              tallest slide and nothing below it shifts when the text rotates. */}
+          <div className="home-hero__stack">
+            {slides.map((slide, i) => (
+              <p
+                key={`label-${i}-${index}`}
+                className={`dh-eyebrow${i === index ? " is-active home-hero__animate" : ""}`}
+                aria-hidden={i !== index}
+              >
+                {slide.label}
+              </p>
+            ))}
+          </div>
 
-        .hero-video {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          z-index: 0;
-        }
+          <h1 className="dh-h1 home-hero__title home-hero__stack">
+            {slides.map((slide, i) => (
+              <span
+                key={`title-${i}-${index}`}
+                className={i === index ? "is-active home-hero__animate d1" : undefined}
+                aria-hidden={i !== index}
+              >
+                {slide.title}
+              </span>
+            ))}
+          </h1>
 
-        .hero-video-fade {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          background: linear-gradient(
-            100deg,
-            var(--navy-deep) 0%,
-            var(--navy-deep) 32%,
-            rgba(14, 33, 56, 0.85) 46%,
-            rgba(14, 33, 56, 0.35) 64%,
-            rgba(14, 33, 56, 0.08) 100%
-          );
-        }
+          <div className="home-hero__desc home-hero__stack">
+            {slides.map((slide, i) => (
+              <p
+                key={`desc-${i}-${index}`}
+                className={`dh-lead${i === index ? " is-active home-hero__animate d2" : ""}`}
+                aria-hidden={i !== index}
+              >
+                {slide.desc}
+              </p>
+            ))}
+          </div>
 
-        .hero-content {
-          position: relative;
-          z-index: 2;
-          width: 100%;
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 140px 24px 100px;
-        }
+          <div className="home-hero__ctas">
+            <a href="/book-appointment" className="dh-btn dh-btn--primary">
+              Book appointment
+              <ArrowIcon />
+            </a>
+            <a href="tel:+14109882335" className="dh-btn dh-btn--secondary">
+              <Phone size={17} aria-hidden="true" />
+              Call us now
+            </a>
+          </div>
 
-        @media (max-width: 900px) {
-          .hero-video-fade {
-            background: linear-gradient(
-              180deg,
-              var(--navy-deep) 0%,
-              var(--navy-deep) 38%,
-              rgba(14, 33, 56, 0.88) 58%,
-              rgba(14, 33, 56, 0.5) 78%,
-              rgba(14, 33, 56, 0.2) 100%
-            );
-          }
-        }
-
-        .hero-label {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          margin-bottom: 28px;
-        }
-
-        .hero-label .line {
-          width: 40px;
-          height: 2px;
-          background: var(--peach);
-          flex-shrink: 0;
-        }
-
-        .hero-label p {
-          font-size: 13px;
-          font-weight: 600;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--peach);
-          margin: 0;
-        }
-
-        .hero-title {
-          font-family: 'Manrope', sans-serif;
-          font-weight: 800;
-          letter-spacing: -1px;
-          color: #fff;
-          font-size: clamp(2.4rem, 1.6rem + 3.2vw, 4.4rem);
-          line-height: 1.1;
-          white-space: pre-line;
-          margin: 0;
-          max-width: 16ch;
-        }
-
-        .hero-desc {
-          margin-top: 28px;
-          max-width: 46ch;
-          font-size: 17px;
-          line-height: 1.7;
-          color: rgba(255, 255, 255, 0.78);
-        }
-
-        .hero-ctas {
-          margin-top: 40px;
-          display: flex;
-          flex-wrap: wrap;
-          gap: 16px;
-        }
-
-        .hero-cta {
-          display: inline-flex;
-          align-items: center;
-          padding: 16px 36px;
-          border-radius: 100px;
-          font-weight: 700;
-          font-size: 15px;
-          text-decoration: none;
-          transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .hero-cta.primary {
-          background: var(--peach);
-          color: #fff;
-          box-shadow: 0 14px 32px -10px rgba(242, 168, 120, 0.5);
-        }
-
-        .hero-cta.primary:hover {
-          background: var(--peach-deep);
-          transform: translateY(-2px);
-        }
-
-        .hero-cta.secondary {
-          background: rgba(255, 255, 255, 0.1);
-          color: #fff;
-          border: 1.5px solid rgba(255, 255, 255, 0.4);
-        }
-
-        .hero-cta.secondary:hover {
-          background: #fff;
-          color: var(--navy);
-          border-color: #fff;
-          transform: translateY(-2px);
-        }
-
-        .hero-dots {
-          position: absolute;
-          z-index: 2;
-          left: 24px;
-          bottom: 36px;
-          display: flex;
-          gap: 8px;
-        }
-
-        @media (min-width: 1280px) {
-          .hero-dots { left: calc((100vw - 1280px) / 2 + 24px); }
-        }
-
-        .hero-dot {
-          width: 28px;
-          height: 3px;
-          border-radius: 3px;
-          background: rgba(255, 255, 255, 0.3);
-          border: none;
-          padding: 0;
-          cursor: pointer;
-          transition: background 0.3s ease;
-        }
-
-        .hero-dot.active {
-          background: var(--peach);
-        }
-      `}</style>
-
-      <video
-        className="hero-video"
-        src={heroVideo}
-        poster={heroPoster}
-        autoPlay
-        muted
-        loop
-        playsInline
-        aria-hidden="true"
-      />
-      <div className="hero-video-fade" />
-
-      <div className="hero-content">
-        <div className="hero-label">
-          <span className="line" />
-          <p>{slides[index].label}</p>
+          <div className="home-hero__dots">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIndex(i)}
+                className={`home-hero__dot${i === index ? " is-active" : ""}`}
+                aria-label={`Show slide ${i + 1}`}
+                aria-current={i === index ? "true" : undefined}
+              />
+            ))}
+          </div>
         </div>
 
-        <h1 className="hero-title">{slides[index].title}</h1>
-
-        <p className="hero-desc">{slides[index].desc}</p>
-
-        <div className="hero-ctas">
-          <a href="/book-appointment" className="hero-cta primary">
-            Book appointment
-          </a>
-          <a href="tel:+14109882335" className="hero-cta secondary">
-            Call us now
-          </a>
+        <div className="home-hero__visual" aria-hidden="true">
+          <span className="home-hero__mark dh-dove-mark" />
+          <span className="home-hero__ring" />
+          <div className="home-hero__frame">
+            <img
+              src={heroImg}
+              srcSet={`${heroImgSm} 640w, ${heroImg} 960w`}
+              sizes="(min-width: 1024px) 520px, (min-width: 520px) 440px, 90vw"
+              alt=""
+              width={960}
+              height={1200}
+              fetchPriority="high"
+              decoding="async"
+            />
+          </div>
+          <div className="home-hero__inset">
+            <img src={heroInset} alt="" width={400} height={400} loading="lazy" decoding="async" />
+          </div>
         </div>
-      </div>
-
-      <div className="hero-dots">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setIndex(i)}
-            className={`hero-dot ${i === index ? "active" : ""}`}
-            aria-label={`Show slide ${i + 1}`}
-          />
-        ))}
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
   import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import useReveal from "./hooks/useReveal";
 
 // Layout
 import Header from "./components/layout/Header";
@@ -35,6 +36,9 @@ import FamilyCounselling from "./pages/services/FamilyCounselling";
 import PersonalCounselling from "./pages/services/PersonalCounselling";
 
 export default function App() {
+  const { pathname } = useLocation();
+  useReveal(pathname);
+
   return (
     <>
       <RouteScrollTop />

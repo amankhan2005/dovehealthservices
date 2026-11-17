@@ -31,161 +31,111 @@ export default function EmployeePasswordGate({ children }) {
   return (
     <div className="emp-gate">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&display=swap');
-
         .emp-gate {
-          --navy: #16314F;
-          --navy-deep: #0E2138;
-          --blue: #2F86C6;
-          --blue-tint: #EAF3FA;
-          --peach: #F2A878;
-          --peach-tint: #FCEEE4;
-          --peach-deep: #E8895A;
-          --paper: #FBF9F7;
-          --crisis-red: #C8302B;
-          --crisis-red-tint: #FBE7E6;
-          background: var(--paper);
-          font-family: 'Inter', sans-serif;
-          min-height: 70vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 64px 24px;
+          position: relative;
+          overflow: hidden;
+          min-height: calc(100vh - var(--dh-header-h));
+          display: grid;
+          place-items: center;
+          padding: clamp(48px, 8vw, 96px) var(--dh-gutter);
+          background:
+            radial-gradient(800px 420px at 100% 0%, rgba(207, 222, 236, 0.75), transparent 60%),
+            radial-gradient(700px 380px at 0% 100%, rgba(245, 238, 229, 0.95), transparent 60%),
+            var(--dh-sand-50);
         }
-
-        .emp-gate h1 { font-family: 'Manrope', sans-serif; }
-
         .emp-gate-card {
+          position: relative;
           width: 100%;
           max-width: 440px;
+          padding: clamp(30px, 5vw, 44px);
+          border: 1px solid var(--dh-line);
+          border-radius: var(--dh-radius-lg);
           background: #fff;
-          border: 1px solid #EFEAE5;
-          border-radius: 20px;
-          padding: 40px 32px;
-          box-shadow: 0 20px 44px -24px rgba(22, 49, 79, 0.22);
+          box-shadow: var(--dh-shadow-lg);
+          text-align: center;
         }
-
         .emp-gate-icon {
-          width: 52px;
-          height: 52px;
-          border-radius: 14px;
-          background: var(--peach-tint);
-          color: var(--peach-deep);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 22px;
+          width: 56px;
+          height: 56px;
+          margin: 0 auto 22px;
+          display: grid;
+          place-items: center;
+          border-radius: 18px;
+          background: var(--dh-brand);
+          color: #fff;
+          box-shadow: 0 14px 26px -14px rgba(11, 64, 119, 0.7);
         }
-
         .emp-gate-card h1 {
-          font-weight: 800;
-          letter-spacing: -0.5px;
-          font-size: 1.6rem;
-          color: var(--navy);
           margin: 0 0 10px;
+          font-family: var(--dh-font-display);
+          font-size: 2rem;
+          font-weight: 500;
+          letter-spacing: -0.015em;
+          color: var(--dh-ink);
         }
-
-        .emp-gate-card > p {
-          font-size: 15px;
-          line-height: 1.65;
-          color: #6A7783;
-          margin: 0 0 28px;
-        }
-
-        .emp-gate-label {
-          display: block;
-          font-size: 13px;
-          font-weight: 600;
-          letter-spacing: 0.3px;
-          color: var(--navy);
-          margin-bottom: 8px;
-        }
-
+        .emp-gate-card > p { margin: 0 0 28px; font-size: 15px; line-height: 1.65; color: var(--dh-ink-2); }
+        .emp-gate-card form { text-align: left; }
+        .emp-gate-label { display: block; margin-bottom: 8px; font-size: 13.5px; font-weight: 600; color: var(--dh-ink); }
         .emp-gate-field { position: relative; }
-
         .emp-gate-field input {
           width: 100%;
-          padding: 14px 46px 14px 16px;
-          border: 1px solid #E2DAD2;
-          border-radius: 12px;
-          font-size: 15px;
-          font-family: inherit;
-          color: var(--navy);
-          background: var(--paper);
-          outline: none;
-          transition: border-color 0.2s ease, box-shadow 0.2s ease;
+          min-height: 52px;
+          padding: 13px 52px 13px 16px;
+          border: 1.5px solid var(--dh-line);
+          border-radius: 14px;
+          background: #fff;
+          font-family: var(--dh-font-sans);
+          font-size: 15.5px;
+          color: var(--dh-ink);
+          transition: border-color 0.2s, box-shadow 0.2s;
         }
-
-        .emp-gate-field input:focus {
-          border-color: var(--blue);
-          box-shadow: 0 0 0 3px rgba(47, 134, 198, 0.15);
-        }
-
+        .emp-gate-field input:focus { outline: none; border-color: var(--dh-brand); box-shadow: 0 0 0 4px rgba(11, 64, 119, 0.12); }
         .emp-gate-toggle {
           position: absolute;
           right: 6px;
           top: 50%;
           transform: translateY(-50%);
-          width: 36px;
-          height: 36px;
-          border: none;
-          background: none;
-          color: #8A97A2;
+          width: 40px;
+          height: 40px;
+          display: grid;
+          place-items: center;
+          border: 0;
+          border-radius: 10px;
+          background: transparent;
+          color: var(--dh-muted);
           cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 8px;
         }
-
-        .emp-gate-toggle:hover { color: var(--navy); background: var(--blue-tint); }
-
+        .emp-gate-toggle:hover { background: var(--dh-sky-50); color: var(--dh-brand); }
         .emp-gate-error {
           display: flex;
           align-items: flex-start;
           gap: 8px;
-          margin-top: 14px;
+          margin-top: 12px;
           padding: 12px 14px;
-          border-radius: 10px;
-          background: var(--crisis-red-tint);
-          border-left: 3px solid var(--crisis-red);
+          border-radius: 12px;
+          background: var(--dh-crisis-50);
           font-size: 13.5px;
           line-height: 1.5;
-          color: #791F1F;
+          color: #9b1c14;
         }
-
         .emp-gate-error svg { flex-shrink: 0; margin-top: 1px; }
-
         .emp-gate-submit {
           width: 100%;
-          margin-top: 24px;
-          padding: 15px 24px;
-          border: none;
-          border-radius: 100px;
-          background: var(--peach);
-          color: #fff;
-          font-family: inherit;
-          font-weight: 700;
+          min-height: 52px;
+          margin-top: 18px;
+          border: 0;
+          border-radius: var(--dh-radius-pill);
+          background: var(--dh-brand);
+          font-family: var(--dh-font-sans);
           font-size: 15px;
+          font-weight: 600;
+          color: #fff;
           cursor: pointer;
-          transition: background 0.2s ease, transform 0.2s ease;
-          box-shadow: 0 14px 32px -12px rgba(242, 168, 120, 0.55);
+          box-shadow: 0 12px 26px -14px rgba(11, 64, 119, 0.7);
+          transition: background-color 0.25s, transform 0.25s var(--dh-ease);
         }
-
-        .emp-gate-submit:hover { background: var(--peach-deep); transform: translateY(-1px); }
-
-        .emp-gate-note {
-          margin: 22px 0 0;
-          font-size: 12.5px;
-          line-height: 1.6;
-          color: #8A97A2;
-          text-align: center;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .emp-gate-submit { transition: none; }
-          .emp-gate-submit:hover { transform: none; }
-        }
+        .emp-gate-submit:hover { background: var(--dh-brand-700); transform: translateY(-1px); }
+        .emp-gate-note { margin: 22px 0 0; font-size: 13px; color: var(--dh-muted); }
       `}</style>
 
       <div className="emp-gate-card">

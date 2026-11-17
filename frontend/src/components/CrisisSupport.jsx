@@ -5,130 +5,74 @@ export default function CrisisSupport() {
   return (
     <section className="crisis-strip">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
-
         .crisis-strip {
-          --crisis-red: #C8302B;
-          --crisis-red-deep: #A8241F;
           position: relative;
-          background: linear-gradient(100deg, var(--crisis-red) 0%, var(--crisis-red-deep) 100%);
+          background: var(--dh-crisis);
           color: #fff;
-          overflow: hidden;
         }
-
-        .crisis-glow {
-          position: absolute;
-          top: -40px;
-          right: 40px;
-          width: 200px;
-          height: 200px;
-          background: rgba(255, 255, 255, 0.08);
-          border-radius: 50%;
-          filter: blur(50px);
-          pointer-events: none;
-        }
-
+        .crisis-glow { display: none; }
         .crisis-inner {
-          position: relative;
-          max-width: 1280px;
+          max-width: calc(var(--dh-container) + var(--dh-gutter) * 2);
           margin: 0 auto;
-          padding: 18px 24px;
+          padding: 16px var(--dh-gutter);
           display: flex;
           flex-wrap: wrap;
           align-items: center;
           justify-content: space-between;
-          gap: 16px;
+          gap: 14px 24px;
         }
-
-        .crisis-message {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-
+        .crisis-message { display: flex; align-items: center; gap: 14px; }
         .crisis-icon {
           display: none;
-          width: 38px;
-          height: 38px;
+          width: 40px;
+          height: 40px;
           flex-shrink: 0;
           align-items: center;
           justify-content: center;
           border-radius: 50%;
           background: rgba(255, 255, 255, 0.14);
-          border: 1px solid rgba(255, 255, 255, 0.28);
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
         }
-
-        @media (min-width: 640px) {
-          .crisis-icon { display: flex; }
-        }
-
+        @media (min-width: 640px) { .crisis-icon { display: flex; } }
         .crisis-text h2 {
-          font-family: 'Manrope', sans-serif;
-          font-weight: 800;
+          font-family: var(--dh-font-sans);
+          font-weight: 700;
           font-size: 15.5px;
           line-height: 1.35;
           margin: 0;
         }
-
         .crisis-text p {
-          font-family: 'Inter', sans-serif;
-          font-size: 12.5px;
-          color: rgba(255, 255, 255, 0.85);
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.86);
           margin: 2px 0 0;
         }
-
-        .crisis-actions {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-        }
-
+        .crisis-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
         .crisis-chip {
           display: inline-flex;
           align-items: center;
           gap: 7px;
-          font-family: 'Inter', sans-serif;
-          font-weight: 700;
-          font-size: 13px;
-          padding: 9px 16px;
-          border-radius: 100px;
+          min-height: 40px;
+          padding: 0 16px;
+          border-radius: var(--dh-radius-pill);
+          font-weight: 600;
+          font-size: 13.5px;
           white-space: nowrap;
           text-decoration: none;
-          transition: background 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+          transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
         }
-
-        .crisis-chip:hover {
-          transform: translateY(-1px);
-        }
-
-        .crisis-chip.primary {
-          background: #fff;
-          color: var(--crisis-red);
-        }
-
-        .crisis-chip.primary:hover {
-          background: #FCEEC9;
-        }
-
+        .crisis-chip.primary { background: #fff; color: var(--dh-crisis-700); }
+        .crisis-chip.primary:hover { background: var(--dh-crisis-50); }
         .crisis-chip.outline {
-          background: rgba(255, 255, 255, 0.12);
+          background: transparent;
           color: #fff;
-          border: 1px solid rgba(255, 255, 255, 0.32);
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
         }
-
-        .crisis-chip.outline:hover {
-          background: rgba(255, 255, 255, 0.2);
-          border-color: rgba(255, 255, 255, 0.55);
-        }
-
-        .crisis-chip.er {
-          display: none;
-        }
-
-        @media (min-width: 640px) {
-          .crisis-chip.er { display: inline-flex; }
+        .crisis-chip.outline:hover { background: rgba(255, 255, 255, 0.12); box-shadow: inset 0 0 0 1px #fff; }
+        .crisis-chip.er { display: none; }
+        @media (min-width: 640px) { .crisis-chip.er { display: inline-flex; } }
+        @media (max-width: 639px) {
+          .crisis-actions { width: 100%; }
+          .crisis-chip { flex: 1 1 auto; justify-content: center; }
         }
       `}</style>
 

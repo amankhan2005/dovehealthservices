@@ -14,105 +14,75 @@ export default function Footer() {
   return (
     <footer className="dove-footer">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
-
         .dove-footer {
-          --navy: #16314F;
-          --navy-deep: #102338;
-          --blue: #5BA3DE;
-          --blue-tint: rgba(91, 163, 222, 0.12);
-          --peach: #F2A878;
-          --peach-deep: #E8895A;
           position: relative;
-          background: var(--navy-deep);
+          overflow: hidden;
+          background:
+            radial-gradient(1000px 420px at 100% 0%, rgba(67, 101, 133, 0.35), transparent 60%),
+            var(--dh-night);
           color: rgba(255, 255, 255, 0.72);
         }
 
         .dove-footer-topline {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
           height: 3px;
-          background: linear-gradient(90deg, transparent, var(--peach), transparent);
+          background: linear-gradient(90deg, var(--dh-accent) 0%, var(--dh-dove) 55%, transparent 100%);
+          opacity: 0.85;
         }
 
         .dove-footer-grid {
-          max-width: 1280px;
+          max-width: calc(var(--dh-container) + var(--dh-gutter) * 2);
           margin: 0 auto;
-          padding: 80px 24px 56px;
+          padding: clamp(64px, 8vw, 96px) var(--dh-gutter) clamp(48px, 6vw, 64px);
           display: grid;
-          grid-template-columns: 1.3fr 1fr 1fr 1.2fr;
+          grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
           gap: 48px;
         }
 
-        @media (max-width: 980px) {
-          .dove-footer-grid { grid-template-columns: 1fr 1fr; }
-        }
+        @media (max-width: 1024px) { .dove-footer-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 560px) { .dove-footer-grid { grid-template-columns: 1fr; gap: 40px; } }
 
-        @media (max-width: 560px) {
-          .dove-footer-grid { grid-template-columns: 1fr; }
-        }
-
-        .dove-footer-brand-row {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          margin-bottom: 22px;
-        }
+        .dove-footer-brand-row { display: flex; align-items: center; margin-bottom: 24px; }
 
         .dove-footer-logo-box {
-          background: #fff;
-          padding: 12px 18px;
-          border-radius: 14px;
-          flex-shrink: 0;
           display: inline-flex;
           align-items: center;
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+          padding: 12px 20px;
+          border-radius: 18px;
+          background: #fff;
+          box-shadow: 0 18px 40px -20px rgba(0, 0, 0, 0.5);
         }
 
-        .dove-footer-logo-box img {
-          height: 72px;
-          width: auto;
-          max-width: 100%;
-          display: block;
-          object-fit: contain;
-        }
-
-        @media (max-width: 560px) {
-          .dove-footer-logo-box img { height: 64px; }
-        }
+        .dove-footer-logo-box img { display: block; height: 68px; width: auto; max-width: 100%; object-fit: contain; }
+        @media (max-width: 560px) { .dove-footer-logo-box img { height: 60px; } }
 
         .dove-footer-desc {
-          font-family: 'Inter', sans-serif;
-          font-size: 14px;
-          line-height: 1.7;
-          color: rgba(255, 255, 255, 0.6);
+          max-width: 34ch;
           margin: 0 0 28px;
-          max-width: 32ch;
+          font-size: 15px;
+          line-height: 1.75;
+          color: rgba(255, 255, 255, 0.66);
         }
 
-        .dove-footer-socials {
-          display: flex;
-          gap: 12px;
-        }
+        .dove-footer-socials { display: flex; gap: 10px; }
 
         .dove-icon-chip {
           width: 40px;
           height: 40px;
-          border-radius: 50%;
-          display: flex;
+          flex-shrink: 0;
+          display: inline-flex;
           align-items: center;
           justify-content: center;
-          background: rgba(255, 255, 255, 0.08);
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.06);
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
           color: #fff;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+          transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.25s var(--dh-ease);
         }
 
-        .dove-icon-chip:hover {
-          background: var(--peach);
-          border-color: var(--peach);
+        a.dove-icon-chip:hover {
+          background: #fff;
+          color: var(--dh-brand);
+          box-shadow: none;
           transform: translateY(-2px);
         }
 
@@ -120,123 +90,79 @@ export default function Footer() {
           display: flex;
           align-items: center;
           gap: 10px;
-          font-family: 'Inter', sans-serif;
-          font-size: 13px;
-          font-weight: 700;
-          letter-spacing: 1.5px;
+          margin: 6px 0 22px;
+          font-size: 12.5px;
+          font-weight: 600;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
-          color: #fff;
-          margin: 0 0 22px;
+          color: var(--dh-accent-soft);
         }
 
-        .dove-footer-heading .bar {
-          width: 18px;
-          height: 3px;
-          border-radius: 3px;
-          background: var(--peach);
-          flex-shrink: 0;
-        }
+        .dove-footer-heading .bar { width: 18px; height: 1.5px; background: currentColor; opacity: 0.8; }
 
-        .dove-footer-links {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          flex-direction: column;
-          gap: 13px;
-        }
+        .dove-footer-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 
         .dove-footer-links a {
-          font-family: 'Inter', sans-serif;
-          font-size: 14.5px;
-          color: rgba(255, 255, 255, 0.65);
+          font-size: 15px;
+          color: rgba(255, 255, 255, 0.78);
           text-decoration: none;
-          transition: color 0.2s ease, padding-left 0.2s ease;
+          background-image: linear-gradient(currentColor, currentColor);
+          background-size: 0% 1px;
+          background-position: 0 100%;
+          background-repeat: no-repeat;
+          padding-bottom: 2px;
+          transition: color 0.2s, background-size 0.3s var(--dh-ease);
         }
 
-        .dove-footer-links a:hover {
-          color: var(--peach);
-          padding-left: 3px;
-        }
+        .dove-footer-links a:hover { color: #fff; background-size: 100% 1px; }
 
-        .dove-footer-contact {
-          display: flex;
-          flex-direction: column;
-          gap: 18px;
-        }
+        .dove-footer-contact { display: grid; gap: 14px; }
 
         .dove-contact-row {
           display: flex;
           align-items: flex-start;
           gap: 14px;
+          color: rgba(255, 255, 255, 0.82);
           text-decoration: none;
-          color: rgba(255, 255, 255, 0.75);
-          transition: color 0.2s ease;
+          transition: color 0.2s;
         }
 
-        .dove-contact-row:hover {
-          color: #fff;
-        }
-
-        .dove-contact-row .dove-icon-chip {
-          background: var(--blue-tint);
-          border-color: transparent;
-          color: var(--blue);
-          flex-shrink: 0;
-          margin-top: 1px;
-        }
-
-        .dove-contact-row:hover .dove-icon-chip {
-          background: var(--blue);
-          color: #fff;
-        }
+        .dove-contact-row:hover { color: #fff; }
+        .dove-contact-row .dove-icon-chip { color: var(--dh-accent-soft); }
+        .dove-contact-row:hover .dove-icon-chip { background: rgba(255, 255, 255, 0.12); }
 
         .dove-contact-row span {
-          font-family: 'Inter', sans-serif;
-          font-size: 14px;
+          min-width: 0;
+          padding-top: 9px;
+          font-size: 14.5px;
           line-height: 1.55;
-          padding-top: 8px;
+          overflow-wrap: anywhere;
         }
 
-        .dove-footer-bottom {
-          border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
+        .dove-footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); }
 
         .dove-footer-bottom-inner {
-          max-width: 1280px;
+          max-width: calc(var(--dh-container) + var(--dh-gutter) * 2);
           margin: 0 auto;
-          padding: 22px 24px;
+          padding: 24px var(--dh-gutter);
           display: flex;
           flex-wrap: wrap;
           align-items: center;
           justify-content: space-between;
-          gap: 10px;
+          gap: 12px 24px;
         }
 
-        .dove-footer-bottom-inner p {
-          font-family: 'Inter', sans-serif;
-          font-size: 13px;
-          color: rgba(255, 255, 255, 0.45);
-          margin: 0;
-        }
+        .dove-footer-bottom-inner p { margin: 0; font-size: 13.5px; color: rgba(255, 255, 255, 0.55); }
 
         .dove-footer-bottom-inner .dove-footer-legal {
-          font-size: 11.5px;
-          letter-spacing: 0.2px;
-          color: rgba(255, 255, 255, 0.35);
           margin-top: 4px;
+          font-size: 11.5px;
+          letter-spacing: 0.02em;
+          color: rgba(255, 255, 255, 0.38);
         }
 
-        .dove-footer-bottom-inner a {
-          font-weight: 700;
-          color: var(--peach);
-          text-decoration: none;
-        }
-
-        .dove-footer-bottom-inner a:hover {
-          color: var(--peach-deep);
-          text-decoration: underline;
-        }
+        .dove-footer-bottom-inner a { font-weight: 600; color: var(--dh-accent-soft); text-decoration: none; }
+        .dove-footer-bottom-inner a:hover { color: #fff; text-decoration: underline; }
       `}</style>
 
       <div className="dove-footer-topline" />

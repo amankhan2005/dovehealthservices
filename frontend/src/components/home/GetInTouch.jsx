@@ -3,6 +3,101 @@ import { useRef, useState } from "react";
 import { Phone, Mail, MapPin, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import MathCaptcha from "./MathCaptcha.jsx";
 
+const CONTACT_CSS = `
+  .home-contact__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(44px, 6vw, 80px);
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .home-contact__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr); }
+  }
+
+  .home-contact__intro { margin-top: 20px; max-width: 54ch; }
+
+  .home-contact__channels {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  @media (min-width: 640px) {
+    .home-contact__channels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .home-channel {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px;
+    border: 1px solid var(--dh-line);
+    border-radius: 18px;
+    background: #fff;
+    color: var(--dh-ink);
+    text-decoration: none;
+    transition: transform 0.3s var(--dh-ease), box-shadow 0.3s var(--dh-ease), border-color 0.3s;
+  }
+
+  .home-channel:hover { transform: translateY(-2px); box-shadow: var(--dh-shadow-sm); border-color: var(--dh-sky-200); }
+
+  .home-channel--wide { grid-column: 1 / -1; }
+
+  .home-channel__icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--dh-sky-50);
+    color: var(--dh-brand);
+  }
+
+  .home-channel.urgent .home-channel__icon { background: var(--dh-crisis-50); color: var(--dh-crisis); }
+  .home-channel.warn .home-channel__icon { background: var(--dh-accent-50); color: var(--dh-accent-ink); }
+
+  .home-channel__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .home-channel__label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--dh-muted);
+  }
+
+  .home-contact__disclaimer {
+    margin: 26px 0 0;
+    padding-left: 16px;
+    border-left: 2px solid var(--dh-accent);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--dh-muted);
+  }
+
+  .home-contact__card {
+    padding: clamp(26px, 4vw, 44px);
+    border-radius: var(--dh-radius-lg);
+    background: #fff;
+    border: 1px solid var(--dh-line);
+    box-shadow: var(--dh-shadow-lg);
+  }
+
+  .home-contact__form-title { font-size: 1.6rem; margin-bottom: 26px; }
+`;
+
 export default function GetInTouch() {
   const API_BASE =
     import.meta.env.VITE_API_URL ||
@@ -58,321 +153,49 @@ export default function GetInTouch() {
   }
 
   return (
-    <section className="contact-section">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&display=swap');
+    <section className="dh-section dh-section--sky home-contact">
+      <style>{CONTACT_CSS}</style>
 
-        .contact-section {
-          --navy: #1C2B3A;
-          --blue: #2F86C6;
-          --blue-tint: #EAF3FA;
-          --peach: #F2A878;
-          --peach-tint: #FCEEE4;
-          --peach-deep: #E8895A;
-          --paper: #FBF9F7;
-          --crisis-red: #C8302B;
-          --warn-amber: #B97A12;
-          --warn-amber-tint: #FCEFDB;
-          position: relative;
-          background: var(--paper);
-          padding: 96px 0;
-          overflow: hidden;
-        }
-
-        .contact-blob-blue {
-          position: absolute;
-          top: -100px;
-          right: -100px;
-          width: 380px;
-          height: 380px;
-          border-radius: 50%;
-          background: var(--blue);
-          filter: blur(90px);
-          opacity: 0.12;
-        }
-
-        .contact-blob-peach {
-          position: absolute;
-          bottom: -100px;
-          left: -100px;
-          width: 380px;
-          height: 380px;
-          border-radius: 50%;
-          background: var(--peach);
-          filter: blur(90px);
-          opacity: 0.16;
-        }
-
-        .contact-inner {
-          position: relative;
-          z-index: 1;
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 0 24px;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 72px;
-          align-items: center;
-        }
-
-        @media (max-width: 980px) {
-          .contact-inner { grid-template-columns: 1fr; gap: 48px; }
-        }
-
-        .contact-eyebrow {
-          font-family: 'Inter', sans-serif;
-          font-size: 13px;
-          font-weight: 600;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--peach-deep);
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-        }
-
-        .contact-eyebrow::before {
-          content: "";
-          width: 28px;
-          height: 2px;
-          background: var(--peach);
-        }
-
-        .contact-heading {
-          font-family: 'Manrope', sans-serif;
-          font-weight: 800;
-          letter-spacing: -0.5px;
-          color: var(--navy);
-          font-size: clamp(2rem, 1.4rem + 2.4vw, 3.1rem);
-          line-height: 1.15;
-          margin-top: 20px;
-        }
-
-        .contact-intro {
-          font-family: 'Inter', sans-serif;
-          font-size: 16px;
-          line-height: 1.75;
-          color: #51606E;
-          margin-top: 20px;
-          max-width: 48ch;
-        }
-
-        .contact-channels {
-          margin-top: 36px;
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-        }
-
-        .contact-channel {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 14px 4px;
-          text-decoration: none;
-          border-bottom: 1px solid #EFEAE5;
-          transition: padding-left 0.25s ease;
-        }
-
-        .contact-channel:hover {
-          padding-left: 8px;
-        }
-
-        .contact-channel-icon {
-          width: 44px;
-          height: 44px;
-          border-radius: 12px;
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .contact-channel.urgent .contact-channel-icon {
-          background: #FBE7E6;
-          color: var(--crisis-red);
-        }
-
-        .contact-channel.warn .contact-channel-icon {
-          background: var(--warn-amber-tint);
-          color: var(--warn-amber);
-        }
-
-        .contact-channel.brand .contact-channel-icon {
-          background: var(--blue-tint);
-          color: var(--blue);
-        }
-
-        .contact-channel-text {
-          font-family: 'Inter', sans-serif;
-          font-size: 15px;
-          font-weight: 500;
-          color: var(--navy);
-        }
-
-        .contact-channel-label {
-          display: block;
-          font-size: 12px;
-          font-weight: 600;
-          color: #8A968F;
-          margin-bottom: 2px;
-        }
-
-        .contact-channel.urgent .contact-channel-label { color: var(--crisis-red); }
-        .contact-channel.warn .contact-channel-label { color: var(--warn-amber); }
-
-        .contact-disclaimer {
-          font-family: 'Inter', sans-serif;
-          font-size: 13px;
-          line-height: 1.6;
-          color: #8A968F;
-          margin-top: 20px;
-          padding-top: 16px;
-        }
-
-        .contact-form-card {
-          background: #fff;
-          border-radius: 24px;
-          border: 1px solid #EFEAE5;
-          box-shadow: 0 24px 60px -28px rgba(28, 43, 58, 0.2);
-          padding: 40px;
-        }
-
-        @media (max-width: 480px) {
-          .contact-form-card { padding: 28px 24px; }
-        }
-
-        .contact-form-title {
-          font-family: 'Manrope', sans-serif;
-          font-weight: 700;
-          font-size: 20px;
-          color: var(--navy);
-          margin: 0 0 28px;
-        }
-
-        .contact-field {
-          margin-bottom: 18px;
-        }
-
-        .contact-field label {
-          position: absolute;
-          width: 1px;
-          height: 1px;
-          overflow: hidden;
-          clip: rect(0 0 0 0);
-        }
-
-        .contact-field input,
-        .contact-field textarea {
-          width: 100%;
-          font-family: 'Inter', sans-serif;
-          font-size: 15px;
-          color: var(--navy);
-          padding: 13px 16px;
-          border-radius: 12px;
-          border: 1px solid #E3DFD9;
-          background: var(--paper);
-          outline: none;
-          transition: border-color 0.2s ease, box-shadow 0.2s ease;
-          box-sizing: border-box;
-        }
-
-        .contact-field textarea {
-          resize: none;
-        }
-
-        .contact-field input:focus,
-        .contact-field textarea:focus {
-          border-color: var(--blue);
-          box-shadow: 0 0 0 3px rgba(47, 134, 198, 0.15);
-        }
-
-        .contact-submit {
-          width: 100%;
-          font-family: 'Inter', sans-serif;
-          font-weight: 700;
-          font-size: 15px;
-          color: #fff;
-          background: var(--peach);
-          border: none;
-          border-radius: 100px;
-          padding: 15px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          cursor: pointer;
-          transition: background 0.2s ease, transform 0.2s ease;
-        }
-
-        .contact-submit:hover:not(:disabled) {
-          background: var(--peach-deep);
-          transform: translateY(-1px);
-        }
-
-        .contact-submit:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-
-        .contact-status {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-family: 'Inter', sans-serif;
-          font-size: 14px;
-          margin-top: 16px;
-        }
-
-        .contact-status.success { color: #2F8F5B; }
-        .contact-status.error { color: var(--crisis-red); }
-      `}</style>
-
-      <div className="contact-blob-blue" />
-      <div className="contact-blob-peach" />
-
-      <div className="contact-inner">
+      <div className="dh-container home-contact__grid">
         {/* LEFT CONTENT */}
-        <div>
-          <span className="contact-eyebrow">Get in Touch</span>
-
-          <h2 className="contact-heading">
+        <div data-reveal>
+          <span className="dh-eyebrow">Get in Touch</span>
+          <h2 className="dh-h2">
             Need immediate mental health support?
           </h2>
-
-          <p className="contact-intro">
+          <p className="dh-lead home-contact__intro">
             If you or your loved one is facing an urgent mental health
             concern, our experienced professionals are ready to provide
             guidance, reassurance, and compassionate care.
           </p>
 
-          <div className="contact-channels">
-            <a href="tel:911" className="contact-channel urgent">
-              <div className="contact-channel-icon">
+          <div className="home-contact__channels">
+            <a href="tel:911" className="home-channel urgent">
+              <div className="home-channel__icon">
                 <Phone size={19} />
               </div>
-              <span className="contact-channel-text">
-                <span className="contact-channel-label">Medical emergency</span>
+              <span className="home-channel__text">
+                <span className="home-channel__label">Medical emergency</span>
                 Call 911
               </span>
             </a>
 
-            <a href="tel:988" className="contact-channel warn">
-              <div className="contact-channel-icon">
+            <a href="tel:988" className="home-channel warn">
+              <div className="home-channel__icon">
                 <Phone size={19} />
               </div>
-              <span className="contact-channel-text">
-                <span className="contact-channel-label">Mental health crisis</span>
+              <span className="home-channel__text">
+                <span className="home-channel__label">Mental health crisis</span>
                 Call or text 988
               </span>
             </a>
 
-            <a href="mailto:careteam@dovehealthservices.com" className="contact-channel brand">
-              <div className="contact-channel-icon">
+            <a href="mailto:careteam@dovehealthservices.com" className="home-channel brand home-channel--wide">
+              <div className="home-channel__icon">
                 <Mail size={19} />
               </div>
-              <span className="contact-channel-text">
-                <span className="contact-channel-label">Email</span>
+              <span className="home-channel__text">
+                <span className="home-channel__label">Email</span>
                 careteam@dovehealthservices.com
               </span>
             </a>
@@ -381,31 +204,31 @@ export default function GetInTouch() {
               href="https://www.google.com/maps/search/?api=1&query=2101+St+Paul+St+Baltimore+MD+21218"
               target="_blank"
               rel="noopener noreferrer"
-              className="contact-channel brand"
+              className="home-channel brand home-channel--wide"
             >
-              <div className="contact-channel-icon">
+              <div className="home-channel__icon">
                 <MapPin size={19} />
               </div>
-              <span className="contact-channel-text">
-                <span className="contact-channel-label">Visit us</span>
+              <span className="home-channel__text">
+                <span className="home-channel__label">Visit us</span>
                 2101 St Paul St, 1st FL, Baltimore MD 21218
               </span>
             </a>
           </div>
 
-          <p className="contact-disclaimer">
+          <p className="home-contact__disclaimer">
             If you are experiencing a medical emergency, call 911
             immediately. For mental health crisis support, call or text 988.
           </p>
         </div>
 
         {/* RIGHT FORM */}
-        <div className="contact-form-card">
-          <h3 className="contact-form-title">Request an appointment</h3>
+        <div className="home-contact__card" data-reveal style={{ "--dh-reveal-delay": "120ms" }}>
+          <h3 className="dh-h3 home-contact__form-title">Request an appointment</h3>
 
-          <form onSubmit={handleSubmit} noValidate>
-            <div className="contact-field">
-              <label htmlFor="gi-name">Full name</label>
+          <form onSubmit={handleSubmit} noValidate className="dh-form">
+            <div className="dh-field">
+              <label className="dh-label" htmlFor="gi-name">Full name</label>
               <input
                 id="gi-name"
                 name="name"
@@ -414,36 +237,41 @@ export default function GetInTouch() {
                 type="text"
                 placeholder="Full name"
                 required
+                className="dh-input"
               />
             </div>
 
-            <div className="contact-field">
-              <label htmlFor="gi-email">Email address</label>
-              <input
-                id="gi-email"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                type="email"
-                placeholder="Email address"
-                required
-              />
+            <div className="dh-form-row">
+              <div className="dh-field">
+                <label className="dh-label" htmlFor="gi-email">Email address</label>
+                <input
+                  id="gi-email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  type="email"
+                  placeholder="Email address"
+                  required
+                  className="dh-input"
+                />
+              </div>
+
+              <div className="dh-field">
+                <label className="dh-label" htmlFor="gi-phone">Phone number</label>
+                <input
+                  id="gi-phone"
+                  name="phone"
+                  value={form.phone}
+                  onChange={handleChange}
+                  type="tel"
+                  placeholder="Phone number"
+                  className="dh-input"
+                />
+              </div>
             </div>
 
-            <div className="contact-field">
-              <label htmlFor="gi-phone">Phone number</label>
-              <input
-                id="gi-phone"
-                name="phone"
-                value={form.phone}
-                onChange={handleChange}
-                type="tel"
-                placeholder="Phone number"
-              />
-            </div>
-
-            <div className="contact-field">
-              <label htmlFor="gi-message">How can we help you?</label>
+            <div className="dh-field">
+              <label className="dh-label" htmlFor="gi-message">How can we help you?</label>
               <textarea
                 id="gi-message"
                 name="message"
@@ -451,18 +279,19 @@ export default function GetInTouch() {
                 onChange={handleChange}
                 placeholder="How can we help you?"
                 rows="4"
+                className="dh-input"
               />
             </div>
 
             <MathCaptcha
               ref={captchaRef}
               onValidChange={setCaptchaOk}
-              className="contact-field"
+              className="dh-field"
             />
 
             <button
               type="submit"
-              className="contact-submit"
+              className="dh-btn dh-btn--primary dh-btn--block"
               disabled={loading || !captchaOk}
             >
               {loading ? (
@@ -476,13 +305,14 @@ export default function GetInTouch() {
             </button>
 
             {status === "success" && (
-              <p className="contact-status success" role="status">
+              <p className="dh-alert dh-alert--success" role="status">
                 <CheckCircle2 size={16} />
                 Thanks! We've received your request and will reach out shortly.
               </p>
             )}
+
             {status === "error" && (
-              <p className="contact-status error" role="alert">
+              <p className="dh-alert dh-alert--error" role="alert">
                 <AlertCircle size={16} />
                 Something went wrong. Please try again or call us directly.
               </p>

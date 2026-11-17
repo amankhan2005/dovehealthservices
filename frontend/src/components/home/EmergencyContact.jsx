@@ -8,129 +8,82 @@ export default function EmergencyContact() {
   return (
     <section className="emergency-section">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
-
         .emergency-section {
-          --crisis-red: #C8302B;
-          --crisis-red-deep: #A8241F;
           position: relative;
-          background: linear-gradient(100deg, var(--crisis-red) 0%, var(--crisis-red-deep) 100%);
-          color: #fff;
+          padding: clamp(40px, 6vw, 72px) var(--dh-gutter);
+          background: #fff;
+          border-top: 1px solid var(--dh-line);
         }
-
-        .emergency-hairline {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 3px;
-          background: rgba(255, 255, 255, 0.25);
-        }
-
+        .emergency-hairline { display: none; }
         .emergency-inner {
-          max-width: 1280px;
+          position: relative;
+          overflow: hidden;
+          max-width: var(--dh-container);
           margin: 0 auto;
-          padding: 44px 24px;
+          padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 48px);
+          border-radius: var(--dh-radius-lg);
+          background:
+            radial-gradient(600px 260px at 100% 0%, rgba(255, 255, 255, 0.12), transparent 60%),
+            linear-gradient(110deg, var(--dh-crisis) 0%, var(--dh-crisis-700) 100%);
+          color: #fff;
           display: flex;
           flex-wrap: wrap;
           align-items: center;
           justify-content: space-between;
-          gap: 32px;
+          gap: 28px 40px;
+          box-shadow: 0 30px 60px -36px rgba(143, 28, 19, 0.6);
         }
-
-        .emergency-message {
-          display: flex;
-          align-items: flex-start;
-          gap: 18px;
-          flex: 1 1 360px;
-        }
-
+        .emergency-message { display: flex; align-items: flex-start; gap: 18px; flex: 1 1 380px; }
         .emergency-icon {
-          width: 52px;
-          height: 52px;
+          width: 54px;
+          height: 54px;
           flex-shrink: 0;
-          border-radius: 14px;
+          border-radius: 16px;
           background: rgba(255, 255, 255, 0.14);
-          border: 1px solid rgba(255, 255, 255, 0.3);
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
           display: flex;
           align-items: center;
           justify-content: center;
         }
-
         .emergency-text h3 {
-          font-family: 'Manrope', sans-serif;
-          font-weight: 800;
-          font-size: clamp(1.25rem, 1rem + 1vw, 1.6rem);
-          line-height: 1.3;
-          margin: 0 0 6px;
+          font-family: var(--dh-font-display);
+          font-weight: 500;
+          font-size: clamp(1.4rem, 1.1rem + 1vw, 1.85rem);
+          line-height: 1.2;
+          letter-spacing: -0.01em;
+          margin: 0 0 8px;
+          color: #fff;
         }
-
         .emergency-text p {
-          font-family: 'Inter', sans-serif;
-          font-size: 15px;
-          line-height: 1.6;
+          font-size: 15.5px;
+          line-height: 1.65;
           color: rgba(255, 255, 255, 0.88);
-          max-width: 480px;
+          max-width: 50ch;
           margin: 0;
         }
-
-        .emergency-ctas {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          flex: 0 0 auto;
-        }
-
+        .emergency-ctas { display: flex; flex-wrap: wrap; gap: 10px; flex: 0 1 auto; }
         .emergency-cta {
-          font-family: 'Inter', sans-serif;
-          font-weight: 700;
-          font-size: 14.5px;
           display: inline-flex;
           align-items: center;
+          justify-content: center;
           gap: 9px;
-          padding: 13px 22px;
-          border-radius: 100px;
+          min-height: 50px;
+          padding: 0 22px;
+          border-radius: var(--dh-radius-pill);
+          font-weight: 600;
+          font-size: 14.5px;
           white-space: nowrap;
           text-decoration: none;
-          transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+          transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.25s var(--dh-ease);
         }
-
-        .emergency-cta:hover {
-          transform: translateY(-2px);
-        }
-
-        .emergency-cta.primary {
-          background: #fff;
-          color: var(--crisis-red);
-        }
-
-        .emergency-cta.primary:hover {
-          background: #FCEEC9;
-        }
-
-        .emergency-cta.secondary {
-          background: transparent;
-          color: #fff;
-          border: 2px solid rgba(255, 255, 255, 0.55);
-        }
-
-        .emergency-cta.secondary:hover {
-          background: rgba(255, 255, 255, 0.12);
-          border-color: #fff;
-        }
-
-        .emergency-cta.tertiary {
-          background: rgba(255, 255, 255, 0.12);
-          color: #fff;
-          border: 2px solid transparent;
-        }
-
-        .emergency-cta.tertiary:hover {
-          background: rgba(255, 255, 255, 0.2);
-        }
-
+        .emergency-cta:hover { transform: translateY(-1px); }
+        .emergency-cta.primary { background: #fff; color: var(--dh-crisis-700); }
+        .emergency-cta.primary:hover { background: var(--dh-crisis-50); }
+        .emergency-cta.secondary { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.55); }
+        .emergency-cta.secondary:hover { background: rgba(255, 255, 255, 0.1); box-shadow: inset 0 0 0 1.5px #fff; }
+        .emergency-cta.tertiary { background: rgba(255, 255, 255, 0.14); color: #fff; }
+        .emergency-cta.tertiary:hover { background: rgba(255, 255, 255, 0.22); }
         @media (max-width: 640px) {
-          .emergency-inner { padding: 36px 20px; }
           .emergency-ctas { width: 100%; flex-direction: column; }
           .emergency-cta { width: 100%; }
         }

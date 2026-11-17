@@ -51,8 +51,9 @@ export default function ScrollToTop({
         style={{
           width: size,
           height: size,
-          background: 'linear-gradient(135deg, #06b6d4, #0ea5a4)',
+          background: 'var(--dh-brand)',
           color: 'white',
+          boxShadow: '0 14px 30px -12px rgba(11, 64, 119, 0.6)',
         }}
       >
         {/* simple chevron-up SVG icon */}
