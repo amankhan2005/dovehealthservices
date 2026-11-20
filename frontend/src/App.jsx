@@ -6,11 +6,12 @@ import useReveal from "./hooks/useReveal";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import TopBar from "./components/layout/TopBar";
-import EmergencyContact from "./components/home/EmergencyContact";
+import EmergencyNotice from "./components/layout/EmergencyNotice";
 
 // Scroll
 import RouteScrollTop from "./components/RouteScrollTop";
 import ScrollToTop from "./components/ScrollToTop";
+import ChatWidget from "./components/chat/ChatWidget";
 
 // Main Pages
 import Home from "./pages/Home";
@@ -45,7 +46,7 @@ export default function App() {
 
       <Header />
 
-      <main className="min-h-screen pt-20 2xl:pt-24">
+      <main className="min-h-screen dh-main">
         <Routes>
 
           {/* Main */}
@@ -72,10 +73,12 @@ export default function App() {
 
         </Routes>
       </main>
-<EmergencyContact />
+<EmergencyNotice />
 
       <Footer />
-      <ScrollToTop />
+      {/* Stacked above the chat launcher (bottom-right) */}
+      <ScrollToTop bottom="6rem" right="1.625rem" />
+      <ChatWidget />
     </>
   );
 }

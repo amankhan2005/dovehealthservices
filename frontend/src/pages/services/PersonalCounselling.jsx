@@ -1,4 +1,5 @@
 import ServicePage from "./ServicePage";
+import serviceImg from "../../assets/about/therapy4.jpg";
 
 const SERVICES = [
   {
@@ -53,6 +54,7 @@ export default function PersonalCounselling() {
       introTitle={"Confidential Support for Emotional Wellness"}
       introText={"Personal counseling gives you a safe, private space to talk through what you're feeling, work through challenges, and build a healthier, more fulfilling life."}
       services={SERVICES}
+      image={{ src: serviceImg, focus: "70% 45%" }}
       ctaTitle={"Begin Your Counseling Journey"}
       ctaText={"Schedule a confidential counseling session today."}
     />

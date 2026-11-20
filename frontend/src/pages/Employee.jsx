@@ -5,8 +5,8 @@ import EmployeeQRCode from "../components/employee/EmployeeQRCode";
 import { EMPLOYEE_FORMS } from "../config/employeeConfig";
 
 const EMPLOYEE_CSS = `
-  .emp-forms-head { max-width: 720px; margin-bottom: 40px; }
-  .emp-forms-head .dh-lead { margin-top: 14px; }
+  .emp-forms-head { margin-bottom: 40px; }
+  .emp-forms-head .dh-lead { margin-top: 0; }
 
   .emp-forms-grid {
     display: grid;
@@ -18,13 +18,17 @@ const EMPLOYEE_CSS = `
 
   .emp-card {
     display: flex;
-    gap: 22px;
-    padding: clamp(22px, 3vw, 30px);
+    gap: 24px;
+    padding: clamp(22px, 3vw, 32px);
+    border: 1px solid var(--dh-line);
+    border-radius: var(--dh-radius-lg);
+    background: #fff;
   }
 
   .emp-card-body { display: flex; flex: 1; min-width: 0; flex-direction: column; align-items: flex-start; }
-  .emp-card-body .dh-icon-badge { margin-bottom: 18px; }
-  .emp-card-body h3 { font-size: 1.25rem; }
+
+  .emp-card-body .emp-card-icon { color: var(--dh-dove); margin-bottom: 18px; }
+  .emp-card-body h3 { font-size: 1.2rem; }
 
   .emp-card-body p {
     margin: 8px 0 22px;
@@ -33,25 +37,13 @@ const EMPLOYEE_CSS = `
     color: var(--dh-ink-2);
   }
 
-  .emp-card-body .dh-btn { margin-top: auto; min-height: 44px; padding: 0 20px; font-size: 14px; }
+  .emp-card-body .dh-btn { margin-top: auto; min-height: 44px; padding: 0 18px; font-size: 14px; }
 
-  .emp-qr {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-  }
+  .emp-qr { display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
 
-  .emp-qr-frame {
-    padding: 10px;
-    border: 1px solid var(--dh-line);
-    border-radius: 18px;
-    background: #fff;
-    box-shadow: var(--dh-shadow-sm);
-  }
+  .emp-qr-frame { padding: 8px; border: 1px solid var(--dh-line); border-radius: var(--dh-radius); background: #fff; }
 
-  .emp-qr-svg { display: block; width: 128px; height: 128px; }
+  .emp-qr-svg { display: block; width: 124px; height: 124px; }
 
   .emp-qr-caption {
     display: inline-flex;
@@ -73,17 +65,15 @@ const EMPLOYEE_CSS = `
     display: flex;
     gap: 12px;
     align-items: flex-start;
-    margin: 36px 0 0;
-    padding: 18px 20px;
-    border-radius: 16px;
-    background: var(--dh-sand-50);
-    border: 1px solid var(--dh-sand-200);
+    margin: 32px 0 0;
+    padding: 18px 0 0;
+    border-top: 1px solid var(--dh-line);
     font-size: 14.5px;
     line-height: 1.65;
     color: var(--dh-ink-2);
   }
 
-  .emp-note svg { flex-shrink: 0; margin-top: 2px; color: var(--dh-accent-ink); }
+  .emp-note svg { flex-shrink: 0; margin-top: 2px; color: var(--dh-dove); }
 `;
 
 function EmployeeContent() {
@@ -98,12 +88,11 @@ function EmployeeContent() {
       </PageHero>
 
       {/* FORMS */}
-      <section className="dh-section dh-section--tight">
+      <section className="dh-section dh-section--tight dh-section--paper">
         <div className="dh-container">
-          <div className="emp-forms-head" data-reveal>
-            <span className="dh-accent-bar" aria-hidden="true" />
-            <h2 className="dh-h2">Forms</h2>
-            <p className="dh-lead">
+          <div className="dh-grid emp-forms-head" data-reveal>
+            <h2 className="dh-h2 dh-col-5">Forms</h2>
+            <p className="dh-lead dh-col-7">
               Each form opens in a new tab. Scanning the code loads the same form on
               a mobile device — useful when completing paperwork with a client.
             </p>
@@ -111,11 +100,9 @@ function EmployeeContent() {
 
           <div className="emp-forms-grid">
             {EMPLOYEE_FORMS.map((form) => (
-              <article key={form.id} className="dh-card dh-card--hover emp-card">
+              <article key={form.id} className="emp-card">
                 <div className="emp-card-body">
-                  <span className="dh-icon-badge" aria-hidden="true">
-                    <FileText size={20} />
-                  </span>
+                  <FileText className="emp-card-icon" size={24} strokeWidth={1.6} aria-hidden="true" />
                   <h3 className="dh-h3">{form.title}</h3>
                   <p>{form.description}</p>
                   <a

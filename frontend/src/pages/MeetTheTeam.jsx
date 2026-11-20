@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { teamMembers, carePhilosophy } from "../data/teamData";
 import { Award, Heart, Users } from "lucide-react";
 import PageHero from "../components/ui/PageHero";
@@ -5,69 +6,85 @@ import CtaBand from "../components/ui/CtaBand";
 import ArrowIcon from "../components/ui/ArrowIcon";
 
 const TEAM_CSS = `
-  .team-philosophy-head { max-width: 760px; margin: 0 auto clamp(40px, 5vw, 56px); text-align: center; }
-  .team-philosophy-head .dh-accent-bar { margin-inline: auto; }
-  .team-philosophy-head .dh-lead { margin-top: 18px; }
+  .team-philosophy { align-items: start; }
+  .team-philosophy .dh-lead { margin-top: 22px; }
 
-  .principles-grid {
+  .team-principles { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--dh-ink); }
+
+  .team-principle {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 4px 16px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--dh-line-strong);
   }
 
-  @media (min-width: 760px) { .principles-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .team-principle svg { grid-row: span 2; color: var(--dh-dove); margin-top: 2px; }
+  .team-principle p { margin: 0; font-size: 16px; line-height: 1.65; color: var(--dh-ink-2); }
 
-  .principle-card { padding: clamp(26px, 3vw, 34px); }
-  .principle-card .dh-icon-badge { margin-bottom: 20px; }
-  .principle-card p { margin: 10px 0 0; font-size: 15.5px; line-height: 1.7; color: var(--dh-ink-2); }
-
-  .team-section-head { max-width: 720px; margin-bottom: clamp(36px, 5vw, 52px); }
-  .team-section-head .dh-lead { margin-top: 14px; }
+  .team-section-head { margin-bottom: clamp(40px, 5vw, 64px); align-items: end; }
 
   .team-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
+    gap: 56px clamp(24px, 3vw, 40px);
   }
 
   @media (min-width: 700px) { .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 1100px) { .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
-  .team-card { overflow: hidden; display: flex; flex-direction: column; }
+  .team-portrait {
+    position: relative;
+    margin: 0 0 22px;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--dh-radius-sm);
+    background: var(--dh-paper-2);
+  }
 
-  .team-card-img-wrap { position: relative; padding: 10px 10px 0; }
+  .team-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-  .team-card-img-wrap img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 4 / 3.4;
-    object-fit: cover;
-    border-radius: 20px;
-    background: var(--dh-sky-100);
+  .team-portrait__monogram {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: var(--dh-night);
+    font-size: clamp(3rem, 2rem + 3vw, 4.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #9fbad6;
   }
 
   .team-card-badge {
     position: absolute;
-    left: 26px;
-    bottom: 16px;
-    padding: 7px 12px;
-    border-radius: var(--dh-radius-pill);
-    background: rgba(255, 255, 255, 0.94);
+    left: 0;
+    bottom: 0;
+    padding: 8px 14px;
+    background: #fff;
     font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--dh-brand);
-    box-shadow: var(--dh-shadow-sm);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--dh-ink);
   }
 
-  .team-card-body { padding: 24px 26px 28px; }
+  .team-card-name { font-size: 1.3rem; }
 
-  .team-card-name { font-size: 1.35rem; }
+  .team-card-role { margin: 6px 0 0; font-size: 15px; font-weight: 500; color: var(--dh-brand); }
 
-  .team-card-role { margin: 6px 0 18px; font-size: 14.5px; font-weight: 600; color: var(--dh-accent-ink); }
+  .team-card-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin: 20px 0 0;
+    padding: 18px 0;
+    border-top: 1px solid var(--dh-line);
+    border-bottom: 1px solid var(--dh-line);
+  }
 
   .team-card-meta-label {
-    margin: 14px 0 3px;
+    margin: 0 0 3px;
     font-size: 11.5px;
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -75,28 +92,50 @@ const TEAM_CSS = `
     color: var(--dh-muted);
   }
 
-  .team-card-meta-value { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--dh-ink); }
+  .team-card-meta-value { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--dh-ink); }
 
-  .team-card-bio {
-    margin: 18px 0;
-    padding: 18px 0;
-    border-block: 1px solid var(--dh-line);
-    font-size: 14.5px;
-    line-height: 1.7;
-    color: var(--dh-ink-2);
-  }
+  .team-card-bio { margin: 18px 0; font-size: 15px; line-height: 1.7; color: var(--dh-ink-2); }
 
-  .team-card-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .team-card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 
   .team-card-tag {
-    padding: 6px 11px;
-    border-radius: var(--dh-radius-pill);
-    background: var(--dh-sky-50);
+    padding: 5px 10px;
+    border: 1px solid var(--dh-line-strong);
+    border-radius: var(--dh-radius-sm);
     font-size: 12.5px;
     font-weight: 500;
-    color: var(--dh-brand);
+    color: var(--dh-ink-2);
   }
 `;
+
+// Initials shown when a clinician photo is not available yet.
+const initials = (name) =>
+  name
+    .split(",")[0]
+    .replace(/^(Dr\.?|Mr\.?|Ms\.?|Mrs\.?)\s+/i, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+function TeamPortrait({ member }) {
+  const [failed, setFailed] = useState(false);
+
+  return (
+    <div className="team-portrait">
+      {failed ? (
+        <span className="team-portrait__monogram" role="img" aria-label={member.name}>
+          {initials(member.name)}
+        </span>
+      ) : (
+        <img src={member.image} alt={member.name} loading="lazy" onError={() => setFailed(true)} />
+      )}
+      <span className="team-card-badge">{member.role.split(" ").slice(-1)[0]}</span>
+    </div>
+  );
+}
 
 export default function MeetTheTeam() {
   const principleIcons = [Heart, Award, Users];
@@ -112,90 +151,73 @@ export default function MeetTheTeam() {
       </PageHero>
 
       {/* CARE PHILOSOPHY */}
-      <section className="dh-section dh-section--tight">
-        <div className="dh-container">
-          <div className="team-philosophy-head" data-reveal>
-            <span className="dh-accent-bar" aria-hidden="true" />
+      <section className="dh-section">
+        <div className="dh-container dh-grid team-philosophy">
+          <div className="dh-col-5" data-reveal>
             <h2 className="dh-h2">{carePhilosophy.title}</h2>
             <p className="dh-lead">{carePhilosophy.description}</p>
           </div>
 
-          <div className="principles-grid">
+          <ul className="dh-col-6 dh-col-start-7 team-principles">
             {carePhilosophy.principles.map((principle, index) => {
               const Icon = principleIcons[index % 3];
               return (
-                <div
+                <li
                   key={index}
-                  className="dh-card dh-card--hover principle-card"
+                  className="team-principle"
                   data-reveal
-                  style={{ "--dh-reveal-delay": `${index * 90}ms` }}
+                  style={{ "--dh-reveal-delay": `${index * 70}ms` }}
                 >
-                  <span
-                    className={`dh-icon-badge${index % 2 === 0 ? "" : " dh-icon-badge--warm"}`}
-                    aria-hidden="true"
-                  >
-                    <Icon size={20} />
-                  </span>
+                  <Icon size={24} strokeWidth={1.6} aria-hidden="true" />
                   <h3 className="dh-h3">{principle.title}</h3>
                   <p>{principle.description}</p>
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ul>
         </div>
       </section>
 
       {/* TEAM MEMBERS */}
-      <section className="dh-section dh-section--sand">
+      <section className="dh-section dh-section--paper">
         <div className="dh-container">
-          <div className="team-section-head" data-reveal>
-            <span className="dh-accent-bar" aria-hidden="true" />
-            <h2 className="dh-h2">Our clinical team</h2>
-            <p className="dh-lead">Skilled professionals committed to your journey toward recovery and wellness.</p>
+          <div className="dh-grid team-section-head" data-reveal>
+            <h2 className="dh-h2 dh-col-6">Our clinical team</h2>
+            <p className="dh-lead dh-col-5 dh-col-start-8">Skilled professionals committed to your journey toward recovery and wellness.</p>
           </div>
 
           <div className="team-grid">
             {teamMembers.map((member) => (
-              <div key={member.id} className="dh-card team-card">
-                <div className="team-card-img-wrap">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    loading="lazy"
-                    onError={(e) => {
-                      e.target.src =
-                        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23436585' width='400' height='400'/%3E%3Ccircle cx='200' cy='120' r='60' fill='%23fff'/%3E%3Cpath d='M400 320c0-66.3-89.8-120-200-120S0 253.7 0 320v80h400z' fill='%23fff' opacity='0.3'/%3E%3C/svg%3E";
-                    }}
-                  />
-                  <span className="team-card-badge">
-                    {member.role.split(" ").slice(-1)[0]}
-                  </span>
-                </div>
+              <article key={member.id} className="team-card" data-reveal>
+                <TeamPortrait member={member} />
 
-                <div className="team-card-body">
-                  <h3 className="dh-h3 team-card-name">{member.name}</h3>
-                  <p className="team-card-role">{member.role}</p>
+                <h3 className="dh-h3 team-card-name">{member.name}</h3>
+                <p className="team-card-role">{member.role}</p>
 
-                  <p className="team-card-meta-label">Qualifications</p>
-                  <p className="team-card-meta-value">{member.qualifications}</p>
-
-                  <p className="team-card-meta-label">Experience</p>
-                  <p className="team-card-meta-value">{member.experience}</p>
-
-                  <p className="team-card-bio">{member.bio}</p>
-
-                  <p className="team-card-meta-label" style={{ marginBottom: 10 }}>
-                    Areas of expertise
-                  </p>
-                  <div className="team-card-tags">
-                    {member.expertise.map((exp, idx) => (
-                      <span key={idx} className="team-card-tag">
-                        {exp}
-                      </span>
-                    ))}
+                <div className="team-card-meta">
+                  <div>
+                    <p className="team-card-meta-label">Qualifications</p>
+                    <p className="team-card-meta-value">{member.qualifications}</p>
+                  </div>
+                  <div>
+                    <p className="team-card-meta-label">Experience</p>
+                    <p className="team-card-meta-value">{member.experience}</p>
                   </div>
                 </div>
-              </div>
+
+                <p className="team-card-bio">{member.bio}</p>
+
+                <p className="team-card-meta-label" style={{ marginBottom: 10 }}>
+                  Areas of expertise
+                </p>
+                <div className="team-card-tags">
+                  {member.expertise.map((exp, idx) => (
+                    <span key={idx} className="team-card-tag">
+                      {exp}
+                    </span>
+                  ))}
+                </div>
+              </article>
             ))}
           </div>
         </div>

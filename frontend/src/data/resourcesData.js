@@ -475,32 +475,3 @@ Daily Wellness Checklist:
 Small, consistent actions build lasting wellness.`
   }
 ];
-
-export const crisisResources = {
-  title: "Immediate Crisis Support",
-  resources: [
-    {
-      name: "National Suicide Prevention Lifeline",
-      number: "988",
-      description: "24/7 support for suicidal thoughts, call or text",
-      link: "tel:988"
-    },
-    {
-      name: "Crisis Text Line",
-      number: "Text HELLO to 741741",
-      description: "24/7 text-based crisis support",
-      link: null
-    },
-    {
-      name: "988 also provides",
-      description: "Referrals to local mental health services",
-      link: null
-    },
-    {
-      name: "Emergency Services",
-      number: "911",
-      description: "For immediate danger or medical emergencies",
-      link: "tel:911"
-    }
-  ]
-};

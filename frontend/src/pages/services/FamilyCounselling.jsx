@@ -1,4 +1,5 @@
 import ServicePage from "./ServicePage";
+import serviceImg from "../../assets/services/family.jpg";
 
 const SERVICES = [
   {
@@ -53,6 +54,7 @@ export default function FamilyCounselling() {
       introTitle={"Supporting Families Through Recovery"}
       introText={"Our family counseling services help families talk to each other more openly, work through disagreements, and build a home life that supports everyone's wellbeing."}
       services={SERVICES}
+      image={{ src: serviceImg, focus: "40% 40%" }}
       ctaTitle={"Strengthen Your Family's Recovery"}
       ctaText={"Schedule a family counseling session today."}
     />

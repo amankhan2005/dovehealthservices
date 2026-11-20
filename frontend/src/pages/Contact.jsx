@@ -6,88 +6,78 @@ import PageHero from "../components/ui/PageHero";
 import ArrowIcon from "../components/ui/ArrowIcon";
 
 const CONTACT_PAGE_CSS = `
-  .contact-grid {
+  .contact-channels {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 64px);
-    align-items: start;
+    border-bottom: 1px solid var(--dh-line);
   }
 
-  @media (min-width: 1000px) {
-    .contact-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
+  @media (min-width: 900px) {
+    .contact-channels { grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr) minmax(0, 1.15fr); }
+    .contact-info-card + .contact-info-card { border-left: 1px solid var(--dh-line); }
   }
-
-  .contact-info-list { display: grid; gap: 14px; }
 
   .contact-info-card {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 22px;
-    border: 1px solid var(--dh-line);
-    border-radius: 22px;
-    background: #fff;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 16px;
+    padding: clamp(28px, 4vw, 44px) clamp(0px, 3vw, 40px) clamp(28px, 4vw, 44px) 0;
     color: var(--dh-ink);
     text-decoration: none;
-    transition: transform 0.3s var(--dh-ease), box-shadow 0.3s var(--dh-ease), border-color 0.3s;
   }
 
-  .contact-info-card:hover { transform: translateY(-2px); box-shadow: var(--dh-shadow-md); border-color: transparent; }
-
-  .contact-info-icon {
-    width: 52px;
-    height: 52px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    border-radius: 16px;
-    background: var(--dh-brand);
-    color: #fff;
+  @media (min-width: 900px) {
+    .contact-info-card + .contact-info-card { padding-left: clamp(24px, 3vw, 40px); }
   }
 
-  .contact-info-card:nth-child(2) .contact-info-icon { background: var(--dh-accent); }
-  .contact-info-card:nth-child(3) .contact-info-icon { background: var(--dh-dove); }
-
-  .contact-info-text { flex: 1; min-width: 0; }
+  @media (max-width: 899px) {
+    .contact-info-card + .contact-info-card { border-top: 1px solid var(--dh-line); }
+  }
 
   .contact-info-label {
-    margin: 0 0 4px;
-    font-size: 12px;
+    margin: 0 0 6px;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--dh-muted);
+    color: var(--dh-dove);
   }
 
   .contact-info-value {
     margin: 0;
-    font-size: 16px;
+    font-size: clamp(1.05rem, 0.98rem + 0.3vw, 1.22rem);
     font-weight: 600;
-    line-height: 1.45;
+    line-height: 1.4;
+    letter-spacing: -0.012em;
     color: var(--dh-ink);
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
+    transition: color 0.2s;
   }
 
-  .contact-info-arrow { color: var(--dh-muted); transition: color 0.2s; }
-  .contact-info-card:hover .contact-info-arrow { color: var(--dh-brand); }
-  .contact-info-card:hover .dh-arrow { transform: translateX(3px); }
+  .contact-info-arrow { align-self: end; color: var(--dh-muted); transition: color 0.2s, transform 0.25s var(--dh-ease); }
+  .contact-info-card:hover .contact-info-value { color: var(--dh-brand); }
+  .contact-info-card:hover .contact-info-arrow { color: var(--dh-brand); transform: translateX(3px); }
+
+  .contact-form-section { background: var(--dh-paper); }
 
   .contact-form-card {
     display: grid;
     gap: 18px;
-    padding: clamp(26px, 4vw, 44px);
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(24px, 4vw, 48px);
     border: 1px solid var(--dh-line);
     border-radius: var(--dh-radius-lg);
     background: #fff;
-    box-shadow: var(--dh-shadow-lg);
   }
 
   .contact-captcha {
     display: grid;
     gap: 10px;
     padding: 16px;
-    border-radius: 16px;
-    background: var(--dh-sky-50);
+    border: 1px solid var(--dh-line);
+    border-radius: var(--dh-radius);
+    background: var(--dh-paper);
   }
 
   .contact-captcha-label {
@@ -293,11 +283,10 @@ export default function ContactUs() {
       </PageHero>
 
       {/* BODY */}
-      <section className="dh-section">
+      <section>
         <div className="dh-container">
-          <div className="contact-grid">
-            {/* INFO */}
-            <div className="contact-info-list" data-reveal>
+          {/* INFO */}
+          <div className="contact-channels" data-reveal>
               {[
                 {
                   icon: Mail,
@@ -318,7 +307,6 @@ export default function ContactUs() {
                   link: MAP_LINK,
                 },
               ].map((item, i) => {
-                const Icon = item.icon;
                 return (
                   <a
                     key={i}
@@ -327,9 +315,6 @@ export default function ContactUs() {
                     rel="noopener noreferrer"
                     className="contact-info-card"
                   >
-                    <div className="contact-info-icon">
-                      <Icon size={20} />
-                    </div>
                     <div className="contact-info-text">
                       <p className="contact-info-label">{item.label}</p>
                       <p className="contact-info-value">{item.value}</p>
@@ -340,8 +325,12 @@ export default function ContactUs() {
                   </a>
                 );
               })}
-            </div>
+          </div>
+        </div>
+      </section>
 
+      <section className="dh-section dh-section--tight contact-form-section">
+        <div className="dh-container">
             {/* FORM */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -365,6 +354,7 @@ export default function ContactUs() {
                 <div className="dh-form-row">
                   <input
                     name="firstName"
+                    aria-label="First Name"
                     placeholder="First Name"
                     required
                     onChange={handleChange}
@@ -374,6 +364,7 @@ export default function ContactUs() {
 
                   <input
                     name="lastName"
+                    aria-label="Last Name"
                     placeholder="Last Name"
                     required
                     onChange={handleChange}
@@ -384,6 +375,7 @@ export default function ContactUs() {
 
                 <input
                   name="email"
+                  aria-label="Email"
                   type="email"
                   placeholder="Email"
                   required
@@ -394,6 +386,7 @@ export default function ContactUs() {
 
                 <input
                   name="phone"
+                  aria-label="Phone"
                   placeholder="Phone"
                   required
                   onChange={handleChange}
@@ -403,6 +396,7 @@ export default function ContactUs() {
 
                 <textarea
                   name="message"
+                  aria-label="Message"
                   rows="4"
                   placeholder="Message"
                   required
@@ -423,6 +417,7 @@ export default function ContactUs() {
                     onChange={(e) => setCaptcha(e.target.value)}
                     className="dh-input"
                     placeholder="Your answer"
+                    aria-label="Your answer"
                   />
                 </div>
 
@@ -435,7 +430,6 @@ export default function ContactUs() {
                 </button>
               </form>
             </motion.div>
-          </div>
         </div>
       </section>
     </main>

@@ -59,12 +59,13 @@ const MathCaptcha = forwardRef(({ onValidChange, className = "" }, ref) => {
           flex-shrink: 0;
           min-height: 52px;
           padding: 0 16px;
-          border-radius: 14px;
-          background: var(--dh-sky-50);
-          border: 1.5px dashed var(--dh-sky-200);
+          border-radius: var(--dh-radius);
+          background: var(--dh-paper);
+          border: 1px solid var(--dh-line-strong);
           font-family: var(--dh-font-display);
-          font-size: 19px;
-          font-weight: 500;
+          font-size: 18px;
+          font-weight: 650;
+          font-variant-numeric: tabular-nums;
           color: var(--dh-ink);
           user-select: none;
         }
@@ -77,8 +78,8 @@ const MathCaptcha = forwardRef(({ onValidChange, className = "" }, ref) => {
           height: 100%;
           min-height: 52px;
           padding: 13px 40px 13px 16px;
-          border: 1.5px solid var(--dh-line);
-          border-radius: 14px;
+          border: 1px solid var(--dh-line-strong);
+          border-radius: var(--dh-radius);
           background: #fff;
           font-family: var(--dh-font-sans);
           font-size: 15.5px;
@@ -105,8 +106,8 @@ const MathCaptcha = forwardRef(({ onValidChange, className = "" }, ref) => {
           flex-shrink: 0;
           display: grid;
           place-items: center;
-          border: 1.5px solid var(--dh-line);
-          border-radius: 14px;
+          border: 1px solid var(--dh-line-strong);
+          border-radius: var(--dh-radius);
           background: #fff;
           color: var(--dh-brand);
           cursor: pointer;

@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { ChevronDown, Menu, X, AlertCircle, CalendarCheck } from "lucide-react";
-import logo from "../../assets/logo.png";
+import { ChevronDown, Menu, X, CalendarCheck } from "lucide-react";
+import logo from "../../assets/brand/dove-health-logo.svg";
 
 const HEADER_CSS = `
   .dh-header {
@@ -9,22 +9,16 @@ const HEADER_CSS = `
     inset: 0 0 auto 0;
     z-index: 50;
     height: var(--dh-header-h);
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: saturate(160%) blur(14px);
-    -webkit-backdrop-filter: saturate(160%) blur(14px);
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s var(--dh-ease), box-shadow 0.3s var(--dh-ease), background-color 0.3s;
+    background: #fff;
+    border-bottom: 1px solid var(--dh-line);
+    transition: box-shadow 0.3s var(--dh-ease);
   }
 
-  .dh-header.is-scrolled {
-    background: rgba(255, 255, 255, 0.96);
-    border-bottom-color: var(--dh-line);
-    box-shadow: 0 10px 30px -24px rgba(14, 42, 71, 0.45);
-  }
+  .dh-header.is-scrolled { box-shadow: 0 8px 24px -20px rgba(15, 37, 64, 0.45); }
 
   .dh-header__bar {
     height: 100%;
-    max-width: 1800px;
+    max-width: calc(var(--dh-container-wide) + var(--dh-gutter) * 2);
     margin: 0 auto;
     padding: 0 var(--dh-gutter);
     display: flex;
@@ -33,124 +27,102 @@ const HEADER_CSS = `
     gap: 16px;
   }
 
-  .dh-header__logo {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    border-radius: 10px;
-  }
+  .dh-header__logo { display: flex; align-items: center; flex-shrink: 0; }
 
+  /* Vector logo (SVG): sharp at every size; width follows the 2.12:1 artwork. */
   .dh-header__logo img {
     display: block;
-    height: 56px;
+    height: 68px;
     width: auto;
     max-width: none;
     user-select: none;
   }
 
-  @media (min-width: 640px) { .dh-header__logo img { height: 64px; } }
-  @media (min-width: 1280px) { .dh-header__logo img { height: 56px; } }
-  @media (min-width: 1536px) { .dh-header__logo img { height: 76px; } }
+  @media (min-width: 640px) { .dh-header__logo img { height: 78px; } }
+  @media (min-width: 1280px) { .dh-header__logo img { height: 90px; } }
+  @media (min-width: 1536px) { .dh-header__logo img { height: 100px; } }
 
   /* Desktop navigation */
   .dh-nav {
     display: none;
     flex: 1;
     min-width: 0;
+    height: 100%;
     align-items: center;
-    justify-content: center;
-    gap: 2px;
+    justify-content: flex-end;
+    gap: 4px;
   }
 
   @media (min-width: 1280px) { .dh-nav { display: flex; } }
-  @media (min-width: 1536px) { .dh-nav { gap: 6px; } }
+  @media (min-width: 1536px) { .dh-nav { gap: 10px; } }
+
+  .dh-nav > .relative { height: 100%; display: flex; align-items: center; }
 
   .dh-nav__item {
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    height: 100%;
     flex-shrink: 0;
-    padding: 10px 12px;
+    padding: 0 12px;
     border: 0;
-    border-radius: 10px;
     background: transparent;
     font-family: var(--dh-font-sans);
-    font-size: 14.5px;
+    font-size: 15px;
     font-weight: 500;
-    line-height: 1.2;
     white-space: nowrap;
     color: var(--dh-ink-2);
     text-decoration: none;
     cursor: pointer;
-    transition: color 0.2s, background-color 0.2s;
+    transition: color 0.2s;
   }
 
-  @media (min-width: 1536px) { .dh-nav__item { font-size: 15.5px; padding: 10px 14px; } }
-
-  .dh-nav__item:hover { color: var(--dh-brand); background: var(--dh-sky-50); }
+  .dh-nav__item:hover { color: var(--dh-ink); }
 
   .dh-nav__item::after {
     content: "";
     position: absolute;
-    left: 50%;
-    bottom: 3px;
-    width: 18px;
+    left: 12px;
+    right: 12px;
+    bottom: -1px;
     height: 2px;
-    border-radius: 2px;
-    background: var(--dh-accent);
-    transform: translateX(-50%) scaleX(0);
+    background: var(--dh-brand);
+    transform: scaleX(0);
+    transform-origin: left;
     transition: transform 0.25s var(--dh-ease);
   }
 
-  .dh-nav__item.is-active { color: var(--dh-brand); font-weight: 600; }
-  .dh-nav__item.is-active::after { transform: translateX(-50%) scaleX(1); }
+  .dh-nav__item:hover::after { transform: scaleX(1); background: var(--dh-line-strong); }
+  .dh-nav__item.is-active { color: var(--dh-ink); font-weight: 600; }
+  .dh-nav__item.is-active::after { transform: scaleX(1); background: var(--dh-brand); }
 
-  .dh-nav__item .chev { transition: transform 0.25s var(--dh-ease); }
+  .dh-nav__item .chev { color: var(--dh-muted); transition: transform 0.25s var(--dh-ease); }
   .dh-nav__item[aria-expanded="true"] .chev { transform: rotate(180deg); }
-
-  .dh-nav__crisis { color: var(--dh-crisis); font-weight: 600; gap: 7px; }
-  .dh-nav__crisis:hover { color: #fff; background: var(--dh-crisis); }
-  .dh-nav__crisis::after { display: none; }
-
-  .dh-sos {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 5px;
-    border-radius: 5px;
-    background: var(--dh-crisis);
-    color: #fff;
-    font-size: 9.5px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    line-height: 1;
-  }
-
-  .dh-nav__crisis:hover .dh-sos { background: #fff; color: var(--dh-crisis); }
 
   .dh-dropdown {
     position: absolute;
-    top: calc(100% + 10px);
+    top: calc(100% + 1px);
     left: 0;
     z-index: 50;
-    width: 248px;
-    padding: 8px;
+    width: 240px;
+    padding: 8px 0;
     border: 1px solid var(--dh-line);
-    border-radius: 16px;
+    border-top: 2px solid var(--dh-brand);
+    border-radius: 0 0 var(--dh-radius) var(--dh-radius);
     background: #fff;
     box-shadow: var(--dh-shadow-md);
-    animation: dh-drop 0.22s var(--dh-ease);
+    animation: dh-drop 0.2s var(--dh-ease);
   }
 
   @keyframes dh-drop {
-    from { opacity: 0; transform: translateY(-6px); }
+    from { opacity: 0; transform: translateY(-4px); }
     to { opacity: 1; transform: none; }
   }
 
   .dh-dropdown__link {
     display: block;
-    padding: 11px 14px;
-    border-radius: 10px;
+    padding: 11px 18px;
     font-size: 14.5px;
     font-weight: 500;
     white-space: nowrap;
@@ -159,32 +131,31 @@ const HEADER_CSS = `
     transition: color 0.2s, background-color 0.2s;
   }
 
-  .dh-dropdown__link:hover { color: var(--dh-brand); background: var(--dh-sky-50); }
-  .dh-dropdown__link.is-active { color: var(--dh-brand); background: var(--dh-sky-50); font-weight: 600; }
+  .dh-dropdown__link:hover { color: var(--dh-ink); background: var(--dh-paper); }
+  .dh-dropdown__link.is-active { color: var(--dh-brand); font-weight: 600; box-shadow: inset 2px 0 0 var(--dh-brand); }
 
-  .dh-header__cta { display: none; flex-shrink: 0; }
+  .dh-header__cta { display: none; flex-shrink: 0; margin-left: 16px; }
   @media (min-width: 1280px) { .dh-header__cta { display: flex; } }
-
-  .dh-header__cta .dh-btn { min-height: 46px; padding: 0 22px; font-size: 14.5px; }
-  @media (min-width: 1536px) { .dh-header__cta .dh-btn { min-height: 50px; padding: 0 26px; font-size: 15px; } }
+  .dh-header__cta .dh-btn { min-height: 46px; padding: 0 20px; font-size: 14.5px; }
 
   /* Mobile */
   .dh-menu-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
+    gap: 8px;
     height: 44px;
+    padding: 0 14px;
     flex-shrink: 0;
-    border: 1px solid var(--dh-line);
-    border-radius: 12px;
+    border: 1px solid var(--dh-line-strong);
+    border-radius: var(--dh-radius);
     background: #fff;
     color: var(--dh-ink);
     cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
+    transition: border-color 0.2s;
   }
 
-  .dh-menu-btn:hover { background: var(--dh-sky-50); border-color: var(--dh-sky-200); }
+  .dh-menu-btn:hover { border-color: var(--dh-ink); }
   @media (min-width: 1280px) { .dh-menu-btn { display: none; } }
 
   .dh-mobile {
@@ -194,8 +165,8 @@ const HEADER_CSS = `
     overscroll-behavior: contain;
     background: #fff;
     border-top: 1px solid var(--dh-line);
-    box-shadow: 0 30px 50px -30px rgba(14, 42, 71, 0.4);
-    animation: dh-drop 0.25s var(--dh-ease);
+    box-shadow: 0 30px 40px -30px rgba(15, 37, 64, 0.35);
+    animation: dh-drop 0.22s var(--dh-ease);
   }
 
   @media (min-width: 1280px) { .dh-mobile { display: none; } }
@@ -203,63 +174,39 @@ const HEADER_CSS = `
   .dh-mobile__nav {
     max-width: 720px;
     margin: 0 auto;
-    padding: 12px var(--dh-gutter) 28px;
+    padding: 8px var(--dh-gutter) 28px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
   }
+
+  .dh-mobile__nav > a.dh-mobile__link,
+  .dh-mobile__nav > div { border-bottom: 1px solid var(--dh-line); }
 
   .dh-mobile__link {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 15px 14px;
+    padding: 17px 2px;
     border: 0;
-    border-radius: 12px;
     background: transparent;
     font-family: var(--dh-font-sans);
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 500;
     color: var(--dh-ink);
     text-align: left;
     text-decoration: none;
     cursor: pointer;
-    transition: color 0.2s, background-color 0.2s;
   }
 
-  .dh-mobile__link:hover { background: var(--dh-sky-50); color: var(--dh-brand); }
-  .dh-mobile__link.is-active { background: var(--dh-sky-50); color: var(--dh-brand); font-weight: 600; }
+  .dh-mobile__link.is-active { color: var(--dh-brand); font-weight: 600; }
   .dh-mobile__link .chev { color: var(--dh-muted); transition: transform 0.25s var(--dh-ease); }
   .dh-mobile__link[aria-expanded="true"] .chev { transform: rotate(180deg); }
 
-  .dh-mobile__sub {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    margin: 2px 0 8px;
-    padding: 8px;
-    border-radius: 14px;
-    background: var(--dh-sand-50);
-  }
+  .dh-mobile__sub { display: flex; flex-direction: column; padding: 0 0 12px 14px; border-left: 2px solid var(--dh-line); margin: 0 0 12px 2px; }
+  .dh-mobile__sub .dh-dropdown__link { padding: 10px 14px; }
 
-  .dh-mobile__crisis {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
-    padding: 14px;
-    border-radius: 12px;
-    background: var(--dh-crisis-50);
-    font-weight: 600;
-    color: var(--dh-crisis);
-    text-decoration: none;
-    transition: background-color 0.2s, color 0.2s;
-  }
-
-  .dh-mobile__crisis:hover { background: var(--dh-crisis); color: #fff; }
-  .dh-mobile__cta { margin-top: 12px; }
+  .dh-mobile__cta { margin-top: 20px; }
 `;
 
 export default function Header() {
@@ -342,8 +289,8 @@ export default function Header() {
           <img
             src={logo}
             alt="Dove Health"
-            width={1000}
-            height={472}
+            width={3951}
+            height={1864}
             decoding="async"
             fetchPriority="high"
             draggable="false"
@@ -433,11 +380,6 @@ export default function Header() {
             Employee
           </NavLink>
 
-          {/* Crisis Support */}
-          <a href="tel:988" className="dh-nav__item dh-nav__crisis">
-            <span className="dh-sos">SOS</span>
-            Crisis
-          </a>
         </nav>
 
         {/* ── CTA ── */}
@@ -538,11 +480,6 @@ export default function Header() {
             <NavLink to="/employee" className={mobileLinkClass}>
               Employee
             </NavLink>
-
-            <a href="tel:988" className="dh-mobile__crisis">
-              <AlertCircle size={18} />
-              Crisis Support (988)
-            </a>
 
             <NavLink to="/contact-us" className={mobileLinkClass}>
               Contact

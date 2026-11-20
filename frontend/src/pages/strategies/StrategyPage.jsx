@@ -4,47 +4,52 @@ import CtaBand from "../../components/ui/CtaBand";
 import ArrowIcon from "../../components/ui/ArrowIcon";
 
 const STRATEGY_CSS = `
-  .strategy-intro {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px 80px;
-    align-items: start;
-  }
+  .strategy-intro__title { margin-bottom: clamp(28px, 4vw, 44px); }
 
-  @media (min-width: 960px) {
-    .strategy-intro { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
-  }
-
-  .strategy-intro .dh-prose > p:first-child {
-    font-size: clamp(1.1rem, 1rem + 0.35vw, 1.25rem);
+  .strategy-intro__statement {
+    margin: 0;
+    font-size: clamp(1.35rem, 1.05rem + 1.1vw, 2.05rem);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
     color: var(--dh-ink);
+    text-wrap: pretty;
   }
 
-  .strategy-cards {
+  .strategy-intro__rest { margin-top: clamp(28px, 4vw, 40px); }
+
+  .strategy-pillars {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 22px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  @media (min-width: 760px) { .strategy-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-
-  .strategy-card {
-    padding: clamp(28px, 3vw, 38px);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+  @media (min-width: 860px) {
+    .strategy-pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .strategy-pillar + .strategy-pillar { border-left: 1px solid rgba(255, 255, 255, 0.16); }
+    .strategy-pillar { padding: 8px clamp(24px, 3vw, 44px); }
+    .strategy-pillar:first-child { padding-left: 0; }
+    .strategy-pillar:last-child { padding-right: 0; }
   }
 
-  .strategy-card .dh-icon-badge { margin-bottom: 10px; }
-  .strategy-card p { margin: 0; font-size: 15.5px; line-height: 1.7; color: var(--dh-ink-2); }
-
-  .strategy-closing { text-align: center; }
-  .strategy-closing .dh-accent-bar { margin-inline: auto; }
-  .strategy-closing .dh-prose { margin-top: 24px; }
-  .strategy-closing .dh-prose > p {
-    font-size: clamp(1.08rem, 1rem + 0.35vw, 1.25rem);
-    line-height: 1.75;
+  @media (max-width: 859px) {
+    .strategy-pillar { padding: 28px 0; border-top: 1px solid rgba(255, 255, 255, 0.16); }
+    .strategy-pillar:first-child { border-top: 0; padding-top: 0; }
   }
+
+  .strategy-pillar svg { color: #9fbad6; margin-bottom: 26px; }
+  .strategy-pillar h3 { margin-bottom: 12px; }
+
+  .strategy-pillar p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.74);
+  }
+
+  .strategy-closing .dh-prose > p { font-size: 18px; }
 `;
 
 const CARD_ICONS = [HeartHandshake, Sprout, Sun];
@@ -61,6 +66,8 @@ export default function StrategyPage({
   ctaSubtitle,
   ctaLabel,
 }) {
+  const [firstParagraph, ...restParagraphs] = introParagraphs;
+
   return (
     <div className="strategy-page">
       <style>{STRATEGY_CSS}</style>
@@ -70,51 +77,51 @@ export default function StrategyPage({
 
       {/* INTRO */}
       <section className="dh-section">
-        <div className="dh-container strategy-intro">
-          <div data-reveal>
-            <span className="dh-accent-bar" aria-hidden="true" />
-            <h2 className="dh-h2">{introTitle}</h2>
+        <div className="dh-container">
+          <h2 className="dh-h2 strategy-intro__title" data-reveal>{introTitle}</h2>
+          <div className="dh-grid">
+            <p className="strategy-intro__statement dh-col-8" data-reveal>{firstParagraph}</p>
           </div>
-          <div className="dh-prose" data-reveal style={{ "--dh-reveal-delay": "120ms" }}>
-            {introParagraphs.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
+          {restParagraphs.length > 0 && (
+            <div className="dh-grid strategy-intro__rest">
+              <div className="dh-prose dh-col-6 dh-col-start-7" data-reveal>
+                {restParagraphs.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
       {/* CARDS */}
-      <section className="dh-section dh-section--sand dh-section--tight">
-        <div className="dh-container strategy-cards">
-          {cards.map((card, i) => {
-            const Icon = CARD_ICONS[i % CARD_ICONS.length];
-            return (
-              <div
-                key={card.title}
-                className="dh-card dh-card--hover strategy-card"
-                data-reveal
-                style={{ "--dh-reveal-delay": `${i * 90}ms` }}
-              >
-                <span
-                  className={`dh-icon-badge${i % 2 === 0 ? "" : " dh-icon-badge--warm"}`}
-                  aria-hidden="true"
+      <section className="dh-section dh-section--night dh-on-dark">
+        <div className="dh-container">
+          <ul className="strategy-pillars">
+            {cards.map((card, i) => {
+              const Icon = CARD_ICONS[i % CARD_ICONS.length];
+              return (
+                <li
+                  key={card.title}
+                  className="strategy-pillar"
+                  data-reveal
+                  style={{ "--dh-reveal-delay": `${i * 80}ms` }}
                 >
-                  <Icon size={22} />
-                </span>
-                <h3 className="dh-h3">{card.title}</h3>
-                <p>{card.desc}</p>
-              </div>
-            );
-          })}
+                  <Icon size={30} strokeWidth={1.5} aria-hidden="true" />
+                  <h3 className="dh-h3">{card.title}</h3>
+                  <p>{card.desc}</p>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </section>
 
       {/* CLOSING */}
-      <section className="dh-section">
-        <div className="dh-container dh-container--narrow strategy-closing" data-reveal>
-          <span className="dh-accent-bar" aria-hidden="true" />
-          <h2 className="dh-h2">{closingTitle}</h2>
-          <div className="dh-prose">
+      <section className="dh-section strategy-closing">
+        <div className="dh-container dh-grid">
+          <h2 className="dh-h2 dh-col-5" data-reveal>{closingTitle}</h2>
+          <div className="dh-prose dh-col-7" data-reveal style={{ "--dh-reveal-delay": "80ms" }}>
             {closingParagraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -123,8 +130,8 @@ export default function StrategyPage({
       </section>
 
       {/* CTA */}
-      <CtaBand title={ctaTitle} text={ctaSubtitle}>
-        <a href="/contact-us" className="dh-btn dh-btn--light">
+      <CtaBand title={ctaTitle} text={ctaSubtitle} tone="paper">
+        <a href="/contact-us" className="dh-btn dh-btn--primary">
           {ctaLabel}
           <ArrowIcon />
         </a>

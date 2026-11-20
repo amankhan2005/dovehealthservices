@@ -8,146 +8,131 @@ import {
   Printer,
 } from "lucide-react";
 
-import logo from "../../assets/logo.png";
+import logo from "../../assets/brand/dove-health-logo-reversed.svg";
 
 export default function Footer() {
   return (
     <footer className="dove-footer">
       <style>{`
         .dove-footer {
-          position: relative;
-          overflow: hidden;
-          background:
-            radial-gradient(1000px 420px at 100% 0%, rgba(67, 101, 133, 0.35), transparent 60%),
-            var(--dh-night);
-          color: rgba(255, 255, 255, 0.72);
+          background: var(--dh-night);
+          color: rgba(255, 255, 255, 0.7);
         }
 
-        .dove-footer-topline {
-          height: 3px;
-          background: linear-gradient(90deg, var(--dh-accent) 0%, var(--dh-dove) 55%, transparent 100%);
-          opacity: 0.85;
-        }
+        .dove-footer-topline { display: none; }
 
         .dove-footer-grid {
-          max-width: calc(var(--dh-container) + var(--dh-gutter) * 2);
+          max-width: calc(var(--dh-container-wide) + var(--dh-gutter) * 2);
           margin: 0 auto;
-          padding: clamp(64px, 8vw, 96px) var(--dh-gutter) clamp(48px, 6vw, 64px);
+          padding: clamp(64px, 8vw, 104px) var(--dh-gutter) clamp(48px, 6vw, 72px);
           display: grid;
-          grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
-          gap: 48px;
+          grid-template-columns: minmax(0, 4fr) minmax(0, 2fr) minmax(0, 2fr) minmax(0, 3fr);
+          gap: 48px clamp(32px, 4vw, 64px);
         }
 
-        @media (max-width: 1024px) { .dove-footer-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 560px) { .dove-footer-grid { grid-template-columns: 1fr; gap: 40px; } }
+        @media (max-width: 1024px) { .dove-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 560px) { .dove-footer-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; } }
 
-        .dove-footer-brand-row { display: flex; align-items: center; margin-bottom: 24px; }
+        .dove-footer-brand-row { margin-bottom: 26px; }
+        .dove-footer-logo-box { display: inline-block; }
 
-        .dove-footer-logo-box {
-          display: inline-flex;
-          align-items: center;
-          padding: 12px 20px;
-          border-radius: 18px;
-          background: #fff;
-          box-shadow: 0 18px 40px -20px rgba(0, 0, 0, 0.5);
+        .dove-footer-logo-box img {
+          display: block;
+          height: 84px;
+          width: auto;
+          max-width: 100%;
         }
 
-        .dove-footer-logo-box img { display: block; height: 68px; width: auto; max-width: 100%; object-fit: contain; }
-        @media (max-width: 560px) { .dove-footer-logo-box img { height: 60px; } }
+        @media (max-width: 560px) { .dove-footer-logo-box img { height: 72px; } }
 
         .dove-footer-desc {
-          max-width: 34ch;
-          margin: 0 0 28px;
+          max-width: 36ch;
+          margin: 0 0 30px;
           font-size: 15px;
-          line-height: 1.75;
+          line-height: 1.7;
           color: rgba(255, 255, 255, 0.66);
         }
 
-        .dove-footer-socials { display: flex; gap: 10px; }
+        .dove-footer-socials { display: flex; gap: 8px; }
 
         .dove-icon-chip {
-          width: 40px;
-          height: 40px;
+          width: 38px;
+          height: 38px;
           flex-shrink: 0;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          border-radius: 12px;
-          background: rgba(255, 255, 255, 0.06);
-          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+          border: 1px solid rgba(255, 255, 255, 0.22);
+          border-radius: var(--dh-radius);
           color: #fff;
-          transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.25s var(--dh-ease);
+          transition: background-color 0.2s, border-color 0.2s, color 0.2s;
         }
 
-        a.dove-icon-chip:hover {
-          background: #fff;
-          color: var(--dh-brand);
-          box-shadow: none;
-          transform: translateY(-2px);
-        }
+        a.dove-icon-chip:hover { background: #fff; border-color: #fff; color: var(--dh-night); }
 
         .dove-footer-heading {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin: 6px 0 22px;
-          font-size: 12.5px;
+          margin: 4px 0 22px;
+          padding-bottom: 14px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+          font-size: 13px;
           font-weight: 600;
-          letter-spacing: 0.16em;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: var(--dh-accent-soft);
+          color: #fff;
         }
 
-        .dove-footer-heading .bar { width: 18px; height: 1.5px; background: currentColor; opacity: 0.8; }
+        .dove-footer-heading .bar { display: none; }
 
         .dove-footer-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 
         .dove-footer-links a {
           font-size: 15px;
-          color: rgba(255, 255, 255, 0.78);
+          color: rgba(255, 255, 255, 0.72);
           text-decoration: none;
-          background-image: linear-gradient(currentColor, currentColor);
-          background-size: 0% 1px;
-          background-position: 0 100%;
-          background-repeat: no-repeat;
-          padding-bottom: 2px;
-          transition: color 0.2s, background-size 0.3s var(--dh-ease);
+          transition: color 0.2s;
         }
 
-        .dove-footer-links a:hover { color: #fff; background-size: 100% 1px; }
+        .dove-footer-links a:hover { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
 
         .dove-footer-contact { display: grid; gap: 14px; }
 
         .dove-contact-row {
-          display: flex;
-          align-items: flex-start;
-          gap: 14px;
-          color: rgba(255, 255, 255, 0.82);
+          display: grid;
+          grid-template-columns: 20px minmax(0, 1fr);
+          gap: 12px;
+          align-items: start;
+          color: rgba(255, 255, 255, 0.78);
           text-decoration: none;
           transition: color 0.2s;
         }
 
         .dove-contact-row:hover { color: #fff; }
-        .dove-contact-row .dove-icon-chip { color: var(--dh-accent-soft); }
-        .dove-contact-row:hover .dove-icon-chip { background: rgba(255, 255, 255, 0.12); }
+
+        .dove-contact-row .dove-icon-chip {
+          width: 20px;
+          height: 22px;
+          border: 0;
+          border-radius: 0;
+          color: #9fbad6;
+          background: transparent;
+        }
 
         .dove-contact-row span {
           min-width: 0;
-          padding-top: 9px;
-          font-size: 14.5px;
-          line-height: 1.55;
+          font-size: 15px;
+          line-height: 1.5;
           overflow-wrap: anywhere;
         }
 
-        .dove-footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .dove-footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.12); }
 
         .dove-footer-bottom-inner {
-          max-width: calc(var(--dh-container) + var(--dh-gutter) * 2);
+          max-width: calc(var(--dh-container-wide) + var(--dh-gutter) * 2);
           margin: 0 auto;
-          padding: 24px var(--dh-gutter);
+          padding: 24px var(--dh-gutter) 28px;
           display: flex;
           flex-wrap: wrap;
-          align-items: center;
+          align-items: flex-end;
           justify-content: space-between;
           gap: 12px 24px;
         }
@@ -156,12 +141,12 @@ export default function Footer() {
 
         .dove-footer-bottom-inner .dove-footer-legal {
           margin-top: 4px;
-          font-size: 11.5px;
+          font-size: 12px;
           letter-spacing: 0.02em;
-          color: rgba(255, 255, 255, 0.38);
+          color: rgba(255, 255, 255, 0.4);
         }
 
-        .dove-footer-bottom-inner a { font-weight: 600; color: var(--dh-accent-soft); text-decoration: none; }
+        .dove-footer-bottom-inner a { font-weight: 600; color: rgba(255, 255, 255, 0.8); text-decoration: none; }
         .dove-footer-bottom-inner a:hover { color: #fff; text-decoration: underline; }
       `}</style>
 
@@ -175,8 +160,8 @@ export default function Footer() {
               <img
                 src={logo}
                 alt="Dove Health"
-                width={1000}
-                height={472}
+                width={3951}
+                height={1864}
                 loading="lazy"
                 decoding="async"
               />
@@ -236,6 +221,15 @@ export default function Footer() {
             <li><Link to="/resources">Resources</Link></li>
             <li><Link to="/contact-us">Contact</Link></li>
             <li><Link to="/faq">FAQs</Link></li>
+            <li>
+              <a
+                href="https://pdf.ac/MhJMWzQID"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Consent forms PRP
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -250,15 +244,6 @@ export default function Footer() {
             <li><Link to="/services/prp">PRP program</Link></li>
             <li><Link to="/services/family-counselling">Family counseling</Link></li>
             <li><Link to="/services/personal-counselling">Personal counseling</Link></li>
-            <li>
-              <a
-                href="https://pdf.ac/MhJMWzQID"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Consent forms PRP
-              </a>
-            </li>
           </ul>
         </div>
 

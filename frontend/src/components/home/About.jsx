@@ -3,28 +3,44 @@ import ArrowIcon from "../ui/ArrowIcon";
 import aboutImg from "../../assets/about.jpg";
 
 const ABOUT_CSS = `
-  .home-about__media { max-width: 500px; margin: 0 auto; width: 100%; }
-  .home-about__media img { --dh-ratio: 4 / 5; }
+  .home-about__grid { align-items: center; }
 
-  .home-about__body { margin-top: 22px; }
+  .home-about__figure { max-width: 440px; }
+  .home-about__figure img { --dh-ratio: 4 / 5; --dh-focus: 50% 30%; }
+  @media (max-width: 959px) { .home-about__figure img { --dh-ratio: 4 / 3.6; } }
+
+  .home-about__body { margin-top: 26px; }
 
   .home-about__credentials {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 36px 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--dh-line);
+    border-bottom: 1px solid var(--dh-line);
   }
 
-  .home-about__credentials .dh-chip svg { color: var(--dh-accent); }
+  .home-about__credentials li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 12px 18px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dh-ink);
+  }
 
-  .home-about__cta-row {
+  .home-about__credentials li + li { padding-left: 18px; border-left: 1px solid var(--dh-line); }
+  .home-about__credentials svg { color: var(--dh-brand); flex-shrink: 0; }
+
+  .home-about__foot {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 18px 26px;
-    margin-top: 38px;
-    padding-top: 30px;
-    border-top: 1px solid var(--dh-line);
+    justify-content: space-between;
+    gap: 16px 28px;
+    margin-top: 30px;
   }
 
   .home-about__trust {
@@ -32,11 +48,15 @@ const ABOUT_CSS = `
     align-items: center;
     gap: 10px;
     font-size: 14px;
-    font-weight: 500;
     color: var(--dh-muted);
   }
 
-  .home-about__trust svg { color: var(--dh-brand); flex-shrink: 0; }
+  .home-about__trust svg { color: var(--dh-dove); flex-shrink: 0; }
+
+  @media (max-width: 520px) {
+    .home-about__credentials { grid-template-columns: minmax(0, 1fr); }
+    .home-about__credentials li + li { padding-left: 0; border-left: 0; border-top: 1px solid var(--dh-line); }
+  }
 `;
 
 export default function About() {
@@ -50,24 +70,21 @@ export default function About() {
     <section className="dh-section">
       <style>{ABOUT_CSS}</style>
 
-      <div className="dh-container dh-split">
+      <div className="dh-container dh-grid home-about__grid">
         {/* IMAGE */}
-        <div className="dh-media dh-media--left home-about__media" data-reveal>
+        <figure className="dh-figure dh-col-5 home-about__figure" data-reveal>
           <img
             src={aboutImg}
             alt="Professional mental health consultation at Dove Health"
             loading="lazy"
             decoding="async"
           />
-          <div className="dh-float-label">
-            <span className="dot" />
-            <span>Person-centered care</span>
-          </div>
-        </div>
+          <figcaption>Person-centered care</figcaption>
+        </figure>
 
         {/* CONTENT */}
-        <div data-reveal style={{ "--dh-reveal-delay": "120ms" }}>
-          <span className="dh-eyebrow">About Dove Health</span>
+        <div className="dh-col-6 dh-col-start-7" data-reveal style={{ "--dh-reveal-delay": "100ms" }}>
+          <span className="dh-kicker">About Dove Health</span>
           <h2 className="dh-h2">
             Dedicated to mental wellness, <em>recovery</em> & lifelong support
           </h2>
@@ -80,17 +97,17 @@ export default function About() {
             to live stable and meaningful lives.
           </p>
 
-          <div className="home-about__credentials">
+          <ul className="home-about__credentials">
             {credentials.map((c) => (
-              <span key={c.label} className="dh-chip">
-                <Check size={15} strokeWidth={2.5} aria-hidden="true" />
+              <li key={c.label}>
+                <Check size={16} strokeWidth={2.4} aria-hidden="true" />
                 {c.label}
-              </span>
+              </li>
             ))}
-          </div>
+          </ul>
 
-          <div className="home-about__cta-row">
-            <a href="/about-us" className="dh-btn dh-btn--secondary">
+          <div className="home-about__foot">
+            <a href="/about-us" className="dh-link">
               Learn More
               <ArrowIcon />
             </a>

@@ -1,4 +1,5 @@
 import ServicePage from "./ServicePage";
+import serviceImg from "../../assets/services/omhc.jpg";
 
 const SERVICES = [
   {
@@ -53,6 +54,7 @@ export default function OMHC() {
       introTitle={"Comprehensive Mental Health Care"}
       introText={"Our OMHC program offers therapy, medical support, and recovery help to anyone looking to feel more stable, independent, and well."}
       services={SERVICES}
+      image={{ src: serviceImg, focus: "45% 40%" }}
       ctaTitle={"Start Your Recovery Today"}
       ctaText={"Schedule your consultation with our mental health professionals."}
     />

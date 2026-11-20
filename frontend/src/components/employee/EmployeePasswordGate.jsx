@@ -39,9 +39,7 @@ export default function EmployeePasswordGate({ children }) {
           place-items: center;
           padding: clamp(48px, 8vw, 96px) var(--dh-gutter);
           background:
-            radial-gradient(800px 420px at 100% 0%, rgba(207, 222, 236, 0.75), transparent 60%),
-            radial-gradient(700px 380px at 0% 100%, rgba(245, 238, 229, 0.95), transparent 60%),
-            var(--dh-sand-50);
+            var(--dh-paper);
         }
         .emp-gate-card {
           position: relative;
@@ -51,7 +49,6 @@ export default function EmployeePasswordGate({ children }) {
           border: 1px solid var(--dh-line);
           border-radius: var(--dh-radius-lg);
           background: #fff;
-          box-shadow: var(--dh-shadow-lg);
           text-align: center;
         }
         .emp-gate-icon {
@@ -60,17 +57,17 @@ export default function EmployeePasswordGate({ children }) {
           margin: 0 auto 22px;
           display: grid;
           place-items: center;
-          border-radius: 18px;
+          border-radius: var(--dh-radius);
           background: var(--dh-brand);
           color: #fff;
-          box-shadow: 0 14px 26px -14px rgba(11, 64, 119, 0.7);
+          
         }
         .emp-gate-card h1 {
           margin: 0 0 10px;
           font-family: var(--dh-font-display);
-          font-size: 2rem;
-          font-weight: 500;
-          letter-spacing: -0.015em;
+          font-size: 1.85rem;
+          font-weight: 700;
+          letter-spacing: -0.026em;
           color: var(--dh-ink);
         }
         .emp-gate-card > p { margin: 0 0 28px; font-size: 15px; line-height: 1.65; color: var(--dh-ink-2); }
@@ -81,8 +78,8 @@ export default function EmployeePasswordGate({ children }) {
           width: 100%;
           min-height: 52px;
           padding: 13px 52px 13px 16px;
-          border: 1.5px solid var(--dh-line);
-          border-radius: 14px;
+          border: 1px solid var(--dh-line-strong);
+          border-radius: var(--dh-radius);
           background: #fff;
           font-family: var(--dh-font-sans);
           font-size: 15.5px;
@@ -124,14 +121,14 @@ export default function EmployeePasswordGate({ children }) {
           min-height: 52px;
           margin-top: 18px;
           border: 0;
-          border-radius: var(--dh-radius-pill);
+          border-radius: var(--dh-radius);
           background: var(--dh-brand);
           font-family: var(--dh-font-sans);
           font-size: 15px;
           font-weight: 600;
           color: #fff;
           cursor: pointer;
-          box-shadow: 0 12px 26px -14px rgba(11, 64, 119, 0.7);
+          
           transition: background-color 0.25s, transform 0.25s var(--dh-ease);
         }
         .emp-gate-submit:hover { background: var(--dh-brand-700); transform: translateY(-1px); }

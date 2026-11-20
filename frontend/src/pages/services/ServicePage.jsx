@@ -1,67 +1,68 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CheckCircle2, ChevronDown, Users, Compass } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import PageHero from "../../components/ui/PageHero";
 import CtaBand from "../../components/ui/CtaBand";
 import ArrowIcon from "../../components/ui/ArrowIcon";
 
 const SERVICE_PAGE_CSS = `
-  .svc-intro { text-align: center; }
-  .svc-intro .dh-accent-bar { margin-inline: auto; }
-  .svc-intro .dh-lead { margin-top: 22px; }
+  .svc-layout { align-items: start; }
 
-  .svc-grid {
+  .svc-intro { position: sticky; top: calc(var(--dh-header-h) + 32px); }
+  .svc-intro .dh-lead { margin-top: 20px; }
+
+  .svc-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--dh-ink); }
+
+  .svc-item { border-bottom: 1px solid var(--dh-line-strong); }
+
+  .svc-item__row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 22px;
-    align-items: start;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 4px 12px;
+    padding: 26px 0;
   }
 
-  @media (min-width: 700px) { .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 1100px) { .svc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .svc-item__row .dh-index { padding-top: 4px; }
 
-  .svc-card {
-    display: flex;
-    flex-direction: column;
-    padding: clamp(26px, 3vw, 34px);
-  }
+  .svc-item__title { margin: 0; font-size: 1.25rem; }
 
-  .svc-card .dh-icon-badge { margin-bottom: 22px; }
-  .svc-card .dh-h3 { font-size: 1.3rem; }
-
-  .svc-card__summary {
-    margin: 12px 0 22px;
-    font-size: 15.5px;
-    line-height: 1.7;
+  .svc-item__summary {
+    grid-column: 2;
+    margin: 8px 0 0;
+    max-width: 58ch;
+    font-size: 16px;
+    line-height: 1.65;
     color: var(--dh-ink-2);
   }
 
   .svc-toggle {
+    grid-column: 2;
+    justify-self: start;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    align-self: flex-start;
-    min-height: 42px;
-    padding: 0 16px;
-    border: 1.5px solid rgba(11, 64, 119, 0.22);
-    border-radius: var(--dh-radius-pill);
+    gap: 6px;
+    margin-top: 14px;
+    padding: 4px 0;
+    border: 0;
     background: transparent;
     font-family: var(--dh-font-sans);
-    font-size: 14px;
+    font-size: 14.5px;
     font-weight: 600;
     color: var(--dh-brand);
+    text-decoration: underline;
+    text-decoration-color: rgba(11, 64, 119, 0.3);
+    text-underline-offset: 5px;
     cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
   }
 
-  .svc-toggle:hover { background: var(--dh-sky-50); border-color: var(--dh-brand); }
+  .svc-toggle:hover { text-decoration-color: currentColor; }
   .svc-toggle svg { transition: transform 0.3s var(--dh-ease); }
   .svc-toggle.open svg { transform: rotate(180deg); }
 
   .svc-details {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows 0.4s var(--dh-ease);
+    transition: grid-template-rows 0.35s var(--dh-ease);
   }
 
   .svc-details.open { grid-template-rows: 1fr; }
@@ -69,45 +70,37 @@ const SERVICE_PAGE_CSS = `
 
   .svc-details__list {
     display: grid;
-    gap: 16px;
-    margin-top: 22px;
-    padding-top: 22px;
-    border-top: 1px solid var(--dh-line);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px 32px;
+    margin: 0 0 28px 56px;
+    padding: 22px 24px;
+    border-radius: var(--dh-radius);
+    background: var(--dh-paper);
   }
 
-  .svc-detail { display: flex; gap: 12px; align-items: flex-start; }
-
-  .svc-detail__icon {
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--dh-sky-50);
-    color: var(--dh-brand);
+  @media (min-width: 760px) {
+    .svc-details__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 
-  .svc-detail.who .svc-detail__icon { background: var(--dh-accent-50); color: var(--dh-accent-ink); }
-  .svc-detail.expect .svc-detail__icon { background: var(--dh-success-50); color: var(--dh-success); }
+  @media (max-width: 520px) {
+    .svc-details__list { margin-left: 0; }
+  }
 
   .svc-detail__label {
-    margin: 3px 0 4px;
+    margin: 0 0 6px;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--dh-muted);
+    color: var(--dh-dove);
   }
 
   .svc-detail__text { margin: 0; font-size: 15px; line-height: 1.65; color: var(--dh-ink-2); }
 `;
 
-const CARD_ICONS = [CheckCircle2, Users, Compass];
-
 /**
  * Shared layout for the four service pages (OMHC, PRP, Family and Personal
- * counseling). Each page passes its own wording and service list unchanged.
+ * counseling). Each page passes its own wording, service list and photo.
  */
 export default function ServicePage({
   breadcrumb,
@@ -117,29 +110,32 @@ export default function ServicePage({
   services,
   ctaTitle,
   ctaText,
+  image,
 }) {
   return (
     <div className="service-page">
       <style>{SERVICE_PAGE_CSS}</style>
 
       {/* HEADER */}
-      <PageHero breadcrumb={breadcrumb} title={title} />
+      <PageHero
+        breadcrumb={breadcrumb}
+        title={title}
+        image={image ? { src: image.src, alt: title, ratio: "4 / 3", focus: image.focus } : undefined}
+      />
 
-      {/* INTRO */}
-      <section className="dh-section dh-section--tight">
-        <div className="dh-container dh-container--narrow svc-intro" data-reveal>
-          <span className="dh-accent-bar" aria-hidden="true" />
-          <h2 className="dh-h2">{introTitle}</h2>
-          <p className="dh-lead">{introText}</p>
-        </div>
-      </section>
+      {/* INTRO + SERVICES */}
+      <section className="dh-section">
+        <div className="dh-container dh-grid svc-layout">
+          <div className="dh-col-4 svc-intro" data-reveal>
+            <h2 className="dh-h2">{introTitle}</h2>
+            <p className="dh-lead">{introText}</p>
+          </div>
 
-      {/* SERVICES */}
-      <section className="dh-section dh-section--sand dh-section--tight">
-        <div className="dh-container svc-grid">
-          {services.map((service, index) => (
-            <ServiceCard key={index} index={index} {...service} />
-          ))}
+          <ol className="dh-col-8 svc-list">
+            {services.map((service, index) => (
+              <ServiceItem key={index} index={index} {...service} />
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -154,71 +150,49 @@ export default function ServicePage({
   );
 }
 
-/* SERVICE CARD WITH LEARN MORE TOGGLE */
-function ServiceCard({ index, title, summary, what, who, expect }) {
+/* SERVICE ROW WITH LEARN MORE TOGGLE */
+function ServiceItem({ index, title, summary, what, who, expect }) {
   const [open, setOpen] = useState(false);
-  const Icon = CARD_ICONS[index % CARD_ICONS.length];
+  const id = `svc-details-${index}`;
 
   return (
-    <div
-      className="dh-card svc-card"
-      data-reveal
-      style={{ "--dh-reveal-delay": `${(index % 3) * 80}ms` }}
-    >
-      <span
-        className={`dh-icon-badge${index % 2 === 0 ? "" : " dh-icon-badge--warm"}`}
-        aria-hidden="true"
-      >
-        <Icon size={22} />
-      </span>
-      <h3 className="dh-h3">{title}</h3>
-      <p className="svc-card__summary">{summary}</p>
+    <li className="svc-item" data-reveal style={{ "--dh-reveal-delay": `${(index % 3) * 60}ms` }}>
+      <div className="svc-item__row">
+        <span className="dh-index" aria-hidden="true">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <h3 className="dh-h3 svc-item__title">{title}</h3>
+        <p className="svc-item__summary">{summary}</p>
+        <button
+          type="button"
+          className={`svc-toggle${open ? " open" : ""}`}
+          onClick={() => setOpen(!open)}
+          aria-expanded={open}
+          aria-controls={id}
+        >
+          {open ? "Show less" : "Learn More"}
+          <ChevronDown size={16} />
+        </button>
+      </div>
 
-      <button
-        type="button"
-        className={`svc-toggle${open ? " open" : ""}`}
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
-      >
-        {open ? "Show less" : "Learn More"}
-        <ChevronDown size={16} />
-      </button>
-
-      <div className={`svc-details${open ? " open" : ""}`} aria-hidden={!open}>
+      <div id={id} className={`svc-details${open ? " open" : ""}`} aria-hidden={!open}>
         <div className="svc-details__inner">
           <div className="svc-details__list">
-            <div className="svc-detail what">
-              <div className="svc-detail__icon">
-                <CheckCircle2 size={15} />
-              </div>
-              <div>
-                <p className="svc-detail__label">What it is</p>
-                <p className="svc-detail__text">{what}</p>
-              </div>
+            <div>
+              <p className="svc-detail__label">What it is</p>
+              <p className="svc-detail__text">{what}</p>
             </div>
-
-            <div className="svc-detail who">
-              <div className="svc-detail__icon">
-                <CheckCircle2 size={15} />
-              </div>
-              <div>
-                <p className="svc-detail__label">Who it's for</p>
-                <p className="svc-detail__text">{who}</p>
-              </div>
+            <div>
+              <p className="svc-detail__label">Who it's for</p>
+              <p className="svc-detail__text">{who}</p>
             </div>
-
-            <div className="svc-detail expect">
-              <div className="svc-detail__icon">
-                <CheckCircle2 size={15} />
-              </div>
-              <div>
-                <p className="svc-detail__label">What to expect</p>
-                <p className="svc-detail__text">{expect}</p>
-              </div>
+            <div>
+              <p className="svc-detail__label">What to expect</p>
+              <p className="svc-detail__text">{expect}</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </li>
   );
 }

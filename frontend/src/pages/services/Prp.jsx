@@ -1,4 +1,5 @@
 import ServicePage from "./ServicePage";
+import serviceImg from "../../assets/services/prp.jpg";
 
 const SERVICES = [
   {
@@ -53,6 +54,7 @@ export default function Prp() {
       introTitle={"Building Skills for Independent Living"}
       introText={"Our Psychiatric Rehabilitation Program helps you build everyday life skills, feel more confident around others, and work toward greater independence."}
       services={SERVICES}
+      image={{ src: serviceImg, focus: "55% 40%" }}
       ctaTitle={"Start PRP Services Today"}
       ctaText={"Take the first step toward independence and recovery."}
     />

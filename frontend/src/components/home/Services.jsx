@@ -5,190 +5,145 @@ import prpImg from "../../assets/services/prp.jpg";
 import familyImg from "../../assets/services/family.jpg";
 import personalImg from "../../assets/about/therapy4.jpg";
 import ArrowIcon from "../ui/ArrowIcon";
+import { SERVICE_SUMMARIES } from "../../data/siteInfo";
+
+// Title, description and link come from data/siteInfo.js (shared with the chatbot).
+const summary = (key) => {
+  const { title, desc, link } = SERVICE_SUMMARIES.find((s) => s.key === key);
+  return { title, desc, link };
+};
 
 const SERVICES_CSS = `
-  .home-services__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 22px;
-  }
+  .home-services__head { align-items: end; margin-bottom: clamp(40px, 5vw, 64px); }
 
-  @media (min-width: 680px) { .home-services__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 1200px) { .home-services__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .home-services__list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--dh-ink); }
 
   .home-service {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    border-radius: 26px;
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 8px 24px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--dh-line-strong);
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 0.25s var(--dh-ease);
   }
 
-  .home-service__media {
+  .home-service__thumb {
+    grid-row: span 3;
+    width: 112px;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
-    border-radius: 18px;
-    background: var(--dh-sand-100);
+    border-radius: var(--dh-radius-sm);
+    background: var(--dh-paper-2);
   }
 
-  .home-service__media img {
+  .home-service__thumb img {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    height: 100%;
     object-fit: cover;
-    transition: transform 0.7s var(--dh-ease);
+    transition: transform 0.6s var(--dh-ease);
   }
 
-  .home-service:hover .home-service__media img { transform: scale(1.05); }
-
-  .home-service__body {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    padding: 0 16px 16px;
+  .home-service__title {
+    font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.4rem);
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.3;
+    color: var(--dh-ink);
+    transition: color 0.2s;
   }
-
-  .home-service__icon {
-    position: relative;
-    z-index: 1;
-    margin: -26px 0 18px;
-    width: 52px;
-    height: 52px;
-    display: grid;
-    place-items: center;
-    border-radius: 16px;
-    border: 4px solid #fff;
-    background: var(--dh-brand);
-    color: #fff;
-    box-shadow: var(--dh-shadow-sm);
-  }
-
-  .home-service.accent-peach .home-service__icon { background: var(--dh-accent); }
-
-  .home-service__title { font-size: 1.28rem; }
 
   .home-service__desc {
-    margin: 12px 0 22px;
+    grid-column: 2;
+    margin: 0;
     font-size: 15px;
-    line-height: 1.7;
+    line-height: 1.65;
     color: var(--dh-ink-2);
   }
 
-  .home-service__link { margin-top: auto; align-self: flex-start; }
+  .home-service__more {
+    grid-column: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-self: start;
+    font-size: 14.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--dh-brand);
+  }
 
-  /* Make the whole card clickable while keeping a single link */
-  .home-service__stretch { position: absolute; inset: 0; border-radius: 26px; }
-  .home-service { cursor: pointer; }
+  .home-service:hover .home-service__title { color: var(--dh-brand); }
+  .home-service:hover .home-service__thumb img { transform: scale(1.05); }
+  .home-service .dh-arrow { transition: transform 0.25s var(--dh-ease); }
+  .home-service:hover .dh-arrow { transform: translateX(4px); }
+
+  @media (min-width: 960px) {
+    .home-service {
+      grid-template-columns: 168px minmax(0, 4fr) minmax(0, 5fr) auto;
+      gap: 40px;
+      padding: 28px 0;
+    }
+
+    .home-service__thumb { width: 168px; grid-row: auto; }
+    .home-service__desc { grid-column: 3; }
+    .home-service__more { grid-column: 4; justify-self: end; }
+  }
+
+  @media (max-width: 560px) {
+    .home-service { grid-template-columns: 88px minmax(0, 1fr); }
+    .home-service__thumb { width: 88px; grid-row: auto; }
+    .home-service__desc { grid-column: 1 / -1; }
+    .home-service__more { grid-column: 1 / -1; }
+  }
 `;
 
 export default function Services() {
   const services = [
-    {
-      title: "Outpatient Mental Health Clinic (OMHC)",
-      desc: "Comprehensive therapy and psychiatric services for adults and children focused on long-term emotional stability, structured treatment planning, and holistic mental health recovery support.",
-      img: omhcImg,
-      link: "/services/omhc",
-      accent: "blue",
-      icon: (
-        <path
-          d="M12 21s-7-4.5-9.5-9C.5 8 2 4 6 4c2 0 3.5 1.2 4 2.5C10.5 5.2 12 4 14 4c4 0 5.5 4 3.5 8-2.5 4.5-9.5 9-9.5 9Z"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinejoin="round"
-        />
-      ),
-    },
-    {
-      title: "Psychiatric Rehabilitation Program (PRP)",
-      desc: "Structured rehabilitation services designed to build life skills, enhance independence, improve coping mechanisms, and promote sustainable personal development in daily living.",
-      img: prpImg,
-      link: "/services/prp",
-      accent: "peach",
-      icon: (
-        <path
-          d="M4 19V9l8-5 8 5v10M4 19h16M9 19v-6h6v6"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinejoin="round"
-          strokeLinecap="round"
-        />
-      ),
-    },
-    {
-      title: "Family Counseling",
-      desc: "Guided therapeutic sessions that strengthen communication, resolve interpersonal conflicts, rebuild trust, and restore emotional harmony within families.",
-      img: familyImg,
-      link: "/services/family-counselling",
-      accent: "blue",
-      icon: (
-        <path
-          d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm6 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3 20c0-3 2.7-5 6-5s6 2 6 5M12 20c.3-2.7 2.7-4.6 5.5-4.6 2.5 0 4.6 1.6 5 4"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      ),
-    },
-    {
-      title: "Personal Counseling",
-      desc: "Individualized therapy sessions tailored to emotional well-being, resilience building, trauma recovery, and long-term personal growth strategies.",
-      img: personalImg,
-      link: "/services/personal-counselling",
-      accent: "peach",
-      icon: (
-        <path
-          d="M12 3v3M12 18v3M5 12H3M21 12h-2M6.3 6.3 4.9 4.9M19.1 19.1l-1.4-1.4M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-        />
-      ),
-    },
+    { ...summary("omhc"), img: omhcImg },
+    { ...summary("prp"), img: prpImg },
+    { ...summary("family"), img: familyImg },
+    { ...summary("personal"), img: personalImg },
   ];
 
   return (
-    <section className="dh-section dh-section--sand">
+    <section className="dh-section dh-section--paper">
       <style>{SERVICES_CSS}</style>
 
       <div className="dh-container">
-        <div className="dh-section-head" data-reveal>
-          <span className="dh-eyebrow dh-eyebrow--center">Our Services</span>
-          <h2 className="dh-h2">
-            Specialist Mental Health Consultation Services
-          </h2>
-          <p className="dh-lead">
+        <div className="dh-grid home-services__head" data-reveal>
+          <div className="dh-col-7">
+            <span className="dh-kicker">Our Services</span>
+            <h2 className="dh-h2">
+              Specialist Mental Health Consultation Services
+            </h2>
+          </div>
+          <p className="dh-lead dh-col-5">
             Comprehensive behavioral healthcare designed to promote recovery,
             emotional resilience, and long-term personal growth.
           </p>
         </div>
 
-        <div className="home-services__grid">
+        <ul className="home-services__list">
           {services.map((service, i) => (
-            <article
-              key={service.title}
-              className={`dh-card dh-card--hover home-service accent-${service.accent}`}
-              data-reveal
-              style={{ "--dh-reveal-delay": `${i * 80}ms` }}
-            >
-              <div className="home-service__media">
-                <img src={service.img} alt={service.title} loading="lazy" decoding="async" />
-              </div>
-              <div className="home-service__body">
-                <div className="home-service__icon" aria-hidden="true">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                    {service.icon}
-                  </svg>
-                </div>
-                <h3 className="dh-h3 home-service__title">{service.title}</h3>
+            <li key={service.title} data-reveal style={{ "--dh-reveal-delay": `${i * 60}ms` }}>
+              <Link to={service.link} className="home-service">
+                <span className="home-service__thumb">
+                  <img src={service.img} alt={service.title} loading="lazy" decoding="async" />
+                </span>
+                <h3 className="home-service__title">{service.title}</h3>
                 <p className="home-service__desc">{service.desc}</p>
-                <Link to={service.link} className="dh-link home-service__link">
+                <span className="home-service__more">
                   Read More
                   <ArrowIcon />
-                  <span className="home-service__stretch" aria-hidden="true" />
-                </Link>
-              </div>
-            </article>
+                </span>
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

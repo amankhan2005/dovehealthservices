@@ -1,65 +1,83 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ChevronDown } from "lucide-react";
-import PageHero from "../components/ui/PageHero";
-import CtaBand from "../components/ui/CtaBand";
+import { Plus } from "lucide-react";
 import ArrowIcon from "../components/ui/ArrowIcon";
+import { faqData } from "../data/faqData";
 
 const FAQ_CSS = `
-  .faq-list { display: grid; gap: 12px; }
+  .faq-page { background: linear-gradient(to right, var(--dh-paper) 0 50%, #fff 50% 100%); }
 
-  .faq-item {
-    border: 1px solid var(--dh-line);
-    border-radius: 20px;
-    background: #fff;
-    transition: box-shadow 0.3s var(--dh-ease), border-color 0.3s;
+  .faq-layout { align-items: start; }
+
+  .faq-aside {
+    position: sticky;
+    top: calc(var(--dh-header-h) + 40px);
+    padding-block: clamp(48px, 7vw, 104px);
   }
 
-  .faq-item[open] { border-color: transparent; box-shadow: var(--dh-shadow-md); }
+  .faq-aside .dh-lead { margin-top: 24px; max-width: 40ch; }
+
+  .faq-help {
+    margin-top: clamp(40px, 6vw, 72px);
+    padding-top: 28px;
+    border-top: 1px solid var(--dh-line-strong);
+  }
+
+  .faq-help h2 { margin: 0; font-size: 1.25rem; font-weight: 600; letter-spacing: -0.015em; color: var(--dh-ink); }
+  .faq-help p { margin: 8px 0 22px; font-size: 15.5px; line-height: 1.6; color: var(--dh-ink-2); }
+  .faq-help__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .faq-main { padding-block: clamp(32px, 7vw, 104px); }
+
+  .faq-list { border-top: 1px solid var(--dh-ink); }
+
+  .faq-item { border-bottom: 1px solid var(--dh-line-strong); }
 
   .faq-item summary {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 20px;
-    padding: 22px clamp(18px, 3vw, 28px);
-    font-family: var(--dh-font-display);
-    font-size: clamp(1.08rem, 1rem + 0.3vw, 1.22rem);
-    font-weight: 500;
-    line-height: 1.4;
+    gap: 24px;
+    padding: 26px 0;
+    font-size: clamp(1.05rem, 1rem + 0.25vw, 1.18rem);
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: -0.012em;
     color: var(--dh-ink);
     list-style: none;
     cursor: pointer;
+    transition: color 0.2s;
   }
 
   .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary:hover { color: var(--dh-brand); }
 
   .faq-arrow {
-    width: 38px;
-    height: 38px;
     flex-shrink: 0;
+    width: 30px;
+    height: 30px;
     display: grid;
     place-items: center;
+    border: 1px solid var(--dh-line-strong);
     border-radius: 50%;
-    background: var(--dh-sky-50);
-    color: var(--dh-brand);
-    transition: transform 0.3s var(--dh-ease), background-color 0.25s, color 0.25s;
+    color: var(--dh-ink);
+    transition: transform 0.3s var(--dh-ease), background-color 0.2s, color 0.2s, border-color 0.2s;
   }
 
-  .faq-item[open] .faq-arrow { transform: rotate(180deg); background: var(--dh-brand); color: #fff; }
+  .faq-item[open] .faq-arrow { transform: rotate(45deg); background: var(--dh-ink); border-color: var(--dh-ink); color: #fff; }
 
-  .faq-answer {
-    margin: 0 clamp(18px, 3vw, 28px);
-    padding: 0 0 24px;
-    border-top: 1px solid var(--dh-line);
-    animation: faq-open 0.35s var(--dh-ease);
-  }
-
-  .faq-answer p { margin: 20px 0 0; font-size: 15.5px; line-height: 1.8; color: var(--dh-ink-2); }
+  .faq-answer { padding: 0 54px 28px 0; animation: faq-open 0.3s var(--dh-ease); }
+  .faq-answer p { margin: 0; max-width: 62ch; font-size: 16.5px; line-height: 1.75; color: var(--dh-ink-2); }
 
   @keyframes faq-open {
-    from { opacity: 0; transform: translateY(-6px); }
+    from { opacity: 0; transform: translateY(-4px); }
     to { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 959px) {
+    .faq-page { background: #fff; }
+    .faq-aside { position: static; padding-bottom: 40px; margin-inline: calc(var(--dh-gutter) * -1); padding-inline: var(--dh-gutter); background: var(--dh-paper); border-bottom: 1px solid var(--dh-line); }
+    .faq-answer { padding-right: 0; }
   }
 `;
 
@@ -73,87 +91,52 @@ export default function FAQ() {
     >
       <style>{FAQ_CSS}</style>
 
-      {/* HEADER */}
-      <PageHero
-        eyebrow="Dove Health Support"
-        title={
-          <>
+      <div className="dh-container dh-grid faq-layout">
+        {/* HEADER + NEXT STEP */}
+        <div className="dh-col-5 faq-aside">
+          <p className="dh-kicker">Dove Health Support</p>
+          <h1 className="dh-h1">
             Frequently asked <span className="dh-em">questions</span>
-          </>
-        }
-      >
-        Find answers about our outpatient programs, appointments, and
-        what to expect from care at Dove Health.
-      </PageHero>
+          </h1>
+          <p className="dh-lead">
+            Find answers about our outpatient programs, appointments, and
+            what to expect from care at Dove Health.
+          </p>
 
-      {/* FAQ LIST */}
-      <div className="dh-section">
-        <div className="dh-container dh-container--narrow faq-list">
-          {faqData.map((item, i) => (
-            <details key={i} className="faq-item">
-              <summary>
-                {item.q}
-                <span className="faq-arrow" aria-hidden="true">
-                  <ChevronDown size={18} />
-                </span>
-              </summary>
-              <div className="faq-answer">
-                <p>{item.a}</p>
-              </div>
-            </details>
-          ))}
+          <div className="faq-help">
+            <h2>Still have questions?</h2>
+            <p>Our care team is ready to help you find the right next step.</p>
+            <div className="faq-help__actions">
+              <Link to="/contact-us" className="dh-btn dh-btn--primary">
+                Contact us
+                <ArrowIcon />
+              </Link>
+              <Link to="/book-appointment" className="dh-btn dh-btn--secondary">
+                Book an appointment
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQ LIST */}
+        <div className="dh-col-6 dh-col-start-7 faq-main">
+          <div className="faq-list">
+            {faqData.map((item, i) => (
+              <details key={i} className="faq-item">
+                <summary>
+                  {item.q}
+                  <span className="faq-arrow" aria-hidden="true">
+                    <Plus size={16} />
+                  </span>
+                </summary>
+                <div className="faq-answer">
+                  <p>{item.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* CTA */}
-      <CtaBand
-        title="Still have questions?"
-        text="Our care team is ready to help you find the right next step."
-      >
-        <Link to="/contact-us" className="dh-btn dh-btn--light">
-          Contact us
-          <ArrowIcon />
-        </Link>
-        <Link to="/book-appointment" className="dh-btn dh-btn--outline-light">
-          Book an appointment
-        </Link>
-      </CtaBand>
     </motion.section>
   );
 }
-
-/* FAQ DATA */
-const faqData = [
-  {
-    q: "What services does Dove Health provide?",
-    a: "We offer Outpatient Mental Health Clinic (OMHC) services, a Psychiatric Rehabilitation Program (PRP), family counseling, personal counseling, and DUI education for adults and children across Maryland.",
-  },
-  {
-    q: "How do I schedule my first appointment?",
-    a: "You can book directly through our Book Appointment page, call our office, or submit a request through the Contact Us form. Our team will follow up to confirm your intake.",
-  },
-  {
-    q: "Are your clinicians licensed and accredited?",
-    a: "Yes. Dove Health (Dove Healthcare Services, LLC) is a certified outpatient mental health clinic approved by the Maryland Department of Behavioral Health Administration and accredited by The Joint Commission.",
-  },
-  {
-    q: "What is PRP and who is it for?",
-    a: "The Psychiatric Rehabilitation Program helps individuals build life skills, independence, and coping strategies for sustainable daily functioning as part of long-term recovery.",
-  },
-  {
-    q: "Do you accept insurance?",
-    a: "Coverage varies by plan. Contact our care team with your insurance details and we'll confirm what's accepted before your first visit.",
-  },
-  {
-    q: "What should I expect at my first visit?",
-    a: "Your first visit includes an intake assessment with a clinician to understand your needs and goals, which helps us build a personalized treatment plan from there.",
-  },
-  {
-    q: "What if I'm in crisis right now?",
-    a: "If you're experiencing a medical emergency, call 911. For a mental health crisis, call or text 988, available 24/7. Our office can also be reached directly during business hours.",
-  },
-  {
-    q: "Can family members be involved in treatment?",
-    a: "Yes. We offer family counseling and encourage involving caregivers and loved ones where appropriate, since their support plays an important role in recovery.",
-  },
-];

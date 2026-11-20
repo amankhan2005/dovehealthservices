@@ -1,101 +1,77 @@
 // GetInTouch.jsx
 import { useRef, useState } from "react";
-import { Phone, Mail, MapPin, Send, CheckCircle2, AlertCircle } from "lucide-react";
+import { Mail, MapPin, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import MathCaptcha from "./MathCaptcha.jsx";
+import ArrowIcon from "../ui/ArrowIcon";
 
 const CONTACT_CSS = `
-  .home-contact__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(44px, 6vw, 80px);
-    align-items: start;
-  }
+  .home-contact__grid { align-items: start; }
 
-  @media (min-width: 1024px) {
-    .home-contact__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr); }
-  }
-
-  .home-contact__intro { margin-top: 20px; max-width: 54ch; }
+  .home-contact__intro { margin-top: 24px; max-width: 46ch; }
 
   .home-contact__channels {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
-    margin-top: 36px;
-  }
-
-  @media (min-width: 640px) {
-    .home-contact__channels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    margin: 40px 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--dh-line);
   }
 
   .home-channel {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 18px;
-    border: 1px solid var(--dh-line);
-    border-radius: 18px;
-    background: #fff;
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr) auto;
+    gap: 16px;
+    align-items: start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--dh-line);
     color: var(--dh-ink);
     text-decoration: none;
-    transition: transform 0.3s var(--dh-ease), box-shadow 0.3s var(--dh-ease), border-color 0.3s;
   }
 
-  .home-channel:hover { transform: translateY(-2px); box-shadow: var(--dh-shadow-sm); border-color: var(--dh-sky-200); }
-
-  .home-channel--wide { grid-column: 1 / -1; }
-
-  .home-channel__icon {
-    width: 42px;
-    height: 42px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    border-radius: 12px;
-    background: var(--dh-sky-50);
-    color: var(--dh-brand);
-  }
-
-  .home-channel.urgent .home-channel__icon { background: var(--dh-crisis-50); color: var(--dh-crisis); }
-  .home-channel.warn .home-channel__icon { background: var(--dh-accent-50); color: var(--dh-accent-ink); }
+  .home-channel__icon { padding-top: 2px; color: var(--dh-dove); }
 
   .home-channel__text {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
     min-width: 0;
-    font-size: 15px;
+    font-size: 16.5px;
     font-weight: 600;
     line-height: 1.45;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
+    transition: color 0.2s;
   }
 
   .home-channel__label {
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--dh-muted);
   }
 
-  .home-contact__disclaimer {
-    margin: 26px 0 0;
-    padding-left: 16px;
-    border-left: 2px solid var(--dh-accent);
-    font-size: 14px;
-    line-height: 1.65;
-    color: var(--dh-muted);
+  .home-channel__go { padding-top: 22px; color: var(--dh-muted); transition: transform 0.25s var(--dh-ease), color 0.2s; }
+  .home-channel:hover .home-channel__text { color: var(--dh-brand); }
+  .home-channel:hover .home-channel__go { color: var(--dh-brand); transform: translateX(3px); }
+
+  @media (max-width: 520px) {
+    .home-channel { grid-template-columns: 22px minmax(0, 1fr); }
+    .home-channel__go { display: none; }
+    .home-channel__text { font-size: 15px; }
   }
 
   .home-contact__card {
-    padding: clamp(26px, 4vw, 44px);
-    border-radius: var(--dh-radius-lg);
-    background: #fff;
+    padding: clamp(24px, 3.5vw, 44px);
     border: 1px solid var(--dh-line);
-    box-shadow: var(--dh-shadow-lg);
+    border-radius: var(--dh-radius-lg);
+    background: var(--dh-paper);
   }
 
-  .home-contact__form-title { font-size: 1.6rem; margin-bottom: 26px; }
+  .home-contact__form-title {
+    margin-bottom: 26px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--dh-line);
+    font-size: 1.35rem;
+  }
 `;
 
 export default function GetInTouch() {
@@ -153,13 +129,13 @@ export default function GetInTouch() {
   }
 
   return (
-    <section className="dh-section dh-section--sky home-contact">
+    <section className="dh-section home-contact">
       <style>{CONTACT_CSS}</style>
 
-      <div className="dh-container home-contact__grid">
+      <div className="dh-container dh-grid home-contact__grid">
         {/* LEFT CONTENT */}
-        <div data-reveal>
-          <span className="dh-eyebrow">Get in Touch</span>
+        <div className="dh-col-5" data-reveal>
+          <span className="dh-kicker">Get in Touch</span>
           <h2 className="dh-h2">
             Need immediate mental health support?
           </h2>
@@ -170,60 +146,38 @@ export default function GetInTouch() {
           </p>
 
           <div className="home-contact__channels">
-            <a href="tel:911" className="home-channel urgent">
+            <a href="mailto:careteam@dovehealthservices.com" className="home-channel">
               <div className="home-channel__icon">
-                <Phone size={19} />
-              </div>
-              <span className="home-channel__text">
-                <span className="home-channel__label">Medical emergency</span>
-                Call 911
-              </span>
-            </a>
-
-            <a href="tel:988" className="home-channel warn">
-              <div className="home-channel__icon">
-                <Phone size={19} />
-              </div>
-              <span className="home-channel__text">
-                <span className="home-channel__label">Mental health crisis</span>
-                Call or text 988
-              </span>
-            </a>
-
-            <a href="mailto:careteam@dovehealthservices.com" className="home-channel brand home-channel--wide">
-              <div className="home-channel__icon">
-                <Mail size={19} />
+                <Mail size={20} />
               </div>
               <span className="home-channel__text">
                 <span className="home-channel__label">Email</span>
                 careteam@dovehealthservices.com
               </span>
+              <span className="home-channel__go" aria-hidden="true"><ArrowIcon /></span>
             </a>
 
             <a
               href="https://www.google.com/maps/search/?api=1&query=2101+St+Paul+St+Baltimore+MD+21218"
               target="_blank"
               rel="noopener noreferrer"
-              className="home-channel brand home-channel--wide"
+              className="home-channel"
             >
               <div className="home-channel__icon">
-                <MapPin size={19} />
+                <MapPin size={20} />
               </div>
               <span className="home-channel__text">
                 <span className="home-channel__label">Visit us</span>
                 2101 St Paul St, 1st FL, Baltimore MD 21218
               </span>
+              <span className="home-channel__go" aria-hidden="true"><ArrowIcon /></span>
             </a>
           </div>
 
-          <p className="home-contact__disclaimer">
-            If you are experiencing a medical emergency, call 911
-            immediately. For mental health crisis support, call or text 988.
-          </p>
         </div>
 
         {/* RIGHT FORM */}
-        <div className="home-contact__card" data-reveal style={{ "--dh-reveal-delay": "120ms" }}>
+        <div className="dh-col-6 dh-col-start-7 home-contact__card" data-reveal style={{ "--dh-reveal-delay": "100ms" }}>
           <h3 className="dh-h3 home-contact__form-title">Request an appointment</h3>
 
           <form onSubmit={handleSubmit} noValidate className="dh-form">

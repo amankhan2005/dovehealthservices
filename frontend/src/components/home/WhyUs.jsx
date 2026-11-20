@@ -1,46 +1,45 @@
-import { Check } from "lucide-react";
 import whyImg from "../../assets/whyus.jpg";
 
 const WHYUS_CSS = `
-  .home-why__head { max-width: 720px; margin-bottom: clamp(44px, 6vw, 72px); }
+  .home-why__grid { align-items: center; }
 
-  .home-why__media { max-width: 560px; width: 100%; margin: 0 auto; }
-  .home-why__media::before { background: rgba(255, 255, 255, 0.06); }
-  .home-why__media img { --dh-ratio: 5 / 4; }
+  .home-why__figure img { --dh-ratio: 4 / 5; --dh-focus: 38% 40%; }
+
+  @media (min-width: 960px) and (max-width: 1199px) {
+    .home-why__figure img { --dh-ratio: 3 / 4; }
+  }
+
+  @media (max-width: 959px) {
+    .home-why__figure img { --dh-ratio: 3 / 2; --dh-focus: 40% 35%; }
+  }
 
   .home-why__intro {
-    margin: 0 0 30px;
-    font-size: clamp(1.05rem, 0.98rem + 0.3vw, 1.2rem);
-    line-height: 1.75;
-    color: rgba(255, 255, 255, 0.8);
+    margin: 24px 0 0;
+    font-size: clamp(1.05rem, 1rem + 0.25vw, 1.18rem);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.78);
   }
 
-  .home-why__list { list-style: none; margin: 0; padding: 0; }
+  .home-why__list {
+    margin: 40px 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
 
   .home-why__item {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 20px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-  }
-
-  .home-why__item:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
-
-  .home-why__check {
-    width: 32px;
-    height: 32px;
-    flex-shrink: 0;
     display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: rgba(242, 180, 142, 0.16);
-    color: var(--dh-accent-soft);
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
   }
+
+  .home-why__item .dh-index { color: var(--dh-accent-soft); }
 
   .home-why__item p {
-    margin: 4px 0 0;
-    font-size: 16.5px;
+    margin: 0;
+    font-size: 17px;
     font-weight: 500;
     line-height: 1.5;
     color: #fff;
@@ -59,41 +58,33 @@ export default function WhyUs() {
     <section className="dh-section dh-section--night dh-on-dark">
       <style>{WHYUS_CSS}</style>
 
-      <div className="dh-container">
-        <div className="home-why__head" data-reveal>
-          <span className="dh-eyebrow">Why Choose Us</span>
+      <div className="dh-container dh-grid home-why__grid">
+        <figure className="dh-figure dh-col-5 home-why__figure" data-reveal>
+          <img src={whyImg} alt="Mental health therapy consultation" loading="lazy" decoding="async" />
+          <figcaption>Confidential & licensed care</figcaption>
+        </figure>
+
+        <div className="dh-col-6 dh-col-start-7" data-reveal style={{ "--dh-reveal-delay": "100ms" }}>
+          <span className="dh-kicker">Why Choose Us</span>
           <h2 className="dh-h2">
             Excellence in Mental Wellness & Recovery Support
           </h2>
-        </div>
+          <p className="home-why__intro">
+            We combine clinical expertise with compassionate care to deliver
+            comprehensive mental health services designed for long-term
+            recovery, emotional resilience, and personal empowerment.
+          </p>
 
-        <div className="dh-split">
-          <div className="dh-media home-why__media" data-reveal>
-            <img src={whyImg} alt="Mental health therapy consultation" loading="lazy" decoding="async" />
-            <div className="dh-float-label">
-              <span className="dot" />
-              <span>Confidential & licensed care</span>
-            </div>
-          </div>
-
-          <div data-reveal style={{ "--dh-reveal-delay": "120ms" }}>
-            <p className="home-why__intro">
-              We combine clinical expertise with compassionate care to deliver
-              comprehensive mental health services designed for long-term
-              recovery, emotional resilience, and personal empowerment.
-            </p>
-
-            <ul className="home-why__list">
-              {points.map((item, index) => (
-                <li key={index} className="home-why__item">
-                  <span className="home-why__check" aria-hidden="true">
-                    <Check size={16} strokeWidth={2.5} />
-                  </span>
-                  <p>{item}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ol className="home-why__list">
+            {points.map((item, index) => (
+              <li key={index} className="home-why__item">
+                <span className="dh-index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <p>{item}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>
